@@ -17,18 +17,20 @@ class MySphere extends CGFobject {
     }
 
     initBuffers() {
+        /* Generating normals before because vertices can be obtained as a transformation of their normals */
+        this.generateNormals();
         this.generateVertices();
         this.generateIndices();
-        this.generateNormals();
+        
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
 
-    generateVertices() {
-        /* Initialise vertex list with the poles only */
-        this.vertices = [
-            0, 0, this.radius,
-            0, 0, -this.radius
+    generateNormals() {
+        /* Initialise normals list with the poles only */
+        this.normals = [
+            0, 0, 1,
+            0, 0, -1
             ];
         for (let slice = 0; slice < this.slices; slice += 1)
             this.appendSlice(slice);
@@ -43,16 +45,17 @@ class MySphere extends CGFobject {
     }
 
     generateNormals() {
-        /* In a sphere , the normal on a vertex is the coords of the vertex normalized to length 1 */
-        this.normals = this.vertices.map(coord => coord / this.radius);
+        /* In a sphere , the normal on a vertex is the coords of the vertex normalized to length 1,
+            so a vertex can be obtained by multiplying each normal by the sphere's radius */
+        this.vertices = this.normals.map(coord => coord * this.radius);
     }
 
     appendSlice(slice) {
         const sliceAngle = slice * this.sliceAngleDelta;
         for (let stack = - this.stacks + 1; stack < this.stacks; stack += 1) {
             const stackAngle = stack * this.stackAngleDelta;
-            const vertex = this.polarToRectangular(sliceAngle, stackAngle).map(coord => coord * this.radius);
-            this.vertices.push(...vertex);
+            const normal = this.polarToRectangular(sliceAngle, stackAngle);
+            this.normals.push(...normal);
         }
     }
 
