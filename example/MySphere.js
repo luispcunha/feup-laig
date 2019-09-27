@@ -2,10 +2,11 @@
  * TODO: documentation
  */
 class MySphere extends CGFobject {
-    constructor(scene, stacks, slices) {
+    constructor(scene, stacks, slices, radius) {
         super(scene);
         this.stacks = stacks;
         this.slices = slices;
+        this.radius = radius;
         this.calcAngleDeltas();
         this.initBuffers();
     }
@@ -26,8 +27,8 @@ class MySphere extends CGFobject {
     generateVertices() {
         /* Initialise vertex list with the poles only */
         this.vertices = [
-            0, 0, 1,
-            0, 0, -1
+            0, 0, this.radius,
+            0, 0, -this.radius
             ];
         for (let slice = 0; slice < this.slices; slice += 1)
             this.appendSlice(slice);
@@ -42,15 +43,15 @@ class MySphere extends CGFobject {
     }
 
     generateNormals() {
-        /* In a sphere of radius=1, the normal of a vertex is the coords of the vertex */
-        this.normals = this.vertices.slice();
+        /* In a sphere , the normal on a vertex is the coords of the vertex normalized to length 1 */
+        this.normals = this.vertices.map(coord => coord / this.radius);
     }
 
     appendSlice(slice) {
         const sliceAngle = slice * this.sliceAngleDelta;
         for (let stack = - this.stacks + 1; stack < this.stacks; stack += 1) {
             const stackAngle = stack * this.stackAngleDelta;
-            const vertex = this.polarToRectangular(sliceAngle, stackAngle);
+            const vertex = this.polarToRectangular(sliceAngle, stackAngle).map(coord => coord * this.radius);
             this.vertices.push(...vertex);
         }
     }
