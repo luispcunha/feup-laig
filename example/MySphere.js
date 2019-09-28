@@ -44,7 +44,7 @@ class MySphere extends CGFobject {
         this.connectSlices(this.slices - 1, 0);
     }
 
-    generateNormals() {
+    generateVertices() {
         /* In a sphere , the normal on a vertex is the coords of the vertex normalized to length 1,
             so a vertex can be obtained by multiplying each normal by the sphere's radius */
         this.vertices = this.normals.map(coord => coord * this.radius);
