@@ -488,8 +488,10 @@ class MySceneGraph {
             if (!(shininess != null && !isNaN(shininess)))
                 return "invalid shininess value (material ID = " + materialID + ")";
 
+            // get children nodes of the current material
             grandChildren = children[i].children;
 
+            // get names of the children nodes and see if all required nodes exist
             for (var j = 0; j < grandChildren.length; j++)
                 nodeNames.push(grandChildren[j].nodeName);
             
@@ -509,24 +511,28 @@ class MySceneGraph {
             if (specularIndex == -1)
                 return "specular values missing (material ID = " + materialID + ")";
             
+            // parse emission
             var color = this.parseColor(grandChildren[emissionIndex], "emission");
             if (!Array.isArray(color))
                 return color;
             else
                 emission = color;
             
+            // parse ambient
             color = this.parseColor(grandChildren[ambientIndex], "ambient");
             if (!Array.isArray(color))
                 return color;
             else
                 ambient = color;
 
+            // parse diffuse
             color = this.parseColor(grandChildren[diffuseIndex], "diffuse");
             if (!Array.isArray(color))
                 return color;
             else
                 diffuse = color;
             
+            // parse specular
             color = this.parseColor(grandChildren[specularIndex], "specular");
             if (!Array.isArray(color))
                 return color;
@@ -544,7 +550,7 @@ class MySceneGraph {
             this.materials[materialID] = appearance;
             numMaterials++;
         }
-
+        
         if (numMaterials <= 0)
             return "one or more materials expected";
 
