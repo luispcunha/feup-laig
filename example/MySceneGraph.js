@@ -550,7 +550,7 @@ class MySceneGraph {
             this.materials[materialID] = appearance;
             numMaterials++;
         }
-        
+
         if (numMaterials <= 0)
             return "one or more materials expected";
 
@@ -568,6 +568,7 @@ class MySceneGraph {
         this.transformations = [];
 
         var grandChildren = [];
+        var numTransformationBlocks = 0;
 
         // Any number of transformations.
         for (var i = 0; i < children.length; i++) {
@@ -590,6 +591,7 @@ class MySceneGraph {
             // Specifications for the current transformation.
 
             var transfMatrix = mat4.create();
+            var numTransformations = 0;
 
             for (var j = 0; j < grandChildren.length; j++) {
                 switch (grandChildren[j].nodeName) {
@@ -599,18 +601,55 @@ class MySceneGraph {
                             return coordinates;
 
                         transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
+                        numTransformations++;
                         break;
                     case 'scale':                        
-                        this.onXMLMinorError("TODO: Parse scale transformations.");
+                        var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
+                        if (!Array.isArray(coordinates))
+                            return coordinates;
+
+                        transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
+                        numTransformations++;
                         break;
                     case 'rotate':
-                        // angle
-                        this.onXMLMinorError("TODO: Parse rotate transformations.");
+                        var angle = this.reader.getFloat(grandChildren[j], "angle");
+                        if (!(angle != null && !isNaN(angle)))
+                            return "invalid angle in rotate transformation for ID " + transformationID;
+                        
+                        // convert degrees to radians
+                        angle = angle * Math.PI / 180;
+
+                        var axis = this.reader.getString(grandChildren[j], "axis");    
+                        switch (axis) {
+                            case 'x':
+                                transfMatrix = mat4.rotateX(transfMatrix, transfMatrix, angle);
+                                break;
+                            case 'y':
+                                transfMatrix = mat4.rotateY(transfMatrix, transfMatrix, angle);
+                                break;
+                            case 'z':
+                                transfMatrix = mat4.rotateZ(transfMatrix, transfMatrix, angle);
+                                break;
+                            default:
+                                return "invalid axis in rotate transformation for ID " + transformationID;
+                        }
+                        numTransformations++;
+                        break;
+                    default:
+                        this.onXMLMinorError("unknown transformation tag <" + grandChildren[j].nodeName + "> (ID = " + transformationID + ")");
                         break;
                 }
             }
+
+            if (numTransformations <= 0)
+                return "one or more transformations required (ID = " + transformationID + ")";
+
             this.transformations[transformationID] = transfMatrix;
+            numTransformationBlocks++;
         }
+
+        if (numTransformationBlocks <= 0) 
+            return "one or more transformation blocks required";
 
         this.log("Parsed transformations");
         return null;
