@@ -463,6 +463,7 @@ class MySceneGraph {
         var grandChildren = [];
         var nodeNames = [];
         var emission, ambient, diffuse, specular; 
+        var numMaterials = 0;
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -530,7 +531,11 @@ class MySceneGraph {
             appearance.setShininess(shininess);
 
             this.materials[materialID] = appearance;
+            numMaterials++;
         }
+
+        if (numMaterials <= 0)
+            return "one or more materials expected";
 
         this.log("Parsed materials");
         return null;
