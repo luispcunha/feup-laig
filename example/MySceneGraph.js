@@ -230,6 +230,9 @@ class MySceneGraph {
     parseView(viewsNode) {
         this.onXMLMinorError("TODO: Parse views and create cameras.");
 
+
+
+
         return null;
     }
 
@@ -394,7 +397,57 @@ class MySceneGraph {
     parseTextures(texturesNode) {
 
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("TODO: Parse textures.");
+        
+        var children = texturesNode.children;
+
+        this.textures = [];
+
+        for (var i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknow tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // get ID of the current texture
+            var texID = this.reader.getString(children[i], 'id');
+            if (texID == null)
+                return "no ID defined for texture";
+
+            // check if texture ID is unique
+            if (this.textures[texID] != null)
+                return "ID must be unique for each texture (conflict: ID = " + texID + ")";
+
+            // get file URL
+            var fileURL = this.reader.getString(children[i], 'file');
+            if (fileURL == null)
+                return "no file defined for texture (ID = " + texID + ")";
+
+            // check if image file has valid extension
+            if (fileURL.length < 4 || (fileURL.substr(-4) != ".jpg" && fileURL.substr(-4) != ".png"))
+                return "file extension should be .jpg or .png (ID = " + texID + ")"; 
+            
+            /*
+            var image = new Image();
+            image.src = fileURL;
+
+            // check if image exists (there's probably a better way to do this)
+            if (image.height == 0)
+                return "texture file not found (ID = " + texID + ", url = " + fileURL + ")";
+
+            // warn if size isn't power of 2
+            if (! ((image.height!=0) && !(image.height & (image.height - 1))))
+                this.onXMLMinorError("image height should be power of 2 (ID = " + texID + ")");
+
+            if (! (image.width && !(image.width & (image.width - 1))))
+                this.onXMLMinorError("image width should be power of 2 (ID = " + texID + ")");
+            */
+
+            // add texture
+            this.textures[texID] = new CGFtexture(this.scene, fileURL);
+        }
+
+        this.log("Parsed textures.")
         return null;
     }
 
@@ -409,6 +462,7 @@ class MySceneGraph {
 
         var grandChildren = [];
         var nodeNames = [];
+        var emission, ambient, diffuse, specular; 
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -425,13 +479,60 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
-            //Continue here
-            this.onXMLMinorError("TODO: Parse materials.");
+
+            // get shininess and check if it's a valid float
+            var shininess = this.reader.getFloat(children[i], 'shininess');
+            if (!(shininess != null && !isNaN(shininess)))
+                return "invalid shininess value (material ID = " + materialID + ")";
+
+            grandChildren = children[i].children;
+
+            for (var j = 0; j < grandChildren.length; j++)
+                nodeNames.push(grandChildren[j].nodeName);
+            
+            var emissionIndex = nodeNames.indexOf("emission");
+            var ambientIndex = nodeNames.indexOf("ambient");
+            var diffuseIndex = nodeNames.indexOf("diffuse");
+            var specularIndex = nodeNames.indexOf("specular");
+            
+            var color = this.parseColor(grandChildren[emissionIndex], "emission");
+            if (!Array.isArray(color))
+                return color;
+            else
+                emission = color;
+            
+            color = this.parseColor(grandChildren[ambientIndex], "ambient");
+            if (!Array.isArray(color))
+                return color;
+            else
+                ambient = color;
+
+            color = this.parseColor(grandChildren[diffuseIndex], "diffuse");
+            if (!Array.isArray(color))
+                return color;
+            else
+                diffuse = color;
+            
+            color = this.parseColor(grandChildren[specularIndex], "specular");
+            if (!Array.isArray(color))
+                return color;
+            else
+                specular = color;
+            
+            // create CGFappearance and set it up with desired values
+            var appearance = new CGFappearance(this.scene);
+            appearance.setAmbient(...ambient);
+            appearance.setEmission(...emission);
+            appearance.setDiffuse(...diffuse);
+            appearance.setSpecular(...specular);
+            appearance.setShininess(shininess);
+
+            this.materials[materialID] = appearance;
         }
 
-        //this.log("Parsed materials");
+        this.log("Parsed materials");
         return null;
     }
 
