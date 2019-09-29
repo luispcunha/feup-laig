@@ -494,9 +494,20 @@ class MySceneGraph {
                 nodeNames.push(grandChildren[j].nodeName);
             
             var emissionIndex = nodeNames.indexOf("emission");
+            if (emissionIndex == -1)
+                return "emission values missing (material ID = " + materialID + ")";
+
             var ambientIndex = nodeNames.indexOf("ambient");
+            if (ambientIndex == -1)
+                return "ambient values missing (material ID = " + materialID + ")";
+
             var diffuseIndex = nodeNames.indexOf("diffuse");
+            if (diffuseIndex == -1)
+                return "diffuse values missing (material ID = " + materialID + ")";
+
             var specularIndex = nodeNames.indexOf("specular");
+            if (specularIndex == -1)
+                return "specular values missing (material ID = " + materialID + ")";
             
             var color = this.parseColor(grandChildren[emissionIndex], "emission");
             if (!Array.isArray(color))
