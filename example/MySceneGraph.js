@@ -3,7 +3,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
 // Order of the groups in the XML document.
 var SCENE_INDEX = 0;
 var VIEWS_INDEX = 1;
-var AMBIENT_INDEX = 2;
+var GLOBALS_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
@@ -112,15 +112,15 @@ class MySceneGraph {
                 return error;
         }
 
-        // <ambient>
-        if ((index = nodeNames.indexOf("ambient")) == -1)
-            return "tag <ambient> missing";
+        // <gloabls>
+        if ((index = nodeNames.indexOf("globals")) == -1)
+            return "tag <globals> missing";
         else {
-            if (index != AMBIENT_INDEX)
-                this.onXMLMinorError("tag <ambient> out of order");
+            if (index != GLOBALS_INDEX)
+                this.onXMLMinorError("tag <globals> out of order");
 
             //Parse ambient block
-            if ((error = this.parseAmbient(nodes[index])) != null)
+            if ((error = this.parseGlobals(nodes[index])) != null)
                 return error;
         }
 
@@ -228,11 +228,117 @@ class MySceneGraph {
      */
     //
     parseView(viewsNode) {
-        this.onXMLMinorError("TODO: Parse views and create cameras.");
+        // get default view
+        this.defaultView = this.reader.getString(viewsNode, "default");
+        if (this.defaultView == null)
+            return "default view id missing";
+        
+        var children = viewsNode.children;
+        this.views = [];
+        var numViews = 0;
 
+        // any number of views
+        for (var i = 0; i < children.length; i++) {
+            
+            //Check type of view
+            if (children[i].nodeName != "perspective" && children[i].nodeName != "ortho") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
 
+            var viewID = this.reader.getString(children[i], 'id');
+            if (viewID == null)
+                return "no ID defined for view";
 
+            // Checks for repeated IDs.
+            if (this.views[viewID] != null)
+                return "ID must be unique for each view (conflict: ID = " + viewID + ")";
 
+            var near = this.reader.getFloat(children[i], 'near');
+            if (!(near != null && !isNaN(near)))
+                return "invalid near value for ID " + viewID;
+            
+            var far = this.reader.getFloat(children[i], 'far');
+            if (!(far != null && !isNaN(far)))
+                return "invalid far value for ID " + viewID;
+
+            var angle, left, right, top, bottom;
+
+            if (children[i].nodeName == "perspective") {
+            // get perspective specific properties
+                angle = this.reader.getFloat(children[i], 'angle');
+                if (!(angle != null && !isNaN(angle)))
+                    return "invalid angle value for ID " + viewID;
+            }
+            else {
+                // get ortho specific properties
+                left = this.reader.getFloat(children[i], 'left');
+                if (!(left != null && !isNaN(left)))
+                    return "invalid left value for ID " + viewID;
+
+                right = this.reader.getFloat(children[i], 'right');
+                if (!(right != null && !isNaN(right)))
+                    return "invalid right value for ID " + viewID;
+
+                top = this.reader.getFloat(children[i], 'top'); 
+                if (!(top != null && !isNaN(top)))
+                    return "invalid top value for ID " + viewID;
+
+                bottom = this.reader.getFloat(children[i], 'bottom');
+                if (!(bottom != null && !isNaN(bottom)))
+                    return "invalid bottom value for ID " + viewID;
+            }
+
+            var grandgrandChildren = children[i].children;
+            var nodeNames = [];
+
+            for (var j = 0; j < grandgrandChildren.length; j++) 
+                nodeNames.push(grandgrandChildren[j].nodeName);
+
+            var fromIndex = nodeNames.indexOf('from');
+            if (fromIndex == -1) 
+                return "from values missing (view ID = " + viewID + ")"; 
+            var toIndex = nodeNames.indexOf('to');
+            if (toIndex == -1)
+                return "to values missing (view ID = " + viewID + ")";
+            
+            var from = this.parseCoordinates3D(grandgrandChildren[fromIndex], 'from values (view ID = ' + viewID + ")");
+            if (!Array.isArray(from))
+                return from;
+            
+            var to = this.parseCoordinates3D(grandgrandChildren[toIndex], 'to values (view ID = ' + viewID + ")");
+            if (!Array.isArray(to))
+                return to;
+            
+            if (children[i].nodeName == "perspective")
+                this.views[viewID] = new CGFcamera(angle, near, far, from, to);
+            else {
+                var up;
+                var upIndex = nodeNames.indexOf('up');
+                if (upIndex == -1) {
+                    this.onXMLMinorError("used up default values (view ID = " + viewID + ")");
+                    up = [0, 1, 0];
+                }
+                else {
+                    up = this.parseCoordinates3D(grandgrandChildren[upIndex], 'up values (view ID = ' + viewID + ")");
+                    if (!Array.isArray(up))
+                        return up;
+                }
+
+                this.views[viewID] = new CGFcameraOrtho(left, right, bottom, top, near, from, to, up);
+            }
+
+            numViews++;
+        }
+            
+        if (numViews <= 0)
+            return "at least one view must be defined";
+
+        if (this.views[this.defaultView] == null)
+            return "invalid default view";
+
+        this.log("Parsed views");
+        
         return null;
     }
 
@@ -240,9 +346,9 @@ class MySceneGraph {
      * Parses the <ambient> node.
      * @param {ambient block element} ambientsNode
      */
-    parseAmbient(ambientsNode) {
+    parseGlobals(globalsNode) {
 
-        var children = ambientsNode.children;
+        var children = globalsNode.children;
 
         this.ambient = [];
         this.background = [];
@@ -262,7 +368,7 @@ class MySceneGraph {
             this.ambient = color;
 
         color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
+        if (!Array.isArray(color)) 
             return color;
         else
             this.background = color;
