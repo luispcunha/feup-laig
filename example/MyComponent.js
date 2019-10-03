@@ -1,0 +1,5 @@
+class MyComponent {
+    constructor(id) {
+           
+    }
+}
