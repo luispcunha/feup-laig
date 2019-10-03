@@ -67,7 +67,7 @@ class MyCylinder extends CGFobject {
         for (let stack = 0; stack <= this.stacks; stack++) {
             const height = this.heightDelta * stack;
             const radius = this.bottomRadius + height*this.slope;
-            this.vertices.push(...this.cylindricalToRectangular(radius, angle, height));
+            this.vertices.push(...MyCylinder.cylindricalToRectangular(radius, angle, height));
         }
     }
 
@@ -86,7 +86,7 @@ class MyCylinder extends CGFobject {
         }
     }
 
-    cylindricalToRectangular(radius, angle, height) {
+    static cylindricalToRectangular(radius, angle, height) {
         const x = radius * Math.cos(angle);
         const y = radius *Math.sin(angle);
         const z = height;

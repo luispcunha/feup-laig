@@ -54,12 +54,12 @@ class MySphere extends CGFobject {
         const sliceAngle = slice * this.sliceAngleDelta;
         for (let stack = - this.stacks + 1; stack < this.stacks; stack += 1) {
             const stackAngle = stack * this.stackAngleDelta;
-            const normal = this.polarToRectangular(sliceAngle, stackAngle);
+            const normal = MySphere.polarToRectangular(sliceAngle, stackAngle);
             this.normals.push(...normal);
         }
     }
 
-    polarToRectangular(sliceAngle, stackAngle) {
+    static polarToRectangular(sliceAngle, stackAngle) {
         return [
             Math.cos(sliceAngle) * Math.cos(stackAngle), //x
             Math.sin(sliceAngle) * Math.cos(stackAngle), //y
