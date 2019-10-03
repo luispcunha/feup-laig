@@ -916,7 +916,7 @@ class MySceneGraph {
 
             // Materials
             var numMaterials = 0;
-            grandgrandChildren = grandChildren[materialIndex].children;
+            grandgrandChildren = grandChildren[materialsIndex].children;
             for (var j = 0; j < grandgrandChildren.length; j++) {
                 if (grandgrandChildren[j].nodeName != 'material')
                     this.onXMLMinorError("unknown tag <" + grandgrandChildren[j].nodeName + "> component ID = " + componentID);
@@ -932,7 +932,7 @@ class MySceneGraph {
                 if (this.materials[mat] == null)
                     return "no material with ID " + mat + " (compontent ID = " + componentID + ")";
 
-                materials.push(this.materials[mat]);
+                mats.push(this.materials[mat]);
                 numMaterials++;
             }
 
@@ -951,7 +951,6 @@ class MySceneGraph {
             var length_t = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
             if (!(length_t != null && !isNaN(length_t)))
                 return "unable to parse length_t of the texture (component ID = " +  componentId + ")";
-        
 
             // Children
             grandgrandChildren = grandChildren[childrenIndex].children;
@@ -962,12 +961,12 @@ class MySceneGraph {
             for (var j = 0; j < grandgrandChildren.length; j++) {
                 var nodeName = grandgrandChildren[j].nodeName;
 
-                if (nodeName != 'componentref' || nodeName != 'primitiveref') {
-                    this.onXMLMinorError("unknown tag <" + nodeNames[j] + "> in children of component ID = " + componentID + ")");
+                if (nodeName != 'componentref' && nodeName != 'primitiveref') {
+                    this.onXMLMinorError("unknown tag <" + nodeNames[j] + "> in children of component ID = " + componentID);
                     continue;
                 }
 
-                var id = this.reader.getString(grandgrandChildren[j], nodeName);
+                var id = this.reader.getString(grandgrandChildren[j], 'id');
                 if (id == null)
                     return "unable to parse id of children (component ID = " + componentID + ")";
                 
