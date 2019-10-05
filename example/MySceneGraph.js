@@ -89,7 +89,7 @@ class MySceneGraph {
         const nodes = rootElement.children;
 
         // Reads the names of the nodes to an auxiliary buffer.
-        const nodeNames = Array.from(nodes).map(node => node.nodeName);
+        const nodeNames = nodes.map(node => node.nodeName);
 
         const names = ["scene", "views", "globals", "lights", "textures", "materials", "transformations", "primitives", "components"];
         for (let name of names) {
