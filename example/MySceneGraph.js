@@ -836,6 +836,9 @@ class MySceneGraph {
 
                 this.primitives[primitiveId] = rect;
             }
+            else if (primitiveType == 'triangle') {
+                
+            }
             else {
                 console.warn("TODO: Parse other primitives.");
             }
