@@ -4,6 +4,8 @@ class MyTriangle extends CGFobject {
         this.p1 = new Point(x1, y1, z1);
         this.p2 = new Point(x2, y2, z2);
         this.p3 = new Point(x3, y3, z3);
+        this.length_s = length_s;
+        this.length_t = length_t;
         this.initBuffers();
         
     }
@@ -38,8 +40,17 @@ class MyTriangle extends CGFobject {
         }
     }
 
-    initTexture() {  
-
+    initTexture() {
+        const v12 = Vector.fromPoints(this.p1, this.p2);
+        const v13 = Vector.fromPoints(this.p1, this.p3);
+        const cosAlpha = Vector.cos(v12, v13);
+        const p3RelativeY = Vector.fromPoints(this.p2, this.p3).length * cosAlpha;
+        const p3RelativeX = v13.length * cosAlpha;
+        this.texCoords = [
+            0, 0,
+            v12.length / this.length_s, 0,
+            p3RelativeX / this.length_s, p3RelativeY / this.length_t
+        ];
     }
 
     getNormalX() {
