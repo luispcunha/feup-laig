@@ -887,7 +887,7 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
-            this.onXMLMinorError("TODO: Parse components.");
+            var currentComponent = new MyComponent(componentID);
 
             // Transformations
             grandgrandChildren = grandChildren[transformationIndex].children;
@@ -914,9 +914,11 @@ class MySceneGraph {
                     return transfMatrix;
             }
 
+            currentComponent.transformation = transfMatrix;
+
             // Materials
             var numMaterials = 0;
-            grandgrandChildren = grandChildren[materialIndex].children;
+            grandgrandChildren = grandChildren[materialsIndex].children;
             for (var j = 0; j < grandgrandChildren.length; j++) {
                 if (grandgrandChildren[j].nodeName != 'material')
                     this.onXMLMinorError("unknown tag <" + grandgrandChildren[j].nodeName + "> component ID = " + componentID);
@@ -928,30 +930,51 @@ class MySceneGraph {
                 var mat = this.reader.getString(grandgrandChildren[i], 'id');
                 if (mat == null)
                     return "unable to read material ID for component ID = " + componentID;
+                
+                if (mat == 'inherit') {
+                    currentComponent.inheritMaterial = true;
+                    if (i != 0) {
+                        this.onXMLMinorError("component with inherit material behaviour with other materials defined for component ID" + componentID);
+                    }
+                    numMaterials++;
+                    break;
+                }
 
                 if (this.materials[mat] == null)
                     return "no material with ID " + mat + " (compontent ID = " + componentID + ")";
 
-                materials.push(this.materials[mat]);
+                mats.push(this.materials[mat]);
                 numMaterials++;
             }
 
             if (numMaterials <= 0) 
                 return "at least one material should be provided for component ID = " + componentID;
 
+            currentComponent.materials = mats;
+            currentComponent.selectedMaterial = mats[0];
+
             // Texture
             var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
             if (this.textures[textureID] == null)
                 return "no texture with ID " + textureID + " (component ID = " + componentID + ")";
 
-            var length_s = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
-            if (!(length_s != null && !isNaN(length_s)))
-                return "unable to parse length_s of the texture (component ID = " +  componentId + ")";
-            
-            var length_t = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
-            if (!(length_t != null && !isNaN(length_t)))
-                return "unable to parse length_t of the texture (component ID = " +  componentId + ")";
-        
+            if (textureID == 'inherit' || textureID == 'none')
+                currentComponent.texBehaviour = textureID;
+            else {
+                currentComponent.texBehaviour = 'own';
+
+                var length_s = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
+                if (!(length_s != null && !isNaN(length_s)))
+                    return "unable to parse length_s of the texture (component ID = " +  componentId + ")";
+                
+                var length_t = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
+                if (!(length_t != null && !isNaN(length_t)))
+                    return "unable to parse length_t of the texture (component ID = " +  componentId + ")";
+
+                currentComponent.texture = this.textures[textureID];
+                currentComponent.texLengthS = length_s;
+                currentComponent.texLengthT = length_t;
+            }
 
             // Children
             grandgrandChildren = grandChildren[childrenIndex].children;
@@ -962,15 +985,14 @@ class MySceneGraph {
             for (var j = 0; j < grandgrandChildren.length; j++) {
                 var nodeName = grandgrandChildren[j].nodeName;
 
-                if (nodeName != 'componentref' || nodeName != 'primitiveref') {
-                    this.onXMLMinorError("unknown tag <" + nodeNames[j] + "> in children of component ID = " + componentID + ")");
+                if (nodeName != 'componentref' && nodeName != 'primitiveref') {
+                    this.onXMLMinorError("unknown tag <" + nodeNames[j] + "> in children of component ID = " + componentID);
                     continue;
                 }
 
-                var id = this.reader.getString(grandgrandChildren[j], nodeName);
+                var id = this.reader.getString(grandgrandChildren[j], 'id');
                 if (id == null)
                     return "unable to parse id of children (component ID = " + componentID + ")";
-                
                 
                 if (nodeName == 'primitiveref') {
                     if (this.primitives[id] == null)
@@ -979,10 +1001,30 @@ class MySceneGraph {
                     primitiveChildren.push(this.primitives[id]);
                 }
                 else if (nodeName == 'componentref') {
-                    
+                    if (this.components[id] == null) {
+                        this.components[id] = new MyComponent(id);
+                        componentChildren.push(this.components[id]);
+                    }
+                    else {
+                        componentChildren.push(this.components[id]);    
+                    }
                 }
             }
+
+            currentComponent.primitiveChildren = primitiveChildren;
+            currentComponent.componentChildren = componentChildren;
+            currentComponent.loaded = true;
         }
+
+        for (component in this.components) {
+            if (! component.loaded) {
+                return "component with id " + component.id + " doesn't exist";
+            }
+        }
+        
+        this.log("Parsed components");
+
+        return null;
     }
 
 
