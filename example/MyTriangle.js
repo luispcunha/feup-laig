@@ -1,5 +1,5 @@
 class MyTriangle extends CGFobject {
-    constructor(scene,x1, y1, z1, x2, y2, z2, x3, y3, z3, length_s, length_t) {
+    constructor(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, length_s, length_t) {
         super(scene);
         this.p1 = new Point(x1, y1, z1);
         this.p2 = new Point(x2, y2, z2);
@@ -7,7 +7,6 @@ class MyTriangle extends CGFobject {
         this.length_s = length_s;
         this.length_t = length_t;
         this.initBuffers();
-        
     }
 
     initBuffers() {
