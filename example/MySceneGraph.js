@@ -51,19 +51,17 @@ class MySceneGraph {
      */
     onXMLReady() {
         this.log("XML Loading finished.");
-        var rootElement = this.reader.xmlDoc.documentElement;
+        const rootElement = this.reader.xmlDoc.documentElement;
 
         // Here should go the calls for different functions to parse the various blocks
-        var error = this.parseXMLFile(rootElement);
-
+        const error = this.parseXMLFile(rootElement);
         if (error != null) {
             this.onXMLError(error);
             return;
         }
 
-        this.loadedOk = true;
-
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
+        this.loadedOk = true;
         this.scene.onGraphLoaded();
     }
 
