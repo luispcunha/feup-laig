@@ -812,35 +812,35 @@ class MySceneGraph {
 
             // Retrieves the primitive coordinates.
             if (primitiveType == 'rectangle') {
-                var rect = parseRectangle(grandChildren[0], primitiveId);
+                var rect = this.parseRectangle(grandChildren[0], primitiveId);
                 if (rect instanceof String || typeof rect == 'string')
                     return rect;
 
                 this.primitives[primitiveId] = rect;
             }
             else if (primitiveType == 'triangle') {
-                var triangle = parseTriangle(grandeChildren[0], primitiveId);
+                var triangle = this.parseTriangle(grandeChildren[0], primitiveId);
                 if (triangle instanceof String || typeof triangle == 'string')
                     return triangle;
 
                 this.primitives[primitiveId] = triangle;
             }
             else if (primitiveType == 'cylinder') {
-                var cylinder = parseCylinder(grandChildren[0], primitiveId);
+                var cylinder = this.parseCylinder(grandChildren[0], primitiveId);
                 if (cylinder instanceof String || typeof cylinder == 'string')
                     return cylinder;
 
                 this.primitives[primitveId] = cylinder;
             }
             else if (primitiveType == 'sphere') {
-                var sphere = parseSphere(grandChildren[0], primitiveId);
+                var sphere = this.parseSphere(grandChildren[0], primitiveId);
                 if (sphere instanceof String || typeof sphere == 'string')
                     return sphere;
 
                 this.primitives[primitveId] = sphere;
             }
             else if (primitiveType == 'torus') {
-                var torus = parseTorus(grandChildren[0], primitiveId);
+                var torus = this.parseTorus(grandChildren[0], primitiveId);
                 if (torus instanceof String || typeof torus == 'string')
                     return torus;
 
@@ -852,7 +852,7 @@ class MySceneGraph {
         return null;
     }
 
-    parseRectange(node, id) {
+    parseRectangle(node, id) {
         // x1
         var x1 = this.reader.getFloat(node, 'x1');
         if (!(x1 != null && !isNaN(x1)))
@@ -1166,13 +1166,14 @@ class MySceneGraph {
             currentComponent.primitiveChildren = primitiveChildren;
             currentComponent.componentChildren = componentChildren;
             currentComponent.loaded = true;
+            this.components[componentID] = currentComponent;
         }
-
-        for (component in this.components) {
-            if (! component.loaded) {
+        /*
+        for (let i = 0; i < this.components.keys(); i++) {
+            if (! this.components[this.components.keys()[i]].loaded) {
                 return "component with id " + component.id + " doesn't exist";
             }
-        }
+        }*/
         
         this.log("Parsed components");
 
@@ -1291,13 +1292,21 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
+    processNode(node, transf, mat, text, ls, lt) {
+
+        for (let i = 0; i < node.primitiveChildren.length; i++)
+            node.primitiveChildren[i].display();
+
+        for (let i = 0; i < node.componentChildren.length; i++)
+            this.processNode(node.componentChildren[i], transf);
+    }
+
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
         //TODO: Create display loop for transversing the scene graph
-
-        //To test the parsing/creation of the primitives, call the display function directly
-        this.primitives['demoRectangle'].display();
+        let root = this.components[this.idRoot];
+        this.processNode(root, this.scene.getMatrix());
     }
 }
