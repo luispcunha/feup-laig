@@ -194,6 +194,8 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+
+        this.root = this.components[this.idRoot];
         this.log("all parsed");
     }
 
@@ -830,21 +832,21 @@ class MySceneGraph {
                 if (cylinder instanceof String || typeof cylinder == 'string')
                     return cylinder;
 
-                this.primitives[primitveId] = cylinder;
+                this.primitives[primitiveId] = cylinder;
             }
             else if (primitiveType == 'sphere') {
                 var sphere = this.parseSphere(grandChildren[0], primitiveId);
                 if (sphere instanceof String || typeof sphere == 'string')
                     return sphere;
 
-                this.primitives[primitveId] = sphere;
+                this.primitives[primitiveId] = sphere;
             }
             else if (primitiveType == 'torus') {
                 var torus = this.parseTorus(grandChildren[0], primitiveId);
                 if (torus instanceof String || typeof torus == 'string')
                     return torus;
 
-                this.primitives[primitveId] = torus;
+                this.primitives[primitiveId] = torus;
             }
         }
 
@@ -943,12 +945,12 @@ class MySceneGraph {
 
         // slices
         var slices = this.reader.getInteger(node, 'slices');
-        if (!(slices != null && !isNaN(slices) && ! Number.isInteger(slices)))
+        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
             return "unable to parse slices of the primitive for ID = " + id;
             
         // stacks
         var stacks = this.reader.getInteger(node, 'stacks');
-        if (!(stacks != null && !isNaN(stacks) && ! Number.isInteger(stacks)))
+        if (!(stacks != null && !isNaN(stacks) && Number.isInteger(stacks)))
             return "unable to parse stacks of the primitive for ID = " + id;
 
         return new MyCylinder(this.scene, stacks, slices, base, top, height);
@@ -962,12 +964,12 @@ class MySceneGraph {
 
         // slices
         var slices = this.reader.getInteger(node, 'slices');
-        if (!(slices != null && !isNaN(slices) && ! Number.isInteger(slices)))
+        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
             return "unable to parse slices of the primitive for ID = " + id;
             
         // stacks
         var stacks = this.reader.getInteger(node, 'stacks');
-        if (!(stacks != null && !isNaN(stacks) && ! Number.isInteger(stacks)))
+        if (!(stacks != null && !isNaN(stacks) && Number.isInteger(stacks)))
             return "unable to parse stacks of the primitive for ID = " + id;
 
         return new MySphere(this.scene, stacks, slices, radius);
@@ -986,12 +988,12 @@ class MySceneGraph {
 
         // slices
         var slices = this.reader.getInteger(node, 'slices');
-        if (!(slices != null && !isNaN(slices) && ! Number.isInteger(slices)))
+        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
             return "unable to parse slices of the primitive for ID = " + id;
             
         // loops
         var loops = this.reader.getInteger(node, 'loops');
-        if (!(loops != null && !isNaN(loops) && ! Number.isInteger(loops)))
+        if (!(loops != null && !isNaN(loops) && Number.isInteger(loops)))
             return "unable to parse loops of the primitive for ID = " + id;
 
         return new MyTorus(this.scene, inner, outer, slices, loops);   
@@ -1297,13 +1299,12 @@ class MySceneGraph {
         let childTransfMatrix = mat4.create();
         mat4.multiply(childTransfMatrix, transf, node.transformation);
 
-        for (let i = 0; i < node.primitiveChildren.length; i++)
-            node.primitiveChildren[i].display();
-        
+        for (let child of node.primitiveChildren)
+            child.display();
 
-        for (let i = 0; i < node.componentChildren.length; i++) {
+        for (let child of node.componentChildren) {
             this.scene.pushMatrix();
-            this.processNode(node.componentChildren[i], childTransfMatrix);
+            this.processNode(child, transf);
             this.scene.popMatrix();
         }
     }
@@ -1313,7 +1314,6 @@ class MySceneGraph {
      */
     displayScene() {
         //TODO: Create display loop for transversing the scene graph
-        let root = this.components[this.idRoot];
-        this.processNode(root, this.scene.getMatrix());
+        this.processNode(this.root, this.scene.getMatrix());
     }
 }
