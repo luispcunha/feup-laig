@@ -1307,13 +1307,16 @@ class MySceneGraph {
 
         let childTransfMatrix = mat4.create();
         mat4.multiply(childTransfMatrix, transf, node.transformation);
-
-        for (let child of node.primitiveChildren)
+        
+        this.scene.setMatrix(childTransfMatrix);
+        
+        for (let child of node.primitiveChildren) {
             child.display();
+        }
 
         for (let child of node.componentChildren) {
             this.scene.pushMatrix();
-            this.processNode(child, transf);
+            this.processNode(child, this.scene.getMatrix());
             this.scene.popMatrix();
         }
     }

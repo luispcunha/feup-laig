@@ -50,7 +50,7 @@
             <sphere radius="2" slices="32" stacks="16" />
         </primitive>
         <primitive id="homer-arm">
-            <cylinder base="0.06" top="0.07" stacks="2" slices="16" />
+            <cylinder base="0.06" top="0.07" height="1" stacks="2" slices="16" />
         </primitive>
         <primitive id="donut">
             <torus inner="0.5" outer="2.5" slices="32" loops="32" />
