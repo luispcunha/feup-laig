@@ -1059,8 +1059,8 @@ class MySceneGraph {
                 if (grandgrandChildren.length > 1)
                     return "transformation reference may only be used without explicitly providing transformations";
                 
-                transfRefId = this.reader.getString(grandgrandChildren[transfRefIndex], 'id');
-                transfMatrix = this.transformations[transfRefIndex];
+                var transfRefId = this.reader.getString(grandgrandChildren[transfRefIndex], 'id');
+                transfMatrix = this.transformations[transfRefId];
                 if (transfMatrix == null)
                     return "invalid transformation reference id";
             }
@@ -1082,14 +1082,14 @@ class MySceneGraph {
 
             var mats = [];
 
-            for (var i = 0; i < grandgrandChildren.length; i++) {
-                var mat = this.reader.getString(grandgrandChildren[i], 'id');
+            for (var j = 0; j < grandgrandChildren.length; j++) {
+                var mat = this.reader.getString(grandgrandChildren[j], 'id');
                 if (mat == null)
                     return "unable to read material ID for component ID = " + componentID;
                 
                 if (mat == 'inherit') {
                     currentComponent.inheritMaterial = true;
-                    if (i != 0) {
+                    if (j != 0) {
                         this.onXMLMinorError("component with inherit material behaviour with other materials defined for component ID" + componentID);
                     }
                     numMaterials++;
