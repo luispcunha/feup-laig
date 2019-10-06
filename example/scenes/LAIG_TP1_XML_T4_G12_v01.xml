@@ -71,7 +71,7 @@
         </component>
         <component id="chimneys">
             <transformation>
-                <scale x="1" y="1" z="1" />
+                <translate x="2" y="0" z="0.5" /> 
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -84,7 +84,7 @@
         </component>
         <component id="chimney1">
             <transformation>
-                <translate x="4" z="4" y="0" />
+                <translate x="1.2" z="0.6" y="0" />
                 <scale x="0.2" y="0.2" z="0.2" />
             </transformation>
             <materials>
