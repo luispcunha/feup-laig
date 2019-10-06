@@ -40,7 +40,13 @@
         </transformation>
     </transformations>
     <primitives>
-        <primitive id="chimney">
+        <primitive id="upper-chimney">
+            <cylinder base="2" top="2.3" height="2" stacks="8" slices="38" />
+        </primitive>
+        <primitive id="mid-chimney">
+            <cylinder base="2" top="2" height="0.2" stacks="8" slices="38" />
+        </primitive>
+        <primitive id="lower-chimney">
             <cylinder base="3" top="2" height="5" stacks="8" slices="32" />
         </primitive>
         <primitive id="homer-head">
@@ -59,7 +65,7 @@
     <components>
         <component id="springfield">
             <transformation>
-                <scale x="0.1" y="0.1" z="0.1" />
+                <scale x="0.3" y="0.3" z="0.3" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -71,7 +77,7 @@
         </component>
         <component id="chimneys">
             <transformation>
-                <translate x="2" y="0" z="0.5" /> 
+                <scale x="0.5" y="0.45" z="0.5" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -84,8 +90,6 @@
         </component>
         <component id="chimney1">
             <transformation>
-                <translate x="1.2" z="0.6" y="0" />
-                <scale x="0.2" y="0.2" z="0.2" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -97,7 +101,8 @@
         </component>
         <component id="chimney2">
             <transformation>
-                <scale x="0.3" y="0.3" z="0.3" />
+                <translate x="6" y="0" z="0" />
+                <scale x="0.8" y="0.8" z="0.8" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -110,15 +115,59 @@
             
         <component id="baseChimney">
             <transformation>
-                <transformationref id="baseChimneyTransformation" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="chimney" />
+                <componentref id="lowerChimney" />
+                <componentref id="midChimney" />
+                <componentref id="upperChimney" />
             </children>
         </component>
+
+        <component id="upperChimney">
+            <transformation>
+                <translate x="0" y="5.2" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="upper-chimney" />
+            </children>
+        </component>
+
+        <component id="lowerChimney">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="lower-chimney" />
+            </children>
+        </component>
+
+        <component id="midChimney">
+            <transformation>
+                <translate x="0" y="5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="mid-chimney" />
+            </children>
+        </component>
+
     </components>
 </lxs>

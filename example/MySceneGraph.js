@@ -1159,7 +1159,7 @@ class MySceneGraph {
                 
                 if (nodeName == 'primitiveref') {
                     if (this.primitives[id] == null)
-                        return "primitiveref " + primitiveref + " doesn't exist component (ID = " + componentID + ")";
+                        return "primitiveref " + id + " doesn't exist component (ID = " + componentID + ")";
 
                     primitiveChildren.push(this.primitives[id]);
                 }
@@ -1315,8 +1315,9 @@ class MySceneGraph {
         }
 
         for (let child of node.componentChildren) {
+            let childMatrix = this.scene.getMatrix();
             this.scene.pushMatrix();
-            this.processNode(child, this.scene.getMatrix());
+            this.processNode(child, childMatrix);
             this.scene.popMatrix();
         }
     }
