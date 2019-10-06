@@ -47,9 +47,9 @@
             <sphere radius="0.5" slices="32" stacks="16" />
         </primitive>
         <primitive id="homer-body">
-            <sphere radius="2" slices="32" stacks="16" />
+            <sphere radius="0.6" slices="32" stacks="16" />
         </primitive>
-        <primitive id="homer-arm">
+        <primitive id="homer-limb">
             <cylinder base="0.06" top="0.07" height="1" stacks="2" slices="16" />
         </primitive>
         <primitive id="donut">
@@ -66,12 +66,117 @@
             </materials>
             <texture id="default" length_s="1" length_t="1" />
             <children>
+                <componentref id="homer" />
                 <componentref id="chimneys" />
+            </children>
+        </component>
+        <component id="homer">
+            <transformation>
+                <translate y="0" x="2" z="6" />
+                <scale x="2" y="2" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="homer-left-arm" />
+                <componentref id="homer-right-arm" />
+                <componentref id="homer-body" />
+                <componentref id="homer-left-leg" />
+                <componentref id="homer-right-leg" />
+                <componentref id="homer-head" />
+            </children>
+        </component>
+        <component id="homer-right-arm">
+            <transformation>
+                <translate x="0.4" y="1.5" z="0" />
+                <rotate axis="z" angle="-120" />
+                <rotate axis="x" angle="-90" />
+                <scale x="1" y="1" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="homer-limb" />
+            </children>
+        </component>
+        <component id="homer-left-arm">
+            <transformation>
+                <translate x="-0.4" y="1.5" z="0" />
+                <rotate axis="z" angle="120" />
+                <rotate axis="x" angle="-90" />
+                <scale x="1" y="1" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="homer-limb" />
+            </children>
+        </component>
+        <component id="homer-left-leg">
+            <transformation>
+                <translate x="-0.1" y="0.8" z="0" />
+                <rotate axis="z" angle="150" />
+                <rotate axis="x" angle="-90" />
+                <scale x="1" y="1" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="homer-limb" />
+            </children>
+        </component>
+        <component id="homer-right-leg">
+            <transformation>
+                <translate x="0.1" y="0.8" z="0" />
+                <rotate axis="z" angle="-150" />
+                <rotate axis="x" angle="-90" />
+                <scale x="1" y="1" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="homer-limb" />
+            </children>
+        </component>
+        <component id="homer-body">
+            <transformation>
+                <translate x="0" y="1.2" z="0" />
+                <scale x="0.8" y="1" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="homer-body" />
+            </children>
+        </component>
+        <component id="homer-head">
+            <transformation>
+                <translate x="0" y="2.05" z="0" />
+                <scale x="0.7" y="0.7" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="homer-head" />
             </children>
         </component>
         <component id="chimneys">
             <transformation>
-                <translate x="2" y="0" z="0.5" /> 
+                <translate x="4" y="0" z="1.5" /> 
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -84,8 +189,8 @@
         </component>
         <component id="chimney1">
             <transformation>
-                <translate x="1.2" z="0.6" y="0" />
-                <scale x="0.2" y="0.2" z="0.2" />
+                <translate x="3.6" z="1.2" y="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -97,7 +202,7 @@
         </component>
         <component id="chimney2">
             <transformation>
-                <scale x="0.3" y="0.3" z="0.3" />
+                <scale x="0.9" y="0.9" z="0.9" />
             </transformation>
             <materials>
                 <material id="inherit" />
