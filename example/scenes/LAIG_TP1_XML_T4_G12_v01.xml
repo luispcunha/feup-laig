@@ -59,7 +59,7 @@
             <cylinder base="0.06" top="0.07" height="1" stacks="2" slices="16" />
         </primitive>
         <primitive id="donut">
-            <torus inner="0.5" outer="2.5" slices="32" loops="32" />
+            <torus inner="0.3" outer="2" slices="32" loops="32" />
         </primitive>
     </primitives>
     <components>
@@ -182,8 +182,8 @@
         </component>
         <component id="chimneys">
             <transformation>
-                <translate x="4" y="0" z="1.5" /> 
-                <scale x="0.5" y="0.45" z="0.5" />
+                <translate x="8" y="0" z="-3.5" /> 
+                <scale x="2" y="1.9" z="2" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -230,6 +230,21 @@
                 <componentref id="lowerChimney" />
                 <componentref id="midChimney" />
                 <componentref id="upperChimney" />
+                <componentref id="chimneyRing" />
+            </children> 
+        </component>
+        
+        <component id="chimneyRing">
+            <transformation>
+                <translate x="0" y="7.2" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="donut" />
             </children>
         </component>
 
