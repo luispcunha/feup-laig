@@ -1294,11 +1294,18 @@ class MySceneGraph {
 
     processNode(node, transf, mat, text, ls, lt) {
 
+        let childTransfMatrix = mat4.create();
+        mat4.multiply(childTransfMatrix, transf, node.transformation);
+
         for (let i = 0; i < node.primitiveChildren.length; i++)
             node.primitiveChildren[i].display();
+        
 
-        for (let i = 0; i < node.componentChildren.length; i++)
-            this.processNode(node.componentChildren[i], transf);
+        for (let i = 0; i < node.componentChildren.length; i++) {
+            this.scene.pushMatrix();
+            this.processNode(node.componentChildren[i], childTransfMatrix);
+            this.scene.popMatrix();
+        }
     }
 
     /**
