@@ -765,8 +765,8 @@ class MySceneGraph {
             }
         }
 
-        if (numTransformations <= required)
-            return "" + required + " or more transformations required (ID = " + transformationID + ")";
+        if (numTransformations < required)
+            return "" + required + " or more transformations required (" + errMsg + ")";
         
         return transfMatrix;
     }
@@ -1026,8 +1026,10 @@ class MySceneGraph {
                 return "no ID defined for componentID";
 
             // Checks for repeated IDs.
-            if (this.components[componentID] != null)
-                return "ID must be unique for each component (conflict: ID = " + componentID + ")";
+            if (this.components[componentID] != null) 
+                if (this.components[componentID].loaded)
+                    return "ID must be unique for each component (conflict: ID = " + componentID + ")";
+            
 
             grandChildren = children[i].children;
 
@@ -1109,12 +1111,13 @@ class MySceneGraph {
 
             // Texture
             var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
-            if (this.textures[textureID] == null)
-                return "no texture with ID " + textureID + " (component ID = " + componentID + ")";
-
+            
             if (textureID == 'inherit' || textureID == 'none')
                 currentComponent.texBehaviour = textureID;
             else {
+                if (this.textures[textureID] == null)
+                    return "no texture with ID " + textureID + " (component ID = " + componentID + ")";
+
                 currentComponent.texBehaviour = 'own';
 
                 var length_s = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
