@@ -194,6 +194,8 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+
+        this.root = this.components[this.idRoot];
         this.log("all parsed");
     }
 
@@ -1293,12 +1295,11 @@ class MySceneGraph {
     }
 
     processNode(node, transf, mat, text, ls, lt) {
-
-        for (let i = 0; i < node.primitiveChildren.length; i++)
-            node.primitiveChildren[i].display();
-
-        for (let i = 0; i < node.componentChildren.length; i++)
-            this.processNode(node.componentChildren[i], transf);
+        for (let child of node.primitiveChildren)
+            child.display();
+        
+        for (let child of node.componentChildren)
+            this.processNode(child, transf);
     }
 
     /**
@@ -1306,7 +1307,6 @@ class MySceneGraph {
      */
     displayScene() {
         //TODO: Create display loop for transversing the scene graph
-        let root = this.components[this.idRoot];
-        this.processNode(root, this.scene.getMatrix());
+        this.processNode(this.root, this.scene.getMatrix());
     }
 }
