@@ -1025,11 +1025,18 @@ class MySceneGraph {
             if (componentID == null)
                 return "no ID defined for componentID";
 
+            var currentComponent;
+            
             // Checks for repeated IDs.
-            if (this.components[componentID] != null) 
+            if (this.components[componentID] != null) {
                 if (this.components[componentID].loaded)
                     return "ID must be unique for each component (conflict: ID = " + componentID + ")";
-            
+                else 
+                    currentComponent = this.components[componentID];
+            }    
+            else {
+                currentComponent = new MyComponent(componentID);
+            }
 
             grandChildren = children[i].children;
 
@@ -1043,7 +1050,6 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
 
-            var currentComponent = new MyComponent(componentID);
 
             // Transformations
             grandgrandChildren = grandChildren[transformationIndex].children;
