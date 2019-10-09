@@ -50,12 +50,12 @@ class MySceneGraph {
      */
     onXMLReady() {
         this.log("XML Loading finished.");
-        var rootElement = this.reader.xmlDoc.documentElement;
+        const rootElement = this.reader.xmlDoc.documentElement;
 
         // Here should go the calls for different functions to parse the various blocks
-        var error = this.parseXMLFile(rootElement);
+        const error = this.parseXMLFile(rootElement);
 
-        if (error != null) {
+        if (error !== null) {
             this.onXMLError(error);
             return;
         }
@@ -72,28 +72,24 @@ class MySceneGraph {
      */
     parseXMLFile(rootElement) {
         if (rootElement.nodeName != "lxs")
-            return "root tag <lxs> missing";
+            return "Root tag <lxs> missing.";
 
-        var nodes = rootElement.children;
+        const nodes = rootElement.children;
 
         // Reads the names of the nodes to an auxiliary buffer.
-        var nodeNames = [];
+        const nodeNames = Array.from(nodes).map(node => node.nodeName);
 
-        for (var i = 0; i < nodes.length; i++) {
-            nodeNames.push(nodes[i].nodeName);
-        }
-
-        var error;
+        let error;
+        let index;
 
         // Processes each node, verifying errors.
 
         // <scene>
-        var index;
         if ((index = nodeNames.indexOf("scene")) == -1)
-            return "tag <scene> missing";
+            return this.errMissingNode("scene");
         else {
             if (index != SCENE_INDEX)
-                this.onXMLMinorError("tag <scene> out of order " + index);
+                this.onXMLMinorError(this.errOutOfOrder("scene", SCENE_INDEX, index));
 
             //Parse scene block
             if ((error = this.parseScene(nodes[index])) != null)
@@ -102,10 +98,10 @@ class MySceneGraph {
 
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
-            return "tag <views> missing";
+            return this.errMissingNode("views");
         else {
             if (index != VIEWS_INDEX)
-                this.onXMLMinorError("tag <views> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("views", VIEWS_INDEX, index));
 
             //Parse views block
             if ((error = this.parseView(nodes[index])) != null)
@@ -114,10 +110,10 @@ class MySceneGraph {
 
         // <gloabls>
         if ((index = nodeNames.indexOf("globals")) == -1)
-            return "tag <globals> missing";
+            return this.errMissingNode("globals");
         else {
             if (index != GLOBALS_INDEX)
-                this.onXMLMinorError("tag <globals> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("globals", GLOBALS_INDEX, index));
 
             //Parse ambient block
             if ((error = this.parseGlobals(nodes[index])) != null)
@@ -126,10 +122,10 @@ class MySceneGraph {
 
         // <lights>
         if ((index = nodeNames.indexOf("lights")) == -1)
-            return "tag <lights> missing";
+            return this.errMissingNode("lights");
         else {
             if (index != LIGHTS_INDEX)
-                this.onXMLMinorError("tag <lights> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("lights", LIGHTS_INDEX, index));
 
             //Parse lights block
             if ((error = this.parseLights(nodes[index])) != null)
@@ -137,10 +133,10 @@ class MySceneGraph {
         }
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
-            return "tag <textures> missing";
+            return this.errMissingNode("textures");
         else {
             if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <textures> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("textures", TEXTURES_INDEX, index));
 
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
@@ -149,10 +145,10 @@ class MySceneGraph {
 
         // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
-            return "tag <materials> missing";
+            return this.errMissingNode("materials");
         else {
             if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <materials> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("materials", MATERIALS_INDEX, index));
 
             //Parse materials block
             if ((error = this.parseMaterials(nodes[index])) != null)
@@ -161,10 +157,10 @@ class MySceneGraph {
 
         // <transformations>
         if ((index = nodeNames.indexOf("transformations")) == -1)
-            return "tag <transformations> missing";
+            return this.errMissingNode("transformations");
         else {
             if (index != TRANSFORMATIONS_INDEX)
-                this.onXMLMinorError("tag <transformations> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("transformations", TRANSFORMATIONS_INDEX, index));
 
             //Parse transformations block
             if ((error = this.parseTransformations(nodes[index])) != null)
@@ -173,10 +169,10 @@ class MySceneGraph {
 
         // <primitives>
         if ((index = nodeNames.indexOf("primitives")) == -1)
-            return "tag <primitives> missing";
+            return this.errMissingNode("primitives");
         else {
             if (index != PRIMITIVES_INDEX)
-                this.onXMLMinorError("tag <primitives> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("primitives", PRIMITIVES_INDEX, index));
 
             //Parse primitives block
             if ((error = this.parsePrimitives(nodes[index])) != null)
@@ -185,18 +181,31 @@ class MySceneGraph {
 
         // <components>
         if ((index = nodeNames.indexOf("components")) == -1)
-            return "tag <components> missing";
+            return this.errMissingNode("components");
         else {
             if (index != COMPONENTS_INDEX)
-                this.onXMLMinorError("tag <components> out of order");
+                this.onXMLMinorError(this.errOutOfOrder("components", COMPONENTS_INDEX, index));
 
             //Parse components block
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
 
-        this.root = this.components[this.idRoot];
-        this.log("all parsed");
+        if (this.components.hasOwnProperty(this.idRoot))
+            this.root = this.components[this.idRoot];
+        else
+            return "There is no component with the root ID " + this.idRoot + ".";
+
+        this.log("All parsed.");
+        return null;
+    }
+
+    errMissingNode(node) {
+        return "The <" + node + "> node is missing.";
+    }
+
+    errOutOfOrder(node, expected, actual) {
+        return "The <" + node + "> is out of order. Expected " + expected + ", got " + actual + ".";
     }
 
     /**
@@ -219,7 +228,7 @@ class MySceneGraph {
 
         this.referenceLength = axis_length || 1;
 
-        this.log("Parsed scene");
+        this.log("Parsed scene.");
 
         return null;
     }
@@ -235,20 +244,19 @@ class MySceneGraph {
         if (this.defaultView == null)
             return "default view id missing";
         
-        var children = viewsNode.children;
         this.views = [];
         var numViews = 0;
 
         // any number of views
-        for (var i = 0; i < children.length; i++) {
+        for (const child of viewsNode.children) {
             
             //Check type of view
-            if (children[i].nodeName != "perspective" && children[i].nodeName != "ortho") {
+            if (child.nodeName != "perspective" && child.nodeName != "ortho") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
 
-            var viewID = this.reader.getString(children[i], 'id');
+            const viewID = this.reader.getString(child, 'id');
             if (viewID == null)
                 return "no ID defined for view";
 
@@ -256,67 +264,64 @@ class MySceneGraph {
             if (this.views[viewID] != null)
                 return "ID must be unique for each view (conflict: ID = " + viewID + ")";
 
-            var near = this.reader.getFloat(children[i], 'near');
-            if (!(near != null && !isNaN(near)))
+            const near = this.reader.getFloat(child, 'near');
+            if (!near)
                 return "invalid near value for ID " + viewID;
             
-            var far = this.reader.getFloat(children[i], 'far');
-            if (!(far != null && !isNaN(far)))
+            const far = this.reader.getFloat(child, 'far');
+            if (!far)
                 return "invalid far value for ID " + viewID;
 
-            var angle, left, right, top, bottom;
+            let angle, left, right, top, bottom;
 
-            if (children[i].nodeName == "perspective") {
+            if (child.nodeName == "perspective") {
             // get perspective specific properties
-                angle = this.reader.getFloat(children[i], 'angle');
-                if (!(angle != null && !isNaN(angle)))
+                angle = this.reader.getFloat(child, 'angle');
+                if (!angle)
                     return "invalid angle value for ID " + viewID;
             }
             else {
                 // get ortho specific properties
-                left = this.reader.getFloat(children[i], 'left');
-                if (!(left != null && !isNaN(left)))
+                left = this.reader.getFloat(child, 'left');
+                if (!left)
                     return "invalid left value for ID " + viewID;
 
-                right = this.reader.getFloat(children[i], 'right');
-                if (!(right != null && !isNaN(right)))
+                right = this.reader.getFloat(child, 'right');
+                if (!right)
                     return "invalid right value for ID " + viewID;
 
-                top = this.reader.getFloat(children[i], 'top'); 
-                if (!(top != null && !isNaN(top)))
+                top = this.reader.getFloat(child, 'top'); 
+                if (!top)
                     return "invalid top value for ID " + viewID;
 
-                bottom = this.reader.getFloat(children[i], 'bottom');
-                if (!(bottom != null && !isNaN(bottom)))
+                bottom = this.reader.getFloat(child, 'bottom');
+                if (!bottom)
                     return "invalid bottom value for ID " + viewID;
             }
 
-            var grandChildren = children[i].children;
-            var nodeNames = [];
+            const grandChildren = Array.from(child.children);
+            const nodeNames = grandChildren.map(node => node.nodeName);
 
-            for (var j = 0; j < grandChildren.length; j++) 
-                nodeNames.push(grandChildren[j].nodeName);
-
-            var fromIndex = nodeNames.indexOf('from');
+            const fromIndex = nodeNames.indexOf('from');
             if (fromIndex == -1) 
                 return "from values missing (view ID = " + viewID + ")"; 
-            var toIndex = nodeNames.indexOf('to');
+            const toIndex = nodeNames.indexOf('to');
             if (toIndex == -1)
                 return "to values missing (view ID = " + viewID + ")";
             
-            var from = this.parseCoordinates3D(grandChildren[fromIndex], 'from values (view ID = ' + viewID + ")");
+            const from = this.parseCoordinates3D(grandChildren[fromIndex], 'from values (view ID = ' + viewID + ")");
             if (!Array.isArray(from))
                 return from;
             
-            var to = this.parseCoordinates3D(grandChildren[toIndex], 'to values (view ID = ' + viewID + ")");
+            const to = this.parseCoordinates3D(grandChildren[toIndex], 'to values (view ID = ' + viewID + ")");
             if (!Array.isArray(to))
                 return to;
             
-            if (children[i].nodeName == "perspective")
+            if (child.nodeName == "perspective")
                 this.views[viewID] = new CGFcamera(angle, near, far, from, to);
             else {
-                var up;
-                var upIndex = nodeNames.indexOf('up');
+                let up;
+                const upIndex = nodeNames.indexOf('up');
                 if (upIndex == -1) {
                     this.onXMLMinorError("used up default values (view ID = " + viewID + ")");
                     up = [0, 1, 0];
@@ -339,7 +344,7 @@ class MySceneGraph {
         if (this.views[this.defaultView] == null)
             return "invalid default view";
 
-        this.log("Parsed views");
+        this.log("Parsed views.");
         
         return null;
     }
@@ -349,21 +354,16 @@ class MySceneGraph {
      * @param {ambient block element} ambientsNode
      */
     parseGlobals(globalsNode) {
-
-        var children = globalsNode.children;
+        const children = Array.from(globalsNode.children);
+        const nodeNames = children.map(node => node.nodeName);
 
         this.ambient = [];
         this.background = [];
 
-        var nodeNames = [];
+        const ambientIndex = nodeNames.indexOf("ambient");
+        const backgroundIndex = nodeNames.indexOf("background");
 
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
-
-        var ambientIndex = nodeNames.indexOf("ambient");
-        var backgroundIndex = nodeNames.indexOf("background");
-
-        var color = this.parseColor(children[ambientIndex], "ambient");
+        let color = this.parseColor(children[ambientIndex], "ambient");
         if (!Array.isArray(color))
             return color;
         else
@@ -375,7 +375,7 @@ class MySceneGraph {
         else
             this.background = color;
 
-        this.log("Parsed ambient");
+        this.log("Parsed globals.");
 
         return null;
     }
@@ -534,22 +534,6 @@ class MySceneGraph {
             // check if image file has valid extension
             if (fileURL.length < 4 || (fileURL.substr(-4) != ".jpg" && fileURL.substr(-4) != ".png"))
                 return "file extension should be .jpg or .png (ID = " + texID + ")"; 
-            
-            /*
-            var image = new Image();
-            image.src = fileURL;
-
-            // check if image exists (there's probably a better way to do this)
-            if (image.height == 0)
-                return "texture file not found (ID = " + texID + ", url = " + fileURL + ")";
-
-            // warn if size isn't power of 2
-            if (! ((image.height!=0) && !(image.height & (image.height - 1))))
-                this.onXMLMinorError("image height should be power of 2 (ID = " + texID + ")");
-
-            if (! (image.width && !(image.width & (image.width - 1))))
-                this.onXMLMinorError("image width should be power of 2 (ID = " + texID + ")");
-            */
 
             // add texture
             this.textures[texID] = new CGFtexture(this.scene, fileURL);
