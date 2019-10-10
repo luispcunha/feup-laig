@@ -21,10 +21,15 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
         // add a group of controls (and open/expand by defult)
+        this.settingsFolder = this.gui.addFolder("Settings");
 
         this.initKeys();
 
         return true;
+    }
+
+    initCameraOptions(options) {
+      this.settingsFolder.add(this.scene, "camera", options).name("Current Camera");
     }
 
     /**
