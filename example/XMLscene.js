@@ -12,6 +12,9 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+
+        this.textureStack = [];
+        this.materialStack = [];
     }
 
     /**
@@ -137,5 +140,21 @@ class XMLscene extends CGFscene {
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    pushTexture(texture) {
+        this.textureStack.push(texture);
+    }
+
+    popTexture() {
+        return this.textureStack.pop();
+    }
+
+    popMaterial() {
+        return this.materialStack.pop();
+    }
+
+    pushMaterial(material) {
+        this.materialStack.push(material);
     }
 }

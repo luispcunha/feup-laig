@@ -12,7 +12,6 @@ class MyComponent {
         this.materials = [];
         this.selectedMaterial;
 
-
         this.texture;
         this.texLengthS;
         this.texLengthT;
@@ -20,14 +19,43 @@ class MyComponent {
     }
 
     display() {
-        let childTransfMatrix = mat4.create();
-        mat4.multiply(childTransfMatrix, this.scene.getMatrix(), this.transformation);
-        this.scene.setMatrix(childTransfMatrix);
+        this.scene.multMatrix(this.transformation);
+
+        let mat, tex;
+
+        if (this.inheritMaterial) {
+            mat = this.scene.popMaterial();
+            this.scene.pushMaterial(mat);
+        } else {
+            mat = this.selectedMaterial;
+        }
+
+        switch (this.texBehaviour) {
+            case 'own':
+                tex = this.texture;
+                break;
+            case 'none':
+                tex = null;
+                break;
+            case 'inherit':
+                tex = this.scene.popTexture();
+                this.scene.pushTexture(tex);
+                break;
+            default:
+                break;
+        }
 
         for (let child of this.children) {
+            mat.setTexture(tex);
+            mat.apply();
+
+            this.scene.pushTexture(tex);
+            this.scene.pushMaterial(mat);
             this.scene.pushMatrix();
             child.display();
             this.scene.popMatrix();
+            mat = this.scene.popMaterial();
+            tex = this.scene.popTexture();
         }
     }
 }
