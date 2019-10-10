@@ -20,8 +20,14 @@ class MyComponent {
     }
 
     display() {
+        let childTransfMatrix = mat4.create();
+        mat4.multiply(childTransfMatrix, this.scene.getMatrix(), this.transformation);
+        this.scene.setMatrix(childTransfMatrix);
 
-
-
+        for (let child of this.children) {
+            this.scene.pushMatrix();
+            child.display();
+            this.scene.popMatrix();
+        }
     }
 }

@@ -1279,32 +1279,11 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
-    processNode(node, transf, mat, text, ls, lt) {
-
-        let childTransfMatrix = mat4.create();
-        mat4.multiply(childTransfMatrix, transf, node.transformation);
-
-        this.scene.setMatrix(childTransfMatrix);
-
-        for (let child of node.primitiveChildren) {
-            child.display();
-        }
-
-        for (let child of node.componentChildren) {
-            let childMatrix = this.scene.getMatrix();
-            this.scene.pushMatrix();
-            this.processNode(child, childMatrix);
-            this.scene.popMatrix();
-        }
-    }
-
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
         //TODO: Create display loop for transversing the scene graph
-
-        this.root.display(this.scene.getMatrix());
-        this.processNode(this.root, this.scene.getMatrix());
+        this.root.display();
     }
 }
