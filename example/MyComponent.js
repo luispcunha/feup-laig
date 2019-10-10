@@ -1,10 +1,10 @@
 class MyComponent {
-    constructor(id) {
+    constructor(scene, id) {
         this.id = id;
         this.loaded = false;
-        
-        this.componentChildren = [];
-        this.primitiveChildren = [];
+        this.scene = scene;
+
+        this.children;
         
         this.transformation;
         
@@ -17,5 +17,11 @@ class MyComponent {
         this.texLengthS;
         this.texLengthT;
         this.texBehaviour = 'own';
+    }
+
+    display() {
+
+
+
     }
 }

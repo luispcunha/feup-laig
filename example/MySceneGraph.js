@@ -1019,7 +1019,7 @@ class MySceneGraph {
                     currentComponent = this.components[componentID];
             }
             else {
-                currentComponent = new MyComponent(componentID);
+                currentComponent = new MyComponent(this.scene, componentID);
             }
 
             grandChildren = child.children;
@@ -1126,8 +1126,7 @@ class MySceneGraph {
             // Children
             grandgrandChildren = grandChildren[childrenIndex].children;
 
-            var componentChildren = [];
-            var primitiveChildren = [];
+            var children = [];
 
             for (const grandgrandchild of grandgrandChildren) {
                 var nodeName = grandgrandchild.nodeName;
@@ -1145,21 +1144,20 @@ class MySceneGraph {
                     if (this.primitives[id] == null)
                         return "primitiveref " + id + " doesn't exist component (ID = " + componentID + ")";
 
-                    primitiveChildren.push(this.primitives[id]);
+                    children.push(this.primitives[id]);
                 }
                 else if (nodeName == 'componentref') {
                     if (this.components[id] == null) {
-                        this.components[id] = new MyComponent(id);
-                        componentChildren.push(this.components[id]);
+                        this.components[id] = new MyComponent(this.scene, id);
+                        children.push(this.components[id]);
                     }
                     else {
-                        componentChildren.push(this.components[id]);
+                        children.push(this.components[id]);    
                     }
                 }
             }
 
-            currentComponent.primitiveChildren = primitiveChildren;
-            currentComponent.componentChildren = componentChildren;
+            currentComponent.children = children;
             currentComponent.loaded = true;
             this.components[componentID] = currentComponent;
         }
@@ -1305,6 +1303,8 @@ class MySceneGraph {
      */
     displayScene() {
         //TODO: Create display loop for transversing the scene graph
+
+        this.root.display(this.scene.getMatrix());
         this.processNode(this.root, this.scene.getMatrix());
     }
 }
