@@ -29,10 +29,11 @@ class MySceneGraph {
 
         this.idRoot = null;                    // The id of the root element.
 
-        this.axisCoords = [];
-        this.axisCoords['x'] = [1, 0, 0];
-        this.axisCoords['y'] = [0, 1, 0];
-        this.axisCoords['z'] = [0, 0, 1];
+        this.axisCoords = {
+          x: [1, 0, 0],
+          y: [0, 1, 0],
+          z: [0, 0, 1]
+        };
 
         // File reading
         this.reader = new CGFXMLreader();
@@ -343,6 +344,8 @@ class MySceneGraph {
 
         if (this.views[this.defaultView] == null)
             return "invalid default view";
+        else
+          this.defaultView = this.views[this.defaultView];
 
         this.log("Parsed views.");
 

@@ -101,9 +101,13 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
 
         this.initLights();
+        this.camera = this.graph.defaultView;
+        this.interface.initCameraOptions(this.graph.views);
 
         this.sceneInited = true;
     }
+
+
 
     /**
      * Displays the scene.
@@ -141,6 +145,7 @@ class XMLscene extends CGFscene {
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }
+<<<<<<< HEAD
 
     pushTexture(texture) {
         this.textureStack.push(texture);
@@ -158,3 +163,6 @@ class XMLscene extends CGFscene {
         this.materialStack.push(material);
     }
 }
+=======
+}
+>>>>>>> 31b45218cd9b11eaf28b03495397081ee2f934db
