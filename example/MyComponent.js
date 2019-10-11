@@ -46,8 +46,10 @@ class MyComponent {
         }
 
         for (let child of this.children) {
-            mat.setTexture(tex);
-            mat.apply();
+            if (mat != null) {
+                mat.setTexture(tex);
+                mat.apply();
+            }
 
             this.scene.pushTexture(tex);
             this.scene.pushMaterial(mat);

@@ -278,7 +278,7 @@ class MySceneGraph {
             if (child.nodeName == "perspective") {
             // get perspective specific properties
                 angle = this.reader.getFloat(child, 'angle');
-                if (!angle)
+                if (angle < 0)
                     return "invalid angle value for ID " + viewID;
             }
             else {

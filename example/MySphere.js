@@ -21,6 +21,7 @@ class MySphere extends CGFobject {
         this.generateNormals();
         this.generateVertices();
         this.generateIndices();
+        this.generateTexCoords();
         
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -32,16 +33,15 @@ class MySphere extends CGFobject {
             0, 0, 1,
             0, 0, -1
             ];
-        for (let slice = 0; slice < this.slices; slice += 1)
+        for (let slice = 0; slice <= this.slices; slice += 1)
             this.appendSlice(slice);
     }
 
     generateIndices() {
         this.indices = [];
         /* connect the last set of faces separately to avoid modulus operations */
-        for (let slice = 0; slice < this.slices - 1; slice += 1)
+        for (let slice = 0; slice < this.slices; slice += 1)
             this.connectSlices(slice, slice + 1);
-        this.connectSlices(this.slices - 1, 0);
     }
 
     generateVertices() {
@@ -94,4 +94,19 @@ class MySphere extends CGFobject {
         );
     }
     
+    generateTexCoords() {
+        let deltaV = 1 / this.stacks;
+        let deltaU = 1 / this.slices;
+        let currentU = 0;
+        let currentV = 1;
+
+        this.texCoords = [];
+        for (let slice = 0; slice <= this.slices; slice++) {
+            for (let stack = -this.stacks + 1; stack <= this.stacks; stack++) {
+                this.texCoords.push(currentU, currentV);
+                currentV -= deltaV;
+            }
+            currentU += deltaU;
+        }
+    }
 }

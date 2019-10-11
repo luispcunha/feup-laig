@@ -29,6 +29,7 @@ class MyCylinder extends CGFobject {
         this.generateVertices();
         this.generateNormals();
         this.generateIndices();
+        this.generateTexCoords();
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -36,7 +37,7 @@ class MyCylinder extends CGFobject {
 
     generateVertices() {
         this.vertices = [];
-        for (let slice = 0; slice < this.slices; slice++)
+        for (let slice = 0; slice <= this.slices; slice++)
             this.appendSlice(slice);
     }
 
@@ -45,7 +46,7 @@ class MyCylinder extends CGFobject {
         const tan = - 1 / this.slope; /* is the tangent of the angle between the normal and a horizontal plane */
         const sin = Math.sqrt(1 / (1 + 1/(tan * tan)));
         const cos = sin / tan;
-        for (let slice = 0; slice < this.slices; slice++) {
+        for (let slice = 0; slice <= this.slices; slice++) {
             const angle = this.angleDelta * slice;
             const x = Math.cos(angle) * sin;
             const y = Math.sin(angle) * sin;
@@ -57,9 +58,8 @@ class MyCylinder extends CGFobject {
 
     generateIndices() {
         this.indices = [];
-        for (let slice = 0; slice < this.slices - 1; slice++)
+        for (let slice = 0; slice < this.slices ; slice++)
             this.connectSlices(slice, slice + 1);
-        this.connectSlices(this.slices - 1, 0);
     }
 
     appendSlice(slice) {
@@ -88,8 +88,25 @@ class MyCylinder extends CGFobject {
 
     static cylindricalToRectangular(radius, angle, height) {
         const x = radius * Math.cos(angle);
-        const y = radius *Math.sin(angle);
+        const y = radius * Math.sin(angle);
         const z = height;
         return [x, y, z];
+    }
+
+    generateTexCoords() {
+        let deltaV = 1 / this.stacks;
+        let deltaU = 1 / this.slices;
+        let currentU = 0;
+        let currentV = 1;
+
+        this.texCoords = [];
+        for (let slice = 0; slice <= this.slices; slice++) {
+            for (let stack = 0; stack <= this.stacks; stack++) {
+                this.texCoords.push(currentU, currentV);
+                currentV -= deltaV;
+            }
+            currentV = 1;
+            currentU += deltaU;
+        }
     }
 }
