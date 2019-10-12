@@ -70,7 +70,7 @@ class MySphere extends CGFobject {
         const slice1Offset = slice1 * verticesPerSlice;
         const slice2Offset = slice2 * verticesPerSlice;
 
-        for (let vertex = 0; vertex <= verticesPerSlice; vertex++) {
+        for (let vertex = 0; vertex < verticesPerSlice - 1; vertex++) {
             const bottomLeft = slice1Offset + vertex;
             const bottomRight = slice2Offset + vertex;
             const topLeft = slice1Offset + vertex + 1;
