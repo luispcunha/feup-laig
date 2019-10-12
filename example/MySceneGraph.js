@@ -336,7 +336,7 @@ class MySceneGraph {
                         return up;
                 }
 
-                this.views[viewID] = new CGFcameraOrtho(left, right, bottom, top, near, from, to, up);
+                this.views[viewID] = new CGFcameraOrtho(left, right, bottom, top, near, far, from, to, up);
             }
 
             numViews++;
