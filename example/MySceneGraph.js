@@ -245,7 +245,8 @@ class MySceneGraph {
         if (this.defaultView == null)
             return "default view id missing";
 
-        this.views = [];
+        this.views = {};
+        this.viewNames = [];
         var numViews = 0;
 
         // any number of views
@@ -262,8 +263,10 @@ class MySceneGraph {
                 return "no ID defined for view";
 
             // Checks for repeated IDs.
-            if (this.views[viewID] != null)
+            if (this.views[viewID])
                 return "ID must be unique for each view (conflict: ID = " + viewID + ")";
+
+            this.viewNames.push(viewID);
 
             const near = this.reader.getFloat(child, 'near');
             if (!near)
@@ -342,10 +345,8 @@ class MySceneGraph {
         if (numViews <= 0)
             return "at least one view must be defined";
 
-        if (this.views[this.defaultView] == null)
+        if (!this.views[this.defaultView])
             return "invalid default view";
-        else
-          this.defaultView = this.views[this.defaultView];
 
         this.log("Parsed views.");
 

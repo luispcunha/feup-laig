@@ -102,13 +102,18 @@ class XMLscene extends CGFscene {
 
         this.initLights();
 
-        this.camera = this.graph.defaultView;
-        this.interface.initCameraOptions(this.graph.views);
+        this.currentView = this.graph.defaultView;
+        this.camera = this.graph.views[this.currentView];
+        
+        this.interface.initCameraOptions(this.graph.viewNames);
+        this.interface.setActiveCamera(this.camera);
 
         this.sceneInited = true;
     }
 
-
+    onCameraChange() {
+        this.camera = this.graph.views[this.currentView];
+    }
 
     /**
      * Displays the scene.
@@ -145,6 +150,10 @@ class XMLscene extends CGFscene {
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    cycleTextures() {
+        return;
     }
 
     pushTexture(texture) {

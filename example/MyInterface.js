@@ -29,7 +29,10 @@ class MyInterface extends CGFinterface {
     }
 
     initCameraOptions(options) {
-      this.settingsFolder.add(this.scene, "camera", options).name("Current Camera");
+      this.settingsFolder.add(this.scene, "currentView", options).name("Current Camera").onChange(() => {
+          this.scene.onCameraChange();
+          this.setActiveCamera(this.scene.camera);
+      });
     }
 
     /**
@@ -37,8 +40,13 @@ class MyInterface extends CGFinterface {
      */
     initKeys() {
         this.scene.gui=this;
-        this.processKeyboard=function(){};
         this.activeKeys={};
+    }
+
+    processKeyboard(event) {
+        if (event.code == "KeyM") {
+            scene.cycleTextures();
+        }
     }
 
     processKeyDown(event) {
