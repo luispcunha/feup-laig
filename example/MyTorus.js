@@ -12,15 +12,16 @@ class MyTorus extends CGFobject {
         this.vertices = [];
         this.normals = [];
         this.indices = [];
+        this.texCoords = [];
 
         const outerAngleDelta = 2 * Math.PI / this.loops;
         const innerAngleDelta = 2 * Math.PI / this.slices;
 
-        for (let loop = 0; loop < this.loops; loop++) {
+        for (let loop = 0; loop <= this.loops; loop++) {
             const outerAngle = loop * outerAngleDelta;
             const outerCos = Math.cos(outerAngle);
             const outerSin = Math.sin(outerAngle);
-            for (let slice = 0; slice < this.slices; slice++) {
+            for (let slice = 0; slice <= this.slices; slice++) {
                 const innerAngle = slice * innerAngleDelta;
                 const innerCos = Math.cos(innerAngle);
                 const innerSin = Math.sin(innerAngle);
@@ -34,23 +35,26 @@ class MyTorus extends CGFobject {
                     outerSin * (this.outer + innerCos * this.inner),
                     innerSin * this.inner
                 );
+                this.texCoords.push(
+                    loop / this.loops,
+                    slice / this.slices
+                );
             }
         }
 
-        for (let loop = 0; loop < this.loops - 1; loop++) {
+        for (let loop = 0; loop <= this.loops; loop++) {
             this.connectLoops(loop, loop + 1);
         }
-        this.connectLoops(this.loops - 1, 0);
+    
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
 
     connectLoops(loop1, loop2) {
-        for (let slice = 0; slice < this.slices - 1; slice++) {
+        for (let slice = 0; slice <= this.slices; slice++) {
             this.connectSquare(loop1, loop2, slice, slice + 1);
         }
-        this.connectSquare(loop1, loop2, this.slices - 1, 0);
     }
 
     connectSquare(loop1, loop2, index1, index2) {

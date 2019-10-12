@@ -13,6 +13,7 @@ class MyTriangle extends CGFobject {
         this.initVertices();
         this.initIndices();
         this.initNormals();
+        this.initTexture();
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
