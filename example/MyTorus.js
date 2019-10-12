@@ -42,7 +42,7 @@ class MyTorus extends CGFobject {
             }
         }
 
-        for (let loop = 0; loop < this.loops; loop++) {
+        for (let loop = 0; loop <= this.loops; loop++) {
             this.connectLoops(loop, loop + 1);
         }
     

@@ -11,41 +11,58 @@ class MySphere extends CGFobject {
     }
 
     initBuffers() {
-        const stackAngleDelta = Math.PI / (2 * this.stacks);
-        const sliceAngleDelta = 2 * Math.PI / this.slices;
-
-        this.normals = [];
-        this.vertices = [];
-        this.texCoords = [];
-
-        for (let slice = 0; slice <= this.slices; slice += 1) {
-
-            const sliceAngle = slice * sliceAngleDelta;
-
-            for (let stack = - this.stacks; stack <= this.stacks; stack += 1) {
-                const stackAngle = stack * stackAngleDelta;
-                const normal = MySphere.polarToRectangular(sliceAngle, stackAngle);
-               
-                this.normals.push(...normal);
-                this.vertices.push(...(normal.map(coord => coord * this.radius)));
-                this.texCoords.push(
-                    slice / this.slices, 
-                    (stack + this.stacks) / (this.stacks * 2)
-                );
-            }
-        }
-
+        this.generateNormals();
+        this.generateVertices();
         this.generateIndices();
+        this.generateTexCoords();
        
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
 
+    generateNormals() {
+        this.stackAngleDelta = Math.PI / (2 * this.stacks);
+        this.sliceAngleDelta = 2 * Math.PI / this.slices;
+        this.normals = [];
+        for (let slice = 0; slice <= this.slices; slice += 1) {
+            this.addSliceNormals(slice);
+        }
+    }
+
+    generateVertices() {
+        this.vertices = this.normals.map(coord => coord * this.radius);
+    }
+
     generateIndices() {
         this.indices = [];
-      
         for (let slice = 0; slice < this.slices; slice += 1)
             this.connectSlices(slice, slice + 1);
+    }
+
+    generateTexCoords() {
+        this.texCoords = [];
+        this.horizTexCoordDelta = 1 / this.slices;
+        this.vertTexCoordDelta = 1 / (2 * this.stacks);
+        for (let slice = 0; slice <= this.slices; slice++) {
+            this.addSliceTexCoords(slice);
+        }
+    }
+
+    addSliceNormals(slice) {
+        const sliceAngle = slice * this.sliceAngleDelta;
+        for (let stack = - this.stacks; stack <= this.stacks; stack++) {
+            const stackAngle = stack * this.stackAngleDelta;
+            const normal = Point.fromSpherical(sliceAngle, stackAngle, 1).toCoordArray();
+            this.normals.push(...normal);
+        }
+    }
+
+    addSliceTexCoords(slice) {
+        const horizTexCoord = slice * this.horizTexCoordDelta;
+        for (let vertex = 0; vertex <= 2 * this.stacks; vertex++) {
+            const vertTexCoord = vertex * this.vertTexCoordDelta;
+            this.texCoords.push(horizTexCoord, vertTexCoord);
+        }
     }
 
     connectSlices(slice1, slice2) {
@@ -53,7 +70,7 @@ class MySphere extends CGFobject {
         const slice1Offset = slice1 * verticesPerSlice;
         const slice2Offset = slice2 * verticesPerSlice;
 
-        for (let vertex = 0; vertex < verticesPerSlice; vertex += 1) {
+        for (let vertex = 0; vertex <= verticesPerSlice; vertex++) {
             const bottomLeft = slice1Offset + vertex;
             const bottomRight = slice2Offset + vertex;
             const topLeft = slice1Offset + vertex + 1;
@@ -63,13 +80,5 @@ class MySphere extends CGFobject {
                 topRight, topLeft, bottomLeft
             );
         }
-    }
-
-    static polarToRectangular(sliceAngle, stackAngle) {
-        return [
-            Math.cos(sliceAngle) * Math.cos(stackAngle), //x
-            Math.sin(sliceAngle) * Math.cos(stackAngle), //y
-            Math.sin(stackAngle)                         //z
-        ];
     }
 }

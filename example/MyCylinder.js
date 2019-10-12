@@ -86,16 +86,9 @@ class MyCylinder extends CGFobject {
         }
     }
 
-    static cylindricalToRectangular(radius, angle, height) {
-        const x = radius * Math.cos(angle);
-        const y = radius * Math.sin(angle);
-        const z = height;
-        return [x, y, z];
-    }
-
     generateTexCoords() {
-        let deltaV = 1 / this.stacks;
-        let deltaU = 1 / this.slices;
+        const deltaV = 1 / this.stacks;
+        const deltaU = 1 / this.slices;
         let currentU = 0;
         let currentV = 1;
 
