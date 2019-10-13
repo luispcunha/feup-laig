@@ -4,7 +4,8 @@ class MyComponent {
         this.loaded = false;
         this.scene = scene;
 
-        this.children;
+        this.componentChildren;
+        this.primitiveChildren;
         
         this.transformation;
         
@@ -18,46 +19,53 @@ class MyComponent {
         this.texBehaviour = 'own';
     }
 
-    display() {
+
+    process(mat, tex, ls, lt) {
+        this.scene.pushMatrix();
         this.scene.multMatrix(this.transformation);
 
-        let mat, tex;
+        let material, texture, lengthS, lengthT;
 
-        if (this.inheritMaterial) {
-            mat = this.scene.popMaterial();
-            this.scene.pushMaterial(mat);
+        if (! this.inheritMaterial) {
+            material = this.selectedMaterial;
+            lengthS = this.texLengthS;
+            lengthT = this.texLengthT;
         } else {
-            mat = this.selectedMaterial;
+            material = mat;
+            lengthS = ls;
+            lengthT = lt;
         }
 
         switch (this.texBehaviour) {
             case 'own':
-                tex = this.texture;
-                break;
-            case 'none':
-                tex = null;
+                texture = this.texture;
+                lengthS = this.texLengthS;
+                lengthT = this.texLengthT;
                 break;
             case 'inherit':
-                tex = this.scene.popTexture();
-                this.scene.pushTexture(tex);
+                texture = tex;
+                lengthS = ls;
+                lengthT = lt;
+                break;
+            case 'none':
+                texture = null;
                 break;
             default:
                 break;
         }
 
-        for (let child of this.children) {
-            if (mat != null) {
-                mat.setTexture(tex);
-                mat.apply();
-            }
-
-            this.scene.pushTexture(tex);
-            this.scene.pushMaterial(mat);
-            this.scene.pushMatrix();
-            child.display();
-            this.scene.popMatrix();
-            mat = this.scene.popMaterial();
-            tex = this.scene.popTexture();
+        material.setTexture(texture);
+        material.apply();
+        
+        for (let primitive of this.primitiveChildren) {
+            primitive.scaleTexCoords(lengthS, lengthT);
+            primitive.display();
         }
+
+        for (let component of this.componentChildren) {
+            component.process(material, texture, lengthS, lengthT);
+        }
+
+        this.scene.popMatrix();
     }
 }

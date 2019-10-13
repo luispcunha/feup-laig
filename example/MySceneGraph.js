@@ -1130,7 +1130,8 @@ class MySceneGraph {
             // Children
             grandgrandChildren = grandChildren[childrenIndex].children;
 
-            var children = [];
+            var componentChildren = [];
+            var primitiveChildren = [];
 
             for (const grandgrandchild of grandgrandChildren) {
                 var nodeName = grandgrandchild.nodeName;
@@ -1148,20 +1149,21 @@ class MySceneGraph {
                     if (this.primitives[id] == null)
                         return "primitiveref " + id + " doesn't exist component (ID = " + componentID + ")";
 
-                    children.push(this.primitives[id]);
+                    primitiveChildren.push(this.primitives[id]);
                 }
                 else if (nodeName == 'componentref') {
                     if (this.components[id] == null) {
                         this.components[id] = new MyComponent(this.scene, id);
-                        children.push(this.components[id]);
+                        componentChildren.push(this.components[id]);
                     }
                     else {
-                        children.push(this.components[id]);    
+                        componentChildren.push(this.components[id]);    
                     }
                 }
             }
 
-            currentComponent.children = children;
+            currentComponent.primitiveChildren = primitiveChildren;
+            currentComponent.componentChildren = componentChildren;
             currentComponent.loaded = true;
             this.components[componentID] = currentComponent;
         }
@@ -1288,6 +1290,6 @@ class MySceneGraph {
      */
     displayScene() {
         //TODO: Create display loop for transversing the scene graph
-        this.root.display();
+        this.root.process();
     }
 }

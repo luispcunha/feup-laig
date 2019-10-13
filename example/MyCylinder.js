@@ -102,4 +102,8 @@ class MyCylinder extends CGFobject {
             currentU += deltaU;
         }
     }
+
+    scaleTexCoords(length_s, length_t) {
+        return;
+    }
 }

@@ -81,4 +81,8 @@ class MySphere extends CGFobject {
             );
         }
     }
+
+    scaleTexCoords(length_s, length_t) {
+        return;
+    }
 }

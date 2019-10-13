@@ -61,4 +61,8 @@ class MyTorus extends CGFobject {
             topRight, topLeft, bottomLeft
         );
     }
+
+    scaleTexCoords(length_s, length_t) {
+        return;
+    }
 }

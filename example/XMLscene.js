@@ -155,20 +155,4 @@ class XMLscene extends CGFscene {
     cycleTextures() {
         return;
     }
-
-    pushTexture(texture) {
-        this.textureStack.push(texture);
-    }
-
-    popTexture() {
-        return this.textureStack.pop();
-    }
-
-    popMaterial() {
-        return this.materialStack.pop();
-    }
-
-    pushMaterial(material) {
-        this.materialStack.push(material);
-    }
 }

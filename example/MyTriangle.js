@@ -1,11 +1,11 @@
 class MyTriangle extends CGFobject {
-    constructor(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, length_s, length_t) {
+    constructor(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
         super(scene);
         this.p1 = new Point(x1, y1, z1);
         this.p2 = new Point(x2, y2, z2);
         this.p3 = new Point(x3, y3, z3);
-        this.length_s = length_s;
-        this.length_t = length_t;
+        this.length_s = 1;
+        this.length_t = 1;
         this.initBuffers();
     }
 
@@ -13,7 +13,7 @@ class MyTriangle extends CGFobject {
         this.initVertices();
         this.initIndices();
         this.initNormals();
-        this.initTexture();
+        this.initTexture(this.length_s, this.length_t);
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
@@ -40,7 +40,15 @@ class MyTriangle extends CGFobject {
         }
     }
 
-    initTexture() {
+    scaleTexCoords(length_s, length_t) {
+        if (length_s != this.length_s && length_t != this.length_t) {
+            this.length_s = length_s;
+            this.length_t = length_t;
+            this.initTexture(length_s, length_t);
+        }
+    }
+
+    initTexture(length_s, length_t) {
         const v12 = Vector.fromPoints(this.p1, this.p2);
         const v13 = Vector.fromPoints(this.p1, this.p3);
         const cosAlpha = Vector.cos(v12, v13);
