@@ -37,29 +37,21 @@ class MyTorus extends CGFobject {
                 );
                 this.texCoords.push(
                     loop / this.loops,
-                    slice / this.slices
+                    1 - slice / this.slices
                 );
+
+                if (loop < this.loops && slice < this.slices)
+                    this.connectSquare(loop, loop + 1, slice, slice + 1)
             }
         }
-
-        for (let loop = 0; loop <= this.loops; loop++) {
-            this.connectLoops(loop, loop + 1);
-        }
-    
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
 
-    connectLoops(loop1, loop2) {
-        for (let slice = 0; slice < this.slices; slice++) {
-            this.connectSquare(loop1, loop2, slice, slice + 1);
-        }
-    }
-
     connectSquare(loop1, loop2, index1, index2) {
-        const offset1 = loop1 * this.slices;
-        const offset2 = loop2 * this.slices;
+        const offset1 = loop1 * (this.slices + 1);
+        const offset2 = loop2 * (this.slices + 1);
         const bottomLeft = offset1 + index1;
         const bottomRight = offset2 + index1;
         const topLeft = offset1 + index2;
