@@ -246,7 +246,6 @@ class MySceneGraph {
             return "default view id missing";
 
         this.views = {};
-        this.viewNames = [];
         var numViews = 0;
 
         // any number of views
@@ -265,8 +264,6 @@ class MySceneGraph {
             // Checks for repeated IDs.
             if (this.views[viewID])
                 return "ID must be unique for each view (conflict: ID = " + viewID + ")";
-
-            this.viewNames.push(viewID);
 
             const near = this.reader.getFloat(child, 'near');
             if (!near)
@@ -430,7 +427,7 @@ class MySceneGraph {
             if (!(aux != null && !isNaN(aux) && (aux == true || aux == false)))
                 this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
 
-            enableLight = aux || 1;
+            enableLight = aux;
 
             //Add enabled boolean and type name to light info
             global.push(enableLight);

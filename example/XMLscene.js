@@ -105,7 +105,8 @@ class XMLscene extends CGFscene {
         this.currentView = this.graph.defaultView;
         this.camera = this.graph.views[this.currentView];
         
-        this.interface.initCameraOptions(this.graph.viewNames);
+        this.interface.initCameraOptions();
+        this.interface.initLightOptions();
         this.interface.setActiveCamera(this.camera);
 
         this.sceneInited = true;
@@ -136,8 +137,7 @@ class XMLscene extends CGFscene {
         this.axis.display();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
-            this.lights[i].enable();
+                this.lights[i].update();
         }
 
         if (this.sceneInited) {

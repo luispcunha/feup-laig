@@ -22,17 +22,25 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by defult)
         this.settingsFolder = this.gui.addFolder("Settings");
-
         this.initKeys();
 
         return true;
     }
 
-    initCameraOptions(options) {
-      this.settingsFolder.add(this.scene, "currentView", options).name("Current Camera").onChange(() => {
+    initCameraOptions() {
+      this.settingsFolder.add(this.scene, "currentView", Object.keys(this.scene.graph.views)).name("Current Camera").onChange(() => {
           this.scene.onCameraChange();
           this.setActiveCamera(this.scene.camera);
       });
+    }
+
+    initLightOptions() {
+
+        const keys = Object.keys(this.scene.graph.lights);
+
+        for (let i = 0; i < keys.length; i++) {
+            this.settingsFolder.add(this.scene.lights[i], 'enabled').name(keys[i]);
+        }
     }
 
     /**

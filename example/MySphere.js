@@ -61,7 +61,7 @@ class MySphere extends CGFobject {
         const horizTexCoord = slice * this.horizTexCoordDelta;
         for (let vertex = 0; vertex <= 2 * this.stacks; vertex++) {
             const vertTexCoord = vertex * this.vertTexCoordDelta;
-            this.texCoords.push(horizTexCoord, vertTexCoord);
+            this.texCoords.push(horizTexCoord, 1 - vertTexCoord);
         }
     }
 
