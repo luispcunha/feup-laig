@@ -13,7 +13,7 @@ class MyTriangle extends CGFobject {
         this.initVertices();
         this.initIndices();
         this.initNormals();
-        this.initTexture(this.length_s, this.length_t);
+        this.initTexCoords();
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
@@ -41,14 +41,19 @@ class MyTriangle extends CGFobject {
     }
 
     scaleTexCoords(length_s, length_t) {
-        if (length_s != this.length_s && length_t != this.length_t) {
+        if (length_s != this.length_s || length_t != this.length_t) {
+            
+            this.texCoords[2] = this.texCoords[2] * this.length_s / length_s;
+            this.texCoords[4] = this.texCoords[4] * this.length_s / length_s;
+            this.texCoords[5] = this.texCoords[5] * this.length_t / length_t;
+
             this.length_s = length_s;
             this.length_t = length_t;
-            this.initTexture(length_s, length_t);
         }
+        this.updateTexCoordsGLBuffers();
     }
 
-    initTexture(length_s, length_t) {
+    initTexCoords() {
         const v12 = Vector.fromPoints(this.p1, this.p2);
         const v13 = Vector.fromPoints(this.p1, this.p3);
         const cosAlpha = Vector.cos(v12, v13);
@@ -56,9 +61,10 @@ class MyTriangle extends CGFobject {
         const p3RelativeX = v13.length * cosAlpha;
         this.texCoords = [
             0, 0,
-            v12.length / this.length_s, 0,
-            p3RelativeX / this.length_s, p3RelativeY / this.length_t
+            v12.length, 0,
+            p3RelativeX, p3RelativeY
         ];
+        this.updateTexCoordsGLBuffers();
     }
 
     getNormalX() {

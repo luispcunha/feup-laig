@@ -35,7 +35,6 @@ class MyInterface extends CGFinterface {
     }
 
     initLightOptions() {
-
         const keys = Object.keys(this.scene.graph.lights);
 
         for (let i = 0; i < keys.length; i++) {
