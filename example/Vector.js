@@ -35,6 +35,10 @@ class Vector {
     }
 
     static cos(vec1, vec2) {
-        return Vector.scalarProduct(vec1, vec2), vec1.length * vec2.length
+        return Vector.scalarProduct(vec1, vec2) / vec1.length / vec2.length;
+    }
+
+    static sin(vec1, vec2) {
+        return Math.sqrt(1 - Math.pow(Vector.cos(vec1, vec2), 2));
     }
 }

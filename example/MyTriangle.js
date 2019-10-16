@@ -4,6 +4,17 @@ class MyTriangle extends CGFobject {
         this.p1 = new Point(x1, y1, z1);
         this.p2 = new Point(x2, y2, z2);
         this.p3 = new Point(x3, y3, z3);
+
+        this.x1 = x1;
+		this.y1 = y1;
+		this.z1 = z1;
+		this.x2 = x2;
+		this.y2 = y2;
+		this.z2 = z2;
+		this.x3 = x3;
+		this.y3 = y3;
+		this.z3 = z3;
+
         this.length_s = 1;
         this.length_t = 1;
         this.initBuffers();
@@ -42,28 +53,32 @@ class MyTriangle extends CGFobject {
 
     scaleTexCoords(length_s, length_t) {
         if (length_s != this.length_s || length_t != this.length_t) {
-            
-            this.texCoords[2] = this.texCoords[2] * this.length_s / length_s;
-            this.texCoords[4] = this.texCoords[4] * this.length_s / length_s;
-            this.texCoords[5] = this.texCoords[5] * this.length_t / length_t;
-
+    
             this.length_s = length_s;
             this.length_t = length_t;
+
+            this.texCoords = [];
+		    for (let i = 0; i < this.defaultTexCoords.length; i = i + 2) 
+		        this.texCoords.push(this.defaultTexCoords[i] / length_s, this.defaultTexCoords[i + 1] / length_t);
         }
+
         this.updateTexCoordsGLBuffers();
     }
 
     initTexCoords() {
-        const v12 = Vector.fromPoints(this.p1, this.p2);
-        const v13 = Vector.fromPoints(this.p1, this.p3);
-        const cosAlpha = Vector.cos(v12, v13);
-        const p3RelativeY = Vector.fromPoints(this.p2, this.p3).length * cosAlpha;
-        const p3RelativeX = v13.length * cosAlpha;
-        this.texCoords = [
+        const a = Vector.fromPoints(this.p1, this.p2).length;
+        const b = Vector.fromPoints(this.p2, this.p3).length;
+        const c = Vector.fromPoints(this.p1, this.p3).length;
+        const cosAlpha = Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2) / 2 / a / c;
+        const sinAlpha = Math.sqrt(1 - Math.pow(cosAlpha, 2));
+        
+        this.defaultTexCoords = [
             0, 0,
-            v12.length, 0,
-            p3RelativeX, p3RelativeY
+            a, 0,
+            a * cosAlpha, c * cosAlpha
         ];
+
+        this.texCoords = this.defaultTexCoords;
         this.updateTexCoordsGLBuffers();
     }
 
