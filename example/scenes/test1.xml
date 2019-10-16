@@ -494,8 +494,9 @@
             </transformation>
             <materials>
                 <material id="wallMaterial" />
+                <material id="woodMaterial" />
             </materials>
-            <texture id="wallTexture" length_s="20.0" length_t="25.0" />
+            <texture id="none" length_s="20.0" length_t="25.0" />
             <children>
                 <primitiveref id="rectangle2" />
             </children>

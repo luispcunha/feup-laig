@@ -1098,7 +1098,7 @@ class MySceneGraph {
                 return "at least one material should be provided for component ID = " + componentID;
 
             currentComponent.materials = mats;
-            currentComponent.selectedMaterial = mats[0];
+            currentComponent.selectedMaterial = 0;
 
             // Texture
             var textureID = this.reader.getString(grandChildren[textureIndex], 'id');

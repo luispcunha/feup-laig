@@ -12,9 +12,6 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-
-        this.textureStack = [];
-        this.materialStack = [];
     }
 
     /**
@@ -152,7 +149,11 @@ class XMLscene extends CGFscene {
         // ---- END Background, camera and axis setup
     }
 
-    cycleTextures() {
-        return;
+    cycleMaterials() {
+        let keys = Object.keys(this.graph.components);
+
+        for (const key of keys) {
+            this.graph.components[key].cycleMaterials();
+        }
     }
 }

@@ -19,6 +19,12 @@ class MyComponent {
         this.texBehaviour = 'own';
     }
 
+    cycleMaterials() {
+        this.selectedMaterial++;
+        if (this.selectedMaterial === this.materials.length)
+            this.selectedMaterial = 0;
+    }
+
 
     process(mat, tex, ls, lt) {
         this.scene.pushMatrix();
@@ -27,7 +33,7 @@ class MyComponent {
         let material, texture, lengthS, lengthT;
 
         if (! this.inheritMaterial) {
-            material = this.selectedMaterial;
+            material = this.materials[this.selectedMaterial];
             lengthS = this.texLengthS;
             lengthT = this.texLengthT;
         } else {
