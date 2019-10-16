@@ -40,24 +40,26 @@ class MyRectangle extends CGFobject {
 			0, 0, 1
 		];
 		
-		/*
-		Texture coords (s,t)
-		+----------> s
-        |
-        |
-		|
-		v
-        t
-        */
+		
+		this.initTexCoords();
+		
 
-		this.texCoords = [
-			0, 1,
-			1, 1,
-			0, 0,
-			1, 0
-		]
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
+	}
+
+	initTexCoords() {
+		const height = Math.abs(this.y2 - this.y1);
+		const width = Math.abs(this.x2 - this.x1);
+
+		this.defaultTexCoords = [
+			0, height,
+			width, height,
+			0, 0,
+			width, 0
+		];
+
+		this.texCoords = this.defaultTexCoords;
 	}
 
 	/**
@@ -71,16 +73,16 @@ class MyRectangle extends CGFobject {
 	}
 
 	scaleTexCoords(length_s, length_t) {
-        if (length_s != this.length_s && length_t != this.length_t) {
+        if (length_s != this.length_s || length_t != this.length_t) {
             this.length_s = length_s;
-            this.length_t = length_t;
-            this.texCoords = [
-				0, 1 / length_t,
-				1 / length_s, 1 / length_t,
-				0, 0,
-				1 / length_s, 0
-			]
-        }
+			this.length_t = length_t;
+			
+            this.texCoords = [];
+		    for (let i = 0; i < this.defaultTexCoords.length; i = i + 2) 
+		        this.texCoords.push(this.defaultTexCoords[i] / length_s, this.defaultTexCoords[i + 1] / length_t);
+		}
+
+		this.updateTexCoordsGLBuffers();
     }
 }
 
