@@ -62,6 +62,8 @@ class XMLscene extends CGFscene {
         this.lights[i].setDiffuse(light[4][0], light[4][1], light[4][2], light[4][3]);
         this.lights[i].setSpecular(light[5][0], light[5][1], light[5][2], light[5][3]);
 
+        //TODO: spot direction esta mal, falta atenuacao
+
         if (light[1] == "spot") {
           this.lights[i].setSpotCutOff(light[6]);
           this.lights[i].setSpotExponent(light[7]);

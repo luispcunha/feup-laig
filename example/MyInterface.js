@@ -51,8 +51,6 @@ class MyInterface extends CGFinterface {
     }
 
     processKeyboard(event) {
-        console.log(event);
-
         if (event.code == "KeyM") {
             this.scene.cycleMaterials();
         }
