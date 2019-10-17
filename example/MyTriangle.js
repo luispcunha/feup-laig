@@ -58,24 +58,24 @@ class MyTriangle extends CGFobject {
             this.length_t = length_t;
 
             this.texCoords = [];
-		    for (let i = 0; i < this.defaultTexCoords.length; i = i + 2) 
-		        this.texCoords.push(this.defaultTexCoords[i] / length_s, this.defaultTexCoords[i + 1] / length_t);
+            for (let i = 0; i < this.defaultTexCoords.length; i = i + 2) 
+                this.texCoords.push(this.defaultTexCoords[i] / length_s, this.defaultTexCoords[i + 1] / length_t);
+        
+            this.updateTexCoordsGLBuffers();
         }
-
-        this.updateTexCoordsGLBuffers();
     }
 
     initTexCoords() {
         const a = Vector.fromPoints(this.p1, this.p2).length;
         const b = Vector.fromPoints(this.p2, this.p3).length;
-        const c = Vector.fromPoints(this.p1, this.p3).length;
-        const cosAlpha = Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2) / 2 / a / c;
+        const c = Vector.fromPoints(this.p3, this.p1).length;
+        const cosAlpha = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c);
         const sinAlpha = Math.sqrt(1 - Math.pow(cosAlpha, 2));
         
         this.defaultTexCoords = [
             0, 0,
             a, 0,
-            a * cosAlpha, c * cosAlpha
+            c * cosAlpha, c * sinAlpha
         ];
 
         this.texCoords = this.defaultTexCoords;
