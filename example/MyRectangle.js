@@ -17,7 +17,7 @@ class MyRectangle extends CGFobject {
 
 		this.initBuffers();
 	}
-	
+
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, 0,	//0
@@ -39,10 +39,10 @@ class MyRectangle extends CGFobject {
 			0, 0, 1,
 			0, 0, 1
 		];
-		
-		
+
+
 		this.initTexCoords();
-		
+
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
@@ -76,13 +76,9 @@ class MyRectangle extends CGFobject {
         if (length_s != this.length_s || length_t != this.length_t) {
             this.length_s = length_s;
 			this.length_t = length_t;
-			
-            this.texCoords = [];
-		    for (let i = 0; i < this.defaultTexCoords.length; i = i + 2) 
-		        this.texCoords.push(this.defaultTexCoords[i] / length_s, this.defaultTexCoords[i + 1] / length_t);
+			this.texCoords = this.defaultTexCoords.map((val, i) => val / ((i % 2 == 0) ? length_s : length_t));
 		}
 
 		this.updateTexCoordsGLBuffers();
     }
 }
-

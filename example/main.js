@@ -3,41 +3,41 @@ include=function(){function f(){var a=this.readyState;(!a||/ded|te/.test(a))&&(c
 serialInclude=function(a){var b=console,c=serialInclude.l;if(a.length>0)c.splice(0,0,a);else b.log("Done!");if(c.length>0){if(c[0].length>1){var d=c[0].splice(0,1);b.log("Loading "+d+"...");include(d,function(){serialInclude([]);});}else{var e=c[0][0];c.splice(0,1);e.call();};}else b.log("Finished.");};serialInclude.l=new Array();
 
 function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
-    function(m,key,value) {
-      vars[decodeURIComponent(key)] = decodeURIComponent(value);
-    });
-    return vars;
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+  function(m,key,value) {
+    vars[decodeURIComponent(key)] = decodeURIComponent(value);
+  });
+  return vars;
 }
 //Include additional files here
 serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyComponent.js', 'MyInterface.js', 'MyRectangle.js', 'MySphere.js', 'MyCylinder.js', 'MyTorus.js', 'MyTriangle.js', 'Vector.js', 'Point.js',
 
 main=function()
 {
-	// Standard application, scene and interface setup
-    var app = new CGFapplication(document.body);
-    var myInterface = new MyInterface();
-    var myScene = new XMLscene(myInterface);
+  // Standard application, scene and interface setup
+  var app = new CGFapplication(document.body);
+  var myInterface = new MyInterface();
+  var myScene = new XMLscene(myInterface);
 
-    app.init();
+  app.init();
 
-    app.setScene(myScene);
-    app.setInterface(myInterface);
+  app.setScene(myScene);
+  app.setInterface(myInterface);
 
-    myInterface.setActiveCamera(myScene.camera);
+  myInterface.setActiveCamera(myScene.camera);
 
-	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
-	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
-	
-    var filename=getUrlVars()['file'] || "demo.xml";
+  // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
+  // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
 
-	// create and load graph, and associate it to scene. 
-	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
-	
-	// start
-    app.run();
+  var filename=getUrlVars()['file'] || "demo.xml";
+
+  // create and load graph, and associate it to scene.
+  // Check console for loading errors
+  var myGraph = new MySceneGraph(filename, myScene);
+
+  // start
+  app.run();
 }
 
 ]);
