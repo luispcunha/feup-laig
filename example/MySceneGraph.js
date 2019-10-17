@@ -386,13 +386,10 @@ class MySceneGraph {
   * @param {lights block element} lightsNode
   */
   parseLights(lightsNode) {
-    var children = lightsNode.children;
+    const children = lightsNode.children;
 
     this.lights = [];
     var numLights = 0;
-
-    var grandChildren = [];
-    var nodeNames = [];
 
     // Any number of lights.
     for (const child of children) {
@@ -413,7 +410,7 @@ class MySceneGraph {
       }
 
       // Get id of the current light.
-      var lightId = this.reader.getString(child, 'id');
+      const lightId = this.reader.getString(child, 'id');
       if (lightId == null)
       return "no ID defined for light";
 
@@ -433,13 +430,10 @@ class MySceneGraph {
       global.push(enableLight);
       global.push(child.nodeName);
 
-      grandChildren = child.children;
+      const grandChildren = Array.from(child.children);
       // Specifications for the current light.
 
-      nodeNames = [];
-      for (const grandchild of grandChildren) {
-        nodeNames.push(grandchild.nodeName);
-      }
+      const nodeNames = grandChildren.map(grandchild => grandchild.nodeName);
 
       for (var j = 0; j < attributeNames.length; j++) {
         var attributeIndex = nodeNames.indexOf(attributeNames[j]);
