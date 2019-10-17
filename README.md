@@ -2,7 +2,7 @@
 
 ## TO DO:
 - [**X**] tex coords
-- [ ] tecla m para mudar texturas
+- [**X**] tecla m para mudar texturas
 - [ ] verificar length_s e length_t nos inherits
 - [ ] ls e lt no retangulo e triangulo
 - [ ] pôr as camaras ortogonais a funcionar
