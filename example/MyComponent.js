@@ -60,8 +60,11 @@ class MyComponent {
                 break;
         }
 
-        material.setTexture(texture);
-        material.apply();
+        if (material) {
+            material.setTexture(texture);
+            material.setTextureWrap('REPEAT', 'REPEAT');
+            material.apply();
+        }
         
         for (let primitive of this.primitiveChildren) {
             primitive.scaleTexCoords(lengthS, lengthT);
