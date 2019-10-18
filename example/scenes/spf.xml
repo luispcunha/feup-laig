@@ -24,6 +24,7 @@
 
     <textures>
         <texture id="demoTexture" file="scenes/images/vidral.jpg" />
+        <texture id="welcomeSign" file="scenes/images/welcome.jpg" />
     </textures>
 
     <materials>
@@ -65,7 +66,7 @@
         </primitive>
 
         <primitive id="signRectangle">
-            <rectangle x1="-1" x2="1" y1="-3.5" y2="3.5" />
+            <rectangle x1="-3.5" x2="3.5" y1="-1" y2="1" />
         </primitive>
 
         <!-- chimney related primitives -->
@@ -216,11 +217,12 @@
             <transformation>
                 <translate x="0" y="0" z="5" />
                 <rotate axis="y" angle="90"/>
+                <rotate axis="z" angle="90" />
             </transformation>
             <materials>
                 <material id="wallDemoMaterial" />
             </materials>
-            <texture id="inherit" />
+            <texture id="welcomeSign" length_s="7" length_t="2" />
             <children>
                 <primitiveref id="signRectangle" />
             </children>
@@ -230,6 +232,7 @@
             <transformation>
                 <translate x="0" y="0" z="5" />
                 <rotate axis="y" angle="-90"/>
+                <rotate axis="z" angle="90" />
             </transformation>
             <materials>
                 <material id="wallDemoMaterial" />
