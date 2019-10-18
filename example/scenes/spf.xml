@@ -86,7 +86,7 @@
             </materials>
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
-                <componentref id="chimney" />
+                <componentref id="chimneyPatch" />
                 <componentref id="floor" />
             </children>
         </component>
@@ -103,9 +103,50 @@
             </children>
         </component>
 
-        <component id="chimney">
+        <component id="chimneyPatch">
             <transformation>
-                <translate x="-5" y="5" z="0" />
+                <translate x="-15" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="chimney1" />
+                <componentref id="chimney2" />
+            </children>
+        </component>
+
+        <component id="chimney1">
+            <transformation>
+                <translate x="0" y="7" z="0" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="chimneyTemplate" />
+                <componentref id="smokeRingPatch1" />
+            </children>
+        </component>
+
+        <component id="chimney2">
+            <transformation>
+                <translate x="0" y="-7" z="0" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="chimneyTemplate" />
+                <componentref id="smokeRingPatch2" />
+            </children>
+        </component>
+
+        <component id="chimneyTemplate">
+            <transformation>
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -119,7 +160,6 @@
                 <componentref id="chimneyLayer4" />
                 <componentref id="chimneyLayer5" />
                 <componentref id="chimneyTop" />
-                <componentref id="smokeRingPatch" />
             </children>
         </component>
 
@@ -188,9 +228,27 @@
             </children>
         </component>
 
-        <component id="smokeRingPatch">
+        <component id="smokeRingPatch1">
             <transformation>
                 <translate x="0" y="0" z="12" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="smokeRing1" />
+                <componentref id="smokeRing2" />
+                <componentref id="smokeRing3" /> 
+                <componentref id="smokeRing5" /> 
+                <componentref id="smokeRing6" /> 
+            </children>
+        </component>
+
+        <component id="smokeRingPatch2">
+            <transformation>
+                <translate x="0" y="0" z="12" />
+                <scale x="1.1" y="1.1" z="1" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -219,7 +277,8 @@
 
         <component id="smokeRing2">
             <transformation>
-                <translate x="0" y="1.2" z="2.5" />
+                <translate x="0" y="1.2" z="2.2" />
+                <rotate axis="x" angle="-6" />
                 <scale x="1.3" y="1.3" z="0.9" />
             </transformation>
             <materials>
@@ -233,7 +292,8 @@
 
         <component id="smokeRing3">
             <transformation>
-                <translate x="0" y="1.8" z="5" />
+                <translate x="0" y="1.8" z="4.6" />
+                <rotate axis="x" angle="-10" />
                 <scale x="1.1" y="1.1" z="0.9" />
             </transformation>
             <materials>
@@ -247,8 +307,39 @@
 
         <component id="smokeRing4">
             <transformation>
-                <translate x="0" y="2.4" z="7" />
+                <translate x="0" y="2.4" z="6.6" />
+                <rotate axis="x" angle="-12" />
                 <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+
+        <component id="smokeRing5">
+            <transformation>
+                <translate x="0" y="2.4" z="6.6" />
+                <rotate axis="x" angle="-12" />
+                <scale x="0.9" y="0.89" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+
+        <component id="smokeRing6">
+            <transformation>
+                <translate x="0" y="3.6" z="8.2" />
+                <rotate axis="x" angle="-14" />
+                <scale x="0.7" y="0.7" z="0.8" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
