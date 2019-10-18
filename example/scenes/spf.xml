@@ -168,9 +168,9 @@
                 <translate x="0" y="0" z="3" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="chimneyLayer2Cylinder" />
             </children>
@@ -181,9 +181,9 @@
                 <translate x="0" y="0" z="5" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="chimneyLayer3Cylinder" />
             </children>
@@ -194,9 +194,9 @@
                 <translate x="0" y="0" z="7" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="chimneyLayer4Cylinder" />
             </children>
@@ -207,9 +207,9 @@
                 <translate x="0" y="0" z="8.8" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="chimneyLayer4Cylinder" />
             </children>
@@ -220,9 +220,9 @@
                 <translate x="0" y="0" z="10.6" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="chimneyTopTorus" />
             </children>
@@ -267,9 +267,9 @@
                 <scale x="1" y="1" z="0.8" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
             </children>
@@ -282,9 +282,9 @@
                 <scale x="1.3" y="1.3" z="0.9" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
             </children>
@@ -297,9 +297,9 @@
                 <scale x="1.1" y="1.1" z="0.9" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
             </children>
@@ -312,9 +312,9 @@
                 <scale x="0.8" y="0.8" z="0.8" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
             </children>
@@ -327,9 +327,9 @@
                 <scale x="0.9" y="0.89" z="0.8" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
             </children>
@@ -342,9 +342,9 @@
                 <scale x="0.7" y="0.7" z="0.8" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
             </children>
