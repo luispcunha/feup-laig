@@ -67,6 +67,10 @@
             <cylinder base="2" top="2" height="1" stacks="6" slices="32" />
         </primitive>
 
+        <primitive id="ufoMiniSphere">
+            <sphere radius="0.3" slices="8" stacks="8" />
+        </primitive>
+
         <!-- wall around power plant -->
 
         <primitive id="powerPlantWallRectangle">
@@ -140,7 +144,8 @@
 
         <component id="ufo">
             <transformation>
-                <translate x="0" y="0" z="8" />
+                <translate x="6" y="15" z="8" />
+                <rotate axis="x" angle="20" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -151,6 +156,114 @@
                 <componentref id="ufoDisc" />
                 <primitiveref id="ufoSphere" />
                 <primitiveref id="ufoCylinder" />
+                <componentref id="ornamentSpheresTop" />
+                <componentref id="ornamentSpheresBottom" />
+            </children>
+        </component>
+
+        <component id="ornamentSpheresBottom">
+            <transformation>
+                <translate x="0" y="0" z="-0.7" />
+                <rotate axis="z" angle="22.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSpheresTop" />
+            </children>
+        </component>
+
+        <component id="ornamentSpheresTop">
+            <transformation>
+                <translate x="0" y="0" z="0.35" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSphereQuartet1" />
+                <componentref id="ornamentSphereQuartet2" />
+            </children>
+        </component>
+
+         <component id="ornamentSphereQuartet1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSpherePair1" />
+                <componentref id="ornamentSpherePair2" />
+            </children>
+        </component>
+
+        <component id="ornamentSphereQuartet2">
+            <transformation>
+                <rotate axis="z" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSphereQuartet1" />
+            </children>
+        </component>
+
+        <component id="ornamentSpherePair1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSphere1" />
+                <componentref id="ornamentSphere2" />
+            </children>
+        </component>
+
+        <component id="ornamentSpherePair2">
+            <transformation>
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSpherePair1" />
+            </children>
+        </component>
+
+        <component id="ornamentSphere1">
+            <transformation>
+                <translate x="0" y="4.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="ufoMiniSphere" />
+            </children>
+        </component>
+
+        <component id="ornamentSphere2">
+            <transformation>
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ornamentSphere1" />
             </children>
         </component>
 
