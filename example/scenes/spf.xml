@@ -33,6 +33,12 @@
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
         </material>
+        <material id="wallDemoMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.2" g="0.2" b="0.6" a="1.0" />
+            <diffuse r="0.2" g="0.2" b="0.5" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+        </material>
     </materials>
 
     <transformations>
@@ -46,6 +52,12 @@
     <primitives>
         <primitive id="floorRectangle">
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />
+        </primitive>
+
+        <!-- wall around power plant -->
+
+        <primitive id="powerPlantWallRectangle">
+            <rectangle x1="-10" x2="10" y1="-1" y2="1" />
         </primitive>
 
         <!-- chimney related primitives -->
@@ -86,11 +98,12 @@
             </materials>
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
+                <componentref id="powerPlantWalls" />
                 <componentref id="chimneyPatch" />
                 <componentref id="floor" />
             </children>
         </component>
-
+        
         <component id="floor">
             <transformation>
             </transformation>
@@ -103,9 +116,198 @@
             </children>
         </component>
 
+        <component id="powerPlantWalls">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="rightWall" />
+                <componentref id="leftWall" />
+                <componentref id="backWall" />
+                <componentref id="frontWall" />
+            </children>
+        </component>
+
+        <component id="rightWall">
+            <transformation>
+                <translate x="-15" y="-14.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wallTemplate" />  
+            </children>
+        </component>
+
+        <component id="leftWall">
+            <transformation>
+                <translate x="-15" y="14.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wallTemplate" />  
+            </children>
+        </component>
+
+        <component id="backWall">
+            <transformation>
+                <translate x="-24.5" y="0" z="0" />
+                <scale x="1" y="1.5" z="1" />
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wallTemplate" />  
+            </children>
+        </component>
+
+        <component id="frontWall">
+            <transformation>
+                <translate x="-5.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <!--<componentref id="wallGate" />-->
+                <componentref id="frontWallLeft" />
+                <componentref id="frontWallRight" />
+                <componentref id="frontWallLeftCover" />
+                <componentref id="frontWallRightCover" />
+            </children>
+        </component>
+
+        <component id="frontWallLeft">
+            <transformation>
+                <translate x="0" y="-9" z="0" />
+                <scale x="1" y="0.6" z="1" />
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wallTemplate" />
+            </children>
+        </component>
+
+        <component id="frontWallRight">
+            <transformation>
+                <translate x="0" y="9" z="0" />
+                <scale x="1" y="0.6" z="1" />
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wallTemplate" />
+            </children>
+        </component>
+
+        <component id="frontWallLeftCover">
+            <transformation>
+                <translate x="0" y="3" z="1" />
+                <rotate axis="x" angle="90" />
+                <scale x="0.05" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallRectangle" />
+            </children>
+        </component>
+
+        <component id="frontWallRightCover">
+            <transformation>
+                <translate x="0" y="-3" z="1" />
+                <rotate axis="x" angle="-90" />
+                <scale x="0.05" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallRectangle" />
+            </children>
+        </component>
+
+        <component id="wallTemplate">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wallFrontSide" />
+                <componentref id="wallBackSide" />
+                <componentref id="wallTopSide" />
+            </children>
+        </component>
+
+        <component id="wallFrontSide">
+            <transformation>
+                <translate x="0" y="-0.5" z="1" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallRectangle" />
+            </children>
+        </component>
+
+        <component id="wallBackSide">
+            <transformation>
+                <translate x="0" y="0.5" z="1" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallRectangle" />
+            </children>
+        </component>
+
+        <component id="wallTopSide">
+            <transformation>
+                <translate x="0" y="0" z="2" />
+                <scale x="1" y="0.5" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallRectangle" />
+            </children>
+        </component>
+
         <component id="chimneyPatch">
             <transformation>
-                <translate x="-15" y="0" z="0" />
+                <translate x="-17" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
