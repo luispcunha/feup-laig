@@ -55,6 +55,18 @@
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />
         </primitive>
 
+        <primitive id="ufoTorus">
+            <torus inner="3" outer="2" slices="3" loops="32" />
+        </primitive>
+
+        <primitive id="ufoSphere">
+            <sphere radius="2" slices="20" stacks="20" />
+        </primitive>
+
+        <primitive id="ufoCylinder">
+            <cylinder base="2" top="2" height="1" stacks="6" slices="32" />
+        </primitive>
+
         <!-- wall around power plant -->
 
         <primitive id="powerPlantWallRectangle">
@@ -103,13 +115,14 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
                 <componentref id="powerPlantWalls" />
                 <componentref id="chimneyPatch" />
                 <componentref id="floor" />
+                <componentref id="ufo" />
             </children>
         </component>
         
@@ -122,6 +135,48 @@
             <texture id="none" />
             <children>
                 <primitiveref id="floorRectangle" />
+            </children>
+        </component>
+
+        <component id="ufo">
+            <transformation>
+                <translate x="0" y="0" z="8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ufoDome" />
+                <componentref id="ufoDisc" />
+                <primitiveref id="ufoSphere" />
+                <primitiveref id="ufoCylinder" />
+            </children>
+        </component>
+
+        <component id="ufoDome">
+            <transformation>
+                <translate x="0" y="0" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="ufoSphere" />
+            </children>
+        </component>
+
+        <component id="ufoDisc">
+            <transformation>
+                <scale x="1.2" y="1.2" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="ufoTorus" />
             </children>
         </component>
 
