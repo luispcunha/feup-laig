@@ -43,16 +43,28 @@
     </materials>
 
     <transformations>
-        <transformation id="demoTransform">
-            <scale x="5" y="1" z="5" />
-            <rotate axis="x" angle="-45" />
-            <rotate axis="z" angle="-45" />
+        <transformation id="reverseObject">
+            <scale x="1" y="-1" z="1" />
         </transformation>
     </transformations>
 
     <primitives>
         <primitive id="floorRectangle">
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />
+        </primitive>
+
+        <primitive id="cubeRectangle">
+            <rectangle x1="-0.5" x2="0.5" y1="-0.5" y2="0.5" />
+        </primitive>
+
+        <primitive id="triangle">
+            <triangle   x1="-0.5"   y1="0.5" z1="0"
+                        x2="0"   y2="0" z2="0.5"
+                        x3="0.5" y3="0.5" z3="0" />
+        </primitive>
+
+        <primitive id="pyramid">
+            <cylinder base="1" top="0" height="1" stacks="4" slices="4" />
         </primitive>
 
         <primitive id="ufoTorus">
@@ -121,12 +133,13 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="demoTexture" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="powerPlantWalls" />
                 <componentref id="chimneyPatch" />
                 <componentref id="floor" />
                 <componentref id="ufo" />
+                <componentref id="semaphore" />
             </children>
         </component>
         
@@ -142,10 +155,244 @@
             </children>
         </component>
 
+        <component id="unitCube">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="cubeTop" />
+                <componentref id="cubeBottom" />
+                <componentref id="cubeFront" />
+                <componentref id="cubeBack" />
+                <componentref id="cubeLeft" />
+                <componentref id="cubeRight" />
+            </children>
+        </component>
+
+        <component id="cubeTop">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeRectangle" />
+            </children>
+        </component>
+
+        <component id="cubeBottom">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis="x" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeRectangle" />
+            </children>
+        </component>
+
+        <component id="cubeFront">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeRectangle" />
+            </children>
+        </component>
+
+        <component id="cubeBack">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeRectangle" />
+            </children>
+        </component>
+
+        <component id="cubeRight">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeRectangle" />
+            </children>
+        </component>
+
+        <component id="cubeLeft">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cubeRectangle" />
+            </children>
+        </component>
+
+        <component id="semaphorePole">
+            <transformation>
+                <scale x="1.4" y="1.4" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="poleCylinder" />
+            </children>
+        </component>
+
+        <component id="semaphoreHead">
+            <transformation>
+                <translate x="0" y="0" z="3.8" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="semaphoreHeadParallelepiped" />
+                <componentref id="semaphoreHeadPyramid" />
+            </children>
+        </component>
+
+        <component id="semaphoreHeadParallelepiped">
+            <transformation>
+                <scale x="0.8" y="0.8" z="1.2" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="unitCube" />
+            </children>
+        </component>
+        
+        <component id="semaphoreHeadPyramid">
+            <transformation>
+                <translate x="0" y="0" z="0.6" />
+                <scale x="0.65" y="0.65" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="pyramid" />
+            </children>
+        </component>
+
+        <component id="semaphore">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="semaphorePole" />
+                <componentref id="semaphoreHead" />
+            </children>
+        </component>
+
+        <component id="pyramid">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="pyramidSide1" />
+                <componentref id="pyramidSide2" />
+                <componentref id="pyramidSide3" />
+                <componentref id="pyramidSide4" />
+            </children>
+        </component>
+
+        <component id="pyramidSide1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="pyramidSide2">
+            <transformation>
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="pyramidSide3">
+            <transformation>
+                <rotate axis="z" angle="180" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="pyramidSide4">
+            <transformation>
+                <rotate axis="z" angle="270" />
+            </transformation>
+            <materials>
+                <material id="wallDemoMaterial" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+
         <component id="ufo">
             <transformation>
                 <translate x="6" y="15" z="8" />
-                <rotate axis="x" angle="20" />
+                <rotate axis="y" angle="-10" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -576,7 +823,7 @@
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="chimneyTemplate" />
+                <componentref id="fullChimneyTemplate" />
                 <componentref id="smokeRingPatch1" />
             </children>
         </component>
@@ -590,7 +837,7 @@
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="chimneyTemplate" />
+                <componentref id="fullChimneyTemplate" />
                 <componentref id="smokeRingPatch2" />
             </children>
         </component>
@@ -603,12 +850,38 @@
             </materials>
             <texture id="none" />
             <children>
-                <primitiveref id="chimneyBaseTorus" />
                 <primitiveref id="chimneyLayer1Cylinder" />
                 <componentref id="chimneyLayer2" />
                 <componentref id="chimneyLayer3" />
                 <componentref id="chimneyLayer4" />
                 <componentref id="chimneyLayer5" />
+            </children>
+        </component>
+
+        <component id="chimneyReverseTemplate">
+            <transformation>
+                <transformationref id="reverseObject" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="chimneyTemplate" />
+            </children>
+        </component>
+
+        <component id="fullChimneyTemplate">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="chimneyBaseTorus" />
+                <componentref id="chimneyTemplate" />
+                <componentref id="chimneyReverseTemplate" />
                 <componentref id="chimneyTop" />
             </children>
         </component>
@@ -680,7 +953,7 @@
 
         <component id="smokeRingPatch1">
             <transformation>
-                <translate x="0" y="0" z="12" />
+                <translate x="0" y="0" z="12.5" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -697,7 +970,7 @@
 
         <component id="smokeRingPatch2">
             <transformation>
-                <translate x="0" y="0" z="12" />
+                <translate x="0" y="0" z="12.6" />
                 <scale x="1.1" y="1.1" z="1" />
             </transformation>
             <materials>
@@ -727,7 +1000,7 @@
 
         <component id="smokeRing2">
             <transformation>
-                <translate x="0" y="1.2" z="2.2" />
+                <translate x="0" y="1.2" z="2.4" />
                 <rotate axis="x" angle="-6" />
                 <scale x="1.3" y="1.3" z="0.9" />
             </transformation>
@@ -742,7 +1015,7 @@
 
         <component id="smokeRing3">
             <transformation>
-                <translate x="0" y="1.8" z="4.6" />
+                <translate x="0" y="1.8" z="4.9" />
                 <rotate axis="x" angle="-10" />
                 <scale x="1.1" y="1.1" z="0.9" />
             </transformation>
@@ -757,7 +1030,7 @@
 
         <component id="smokeRing4">
             <transformation>
-                <translate x="0" y="2.4" z="6.6" />
+                <translate x="0" y="2.4" z="6.8" />
                 <rotate axis="x" angle="-12" />
                 <scale x="0.8" y="0.8" z="0.8" />
             </transformation>
@@ -772,7 +1045,7 @@
 
         <component id="smokeRing5">
             <transformation>
-                <translate x="0" y="2.4" z="6.6" />
+                <translate x="0" y="2.4" z="6.9" />
                 <rotate axis="x" angle="-12" />
                 <scale x="0.9" y="0.89" z="0.8" />
             </transformation>
@@ -787,7 +1060,7 @@
 
         <component id="smokeRing6">
             <transformation>
-                <translate x="0" y="3.6" z="8.2" />
+                <translate x="0" y="3.6" z="8.5" />
                 <rotate axis="x" angle="-14" />
                 <scale x="0.7" y="0.7" z="0.8" />
             </transformation>
