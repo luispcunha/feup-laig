@@ -8,7 +8,7 @@
 - [x] pôr as camaras ortogonais a funcionar
 - [x] interface camaras
 - [x] interface luzes
-- [ ] atenuacao
-- [ ] spotlights 
+- [x] atenuacao
+- [x] spotlights 
 - [ ] cena de jeito
 - [ ] ler enunciado para ver se n falta nada
