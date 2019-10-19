@@ -545,7 +545,7 @@ class MySceneGraph {
                 return "no file defined for texture (ID = " + texID + ")";
 
             // check if image file has valid extension
-            if (fileURL.length < 4 || (fileURL.substr(-4) != ".jpg" && fileURL.substr(-4) != ".png" && fileURL.substr(-5) != ".jpeg"))
+            if (fileURL.length < 4 || (fileURL.substr(-4).toLowerCase() != ".jpg" && fileURL.substr(-4).toLowerCase() != ".png" && fileURL.substr(-5).toLowerCase() != ".jpeg"))
                 return "file extension should be .jpg or .png (ID = " + texID + ")";
 
             // add texture
