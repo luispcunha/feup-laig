@@ -40,11 +40,50 @@
             <diffuse r="0.2" g="0.2" b="0.5" a="1.0" />
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
         </material>
+        <material id="redLightOn" shininess="10">
+            <emission r="0.4" g="0" b="0" a="1.0" />
+            <ambient r="0.3" g="0" b="0" a="1.0" />
+            <diffuse r="0.3" g="0" b="0" a="1.0" />
+            <specular r="0.6" g="0" b="0" a="1.0" />
+        </material>
+        <material id="redLightOff" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.2" g="0" b="0" a="1.0" />
+            <diffuse r="0.2" g="0" b="0" a="1.0" />
+            <specular r="0.5" g="0" b="0" a="1.0" />
+        </material>
+        <material id="greenLightOn" shininess="10">
+            <emission r="0" g="0.2" b="0" a="1.0" />
+            <ambient r="0" g="0.3" b="0" a="1.0" />
+            <diffuse r="0" g="0.3" b="0" a="1.0" />
+            <specular r="0" g="0.6" b="0" a="1.0" />
+        </material>
+        <material id="greenLightOff" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0" g="0.2" b="0" a="1.0" />
+            <diffuse r="0" g="0.2" b="0" a="1.0" />
+            <specular r="0" g="0.5" b="0" a="1.0" />
+        </material>
+        <material id="yellowLightOn" shininess="10">
+            <emission r="0.3" g="0.2" b="0" a="1.0" />
+            <ambient r="0.3" g="0.2" b="0" a="1.0" />
+            <diffuse r="0.3" g="0.2" b="0" a="1.0" />
+            <specular r="0.6" g="0.5" b="0" a="1.0" />
+        </material>
+        <material id="yellowLightOff" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.3" g="0.2" b="0" a="1.0" />
+            <diffuse r="0.3" g="0.2" b="0" a="1.0" />
+            <specular r="0.6" g="0.5" b="0" a="1.0" />
+        </material>
     </materials>
 
     <transformations>
         <transformation id="reverseObject">
             <scale x="1" y="-1" z="1" />
+        </transformation>
+        <transformation id="semaphorePosition">
+            <translate x="-3.5" y="4" z="0" />
         </transformation>
     </transformations>
 
@@ -270,7 +309,7 @@
 
         <component id="semaphoreHead">
             <transformation>
-                <translate x="0" y="0" z="3.8" />
+                <translate x="0" y="0" z="3.6" />
             </transformation>
             <materials>
                 <material id="wallDemoMaterial" />
@@ -279,12 +318,15 @@
             <children>
                 <componentref id="semaphoreHeadParallelepiped" />
                 <componentref id="semaphoreHeadPyramid" />
+                <componentref id="semaphoreRedLight" />
+                <componentref id="semaphoreYellowLight" />
+                <componentref id="semaphoreGreenLight" />
             </children>
         </component>
 
         <component id="semaphoreHeadParallelepiped">
             <transformation>
-                <scale x="0.8" y="0.8" z="1.2" />
+                <scale x="0.8" y="0.8" z="1.6" />
             </transformation>
             <materials>
                 <material id="wallDemoMaterial" />
@@ -297,7 +339,7 @@
         
         <component id="semaphoreHeadPyramid">
             <transformation>
-                <translate x="0" y="0" z="0.6" />
+                <translate x="0" y="0" z="0.8" />
                 <scale x="0.65" y="0.65" z="0.6" />
             </transformation>
             <materials>
@@ -309,8 +351,57 @@
             </children>
         </component>
 
+        <component id="semaphoreYellowLight">
+            <transformation>
+                <translate x="0.4" y="0" z="0" />
+                <scale x="0.4" y="0.8" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="yellowLightOff" />
+                <material id="yellowLightOn" />
+                <material id="yellowLightOff" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="ufoMiniSphere" />
+            </children>
+        </component>
+
+        <component id="semaphoreRedLight">
+            <transformation>
+                <translate x="0.4" y="0" z="0.5" />
+                <scale x="0.4" y="0.8" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="redLightOn" />
+                <material id="redLightOff" />
+                <material id="redLightOff" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="ufoMiniSphere" />
+            </children>
+        </component>
+
+        <component id="semaphoreGreenLight">
+            <transformation>
+                <translate x="0.4" y="0" z="-0.5" />
+                <scale x="0.4" y="0.8" z="0.7" />
+            </transformation>
+            <materials>
+                <material id="greenLightOff" />
+                <material id="greenLightOff" />
+                <material id="greenLightOn" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="ufoMiniSphere" />
+            </children>
+        </component>
+
         <component id="semaphore">
             <transformation>
+                <transformationref id="semaphorePosition" />
             </transformation>
             <materials>
                 <material id="wallDemoMaterial" />
