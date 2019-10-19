@@ -34,6 +34,9 @@ class XMLscene extends CGFscene {
 
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(100);
+
+    this.displayAxis = false;
+    this.displayLights = true;
   }
 
   /**
@@ -64,6 +67,8 @@ class XMLscene extends CGFscene {
         this.lights[i].setConstantAttenuation(light[6][0]);
         this.lights[i].setLinearAttenuation(light[6][1]);
         this.lights[i].setQuadraticAttenuation(light[6][2]);
+
+        //TODO: spot direction esta mal, falta atenuacao
 
         if (light[1] == "spot") {
           this.lights[i].setSpotCutOff(light[7]);
@@ -138,11 +143,13 @@ class XMLscene extends CGFscene {
     this.applyViewMatrix();
 
     this.pushMatrix();
-    this.axis.display();
 
-    for (var i = 0; i < this.lights.length; i++) {
-      this.lights[i].update();
+    for (const light of this.lights) {
+      light.update();
     }
+    
+    if (this.displayAxis)
+      this.axis.display();
 
     if (this.sceneInited) {
       // Draw axis
@@ -161,6 +168,12 @@ class XMLscene extends CGFscene {
 
     for (const key of keys) {
       this.graph.components[key].cycleMaterials();
+    }
+  }
+
+  setLightVisibility() {
+    for (const light of this.lights) {
+      light.setVisible(this.displayLights);
     }
   }
 }

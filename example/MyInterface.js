@@ -22,6 +22,10 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by defult)
         this.settingsFolder = this.gui.addFolder("Settings");
+        this.settingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => {
+            this.scene.setLightVisibility();
+        });
+        this.settingsFolder.add(this.scene, "displayAxis").name("Display Axis");
         this.initKeys();
 
         return true;
@@ -51,8 +55,6 @@ class MyInterface extends CGFinterface {
     }
 
     processKeyboard(event) {
-        console.log(event);
-
         if (event.code == "KeyM") {
             this.scene.cycleMaterials();
         }
