@@ -27,7 +27,8 @@
         <texture id="demoTexture" file="scenes/images/vidral.jpg" />
         <texture id="welcomeSign" file="scenes/images/welcome.jpg" />
         <texture id="ufo" file="scenes/images/test.png" />
-        <texture id="chimney" file="scenes/images/plantlogo.jpg" />
+        <texture id="chimneyLogo" file="scenes/images/plantlogo.jpg" />
+        <texture id="chimney" file="scenes/images/chimney.jpg" />
     </textures>
 
     <materials>
@@ -943,7 +944,7 @@
             <materials>
                 <material id="demoMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="chimney" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="chimneyLayer1Cylinder" />
                 <componentref id="chimneyLayer2" />
@@ -999,9 +1000,9 @@
                 <translate x="0" y="0" z="5" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="chimney" length_s="1" length_t="1" />
+            <texture id="chimneyLogo" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="chimneyLayer3Cylinder" />
             </children>
@@ -1014,7 +1015,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="chimneyLayer4Cylinder" />
             </children>
