@@ -386,13 +386,10 @@ class MySceneGraph {
     * @param {lights block element} lightsNode
     */
     parseLights(lightsNode) {
-        var children = lightsNode.children;
+        const children = lightsNode.children;
 
         this.lights = [];
         var numLights = 0;
-
-        var grandChildren = [];
-        var nodeNames = [];
 
         // Any number of lights.
         for (const child of children) {
@@ -408,12 +405,12 @@ class MySceneGraph {
                 continue;
             }
             else {
-                attributeNames.push(...["location", "ambient", "diffuse", "specular"]);
-                attributeTypes.push(...["position", "color", "color", "color"]);
+                attributeNames.push(...["location", "ambient", "diffuse", "specular", "attenuation"]);
+                attributeTypes.push(...["position", "color", "color", "color", "floatArray"]);
             }
 
             // Get id of the current light.
-            var lightId = this.reader.getString(child, 'id');
+            const lightId = this.reader.getString(child, 'id');
             if (lightId == null)
                 return "no ID defined for light";
 
@@ -433,23 +430,23 @@ class MySceneGraph {
             global.push(enableLight);
             global.push(child.nodeName);
 
-            grandChildren = child.children;
+            const grandChildren = Array.from(child.children);
             // Specifications for the current light.
 
-            nodeNames = [];
-            for (const grandchild of grandChildren) {
-                nodeNames.push(grandchild.nodeName);
-            }
+            const nodeNames = grandChildren.map(grandchild => grandchild.nodeName);
 
             for (var j = 0; j < attributeNames.length; j++) {
                 var attributeIndex = nodeNames.indexOf(attributeNames[j]);
 
                 if (attributeIndex != -1) {
-                    if (attributeTypes[j] == "position")
-                        var aux = this.parseCoordinates4D(grandChildren[attributeIndex], "light position for ID" + lightId);
+                    const type = attributeTypes[j];
+                    let aux;
+                    if (type == "position")
+                        aux = this.parseCoordinates4D(grandChildren[attributeIndex], "light position for ID" + lightId);
+                    else if (type == "color")
+                        aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " illumination for ID" + lightId);
                     else
-                        var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " illumination for ID" + lightId);
-
+                        aux = this.parseAttenuationArray(grandChildren[attributeIndex], attributeNames[j] + " attenuation for ID " + lightId);
                     if (!Array.isArray(aux))
                         return aux;
 
@@ -497,6 +494,19 @@ class MySceneGraph {
 
         this.log("Parsed lights.");
         return null;
+    }
+
+    parseAttenuationArray(node, messageError) {
+        const array = [
+            this.reader.getFloat(node, "constant"),
+            this.reader.getFloat(node, "linear"),
+            this.reader.getFloat(node, "quadratic")
+        ];
+        for (const element of array) {
+            if (element === null || isNaN(element) || element < 0 || element > 1)
+                return messageError + ": error parsing values";
+        }
+        return array;
     }
 
     /**
@@ -554,7 +564,7 @@ class MySceneGraph {
         var children = materialsNode.children;
 
         this.materials = [];
-        this.materials["inherit"] = "inherit";    
+        this.materials["inherit"] = "inherit";
 
         var grandChildren = [];
         var nodeNames = [];
@@ -1095,15 +1105,15 @@ class MySceneGraph {
             currentComponent.selectedMaterial = 0;
 
             // Texture
-            
+
             var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
 
-            if (this.textures[textureID] == null) 
+            if (this.textures[textureID] == null)
                 return "no texture with ID " + textureID + " (component ID = " + componentID + ")";
 
             currentComponent.texture = this.textures[textureID];
-            
-            if (textureID != "none" && textureID != "inherit") {                
+
+            if (textureID != "none" && textureID != "inherit") {
                 var length_s = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
                 if (!(length_s != null && !isNaN(length_s)))
                     return "unable to parse length_s of the texture (component ID = " + componentId + ")";
@@ -1114,8 +1124,8 @@ class MySceneGraph {
 
                 currentComponent.texLengthS = length_s;
                 currentComponent.texLengthT = length_t;
-            } 
-            
+            }
+
             // Children
             grandgrandChildren = grandChildren[childrenIndex].children;
 
@@ -1159,8 +1169,8 @@ class MySceneGraph {
 
         const componentIDs = Object.keys(this.components);
         for (const id of componentIDs) {
-            if (! this.components[id].loaded)
-                return "Component with id " + id + " doesn't exist."; 
+            if (!this.components[id].loaded)
+                return "Component with id " + id + " doesn't exist.";
         }
 
         this.log("Parsed components.");
