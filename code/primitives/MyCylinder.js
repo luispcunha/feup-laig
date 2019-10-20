@@ -1,4 +1,21 @@
+/**
+ * This class provides a primitive in the shape of a cylinder, with no 
+ * caps, variable height, bottom and top radius.
+ */
 class MyCylinder extends CGFobject {
+    /**
+     * Will yield a new Cylinder with the rotating axis on 
+     * _scene_'s z axis.
+     * @constructor
+     * @param {CGFscene} scene 
+     * @param {Number} stacks the number of  subdivisions along the 
+     * cylinder's height.
+     * @param {Number} slices the number of angular subdivisions of the 
+     * curves' discretisation
+     * @param {Number} bottomRadius 
+     * @param {Number} topRadius 
+     * @param {Number} height 
+     */
     constructor(scene, stacks, slices,
             bottomRadius, topRadius, height) {
         super(scene);
@@ -13,11 +30,23 @@ class MyCylinder extends CGFobject {
         this.initBuffers();
     }
 
+    /**
+     * Provides scale  factors for applying a texture onto the cylinder.
+     * Currently unimplemented.
+     * @param {Number} length_s 
+     * @param {Number} length_t 
+     */
+    scaleTexCoords(length_s, length_t) {
+        return;
+    }
+
     calcAngleDelta() {
+        /* A slice will be generated at an interval of angleDelta */
         this.angleDelta = 2 * Math.PI / this.slices;
     }
 
     calcHeightDelta() {
+        /* The height of each stack will be heightDelta */
         this.heightDelta = this.height / this.stacks;
     }
 
@@ -37,6 +66,9 @@ class MyCylinder extends CGFobject {
 
     generateVertices() {
         this.vertices = [];
+        /* A <= is used in the exit condition to have an overlap in
+        the last slice, which is used to provide a complete mapping of 
+        textures onto the cylinders surface*/
         for (let slice = 0; slice <= this.slices; slice++)
             this.appendSlice(slice);
     }
@@ -101,9 +133,5 @@ class MyCylinder extends CGFobject {
             currentV = 1;
             currentU += deltaU;
         }
-    }
-
-    scaleTexCoords(length_s, length_t) {
-        return;
     }
 }

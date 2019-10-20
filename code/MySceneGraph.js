@@ -893,7 +893,7 @@ class MySceneGraph {
         if (!(y2 != null && !isNaN(y2) && y2 > y1))
             return "unable to parse y2 of the primitive coordinates for ID = " + id;
 
-        return new MyRectangle(this.scene, id, x1, x2, y1, y2);
+        return new MyRectangle(this.scene, x1, x2, y1, y2);
     }
 
     
