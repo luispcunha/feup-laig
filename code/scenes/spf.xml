@@ -3,17 +3,34 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="30" y="15" z="30" />
-            <to x="0" y="-2" z="0" />
+            <from x="20" y="10" z="20" />
+            <to x="0" y="3" z="0" />
         </perspective>
-        <perspective id="ufoCamera" near="0.1" far="500" angle="60">
-            <from x="12" y="7" z="-9" />
-            <to x="-5" y="7" z="0" />
+        <perspective id="ufoCamera" near="0.1" far="500" angle="45">
+            <from x="12" y="12" z="-9" />
+            <to x="-5" y="6" z="0" />
         </perspective>
-        <ortho id="positiveXOrthoCamera" near="0.1" far="500" angle="45" left="-20" right="20" top="20" bottom="-20">
-            <from x="50" y="4" z="0" />
+        <perspective id="stuckInTrafficCamera" near="0.1" far="500" angle="45">
+            <from x="3.5" y="1.5" z="2" />
+            <to x="-8" y="3" z="-1" />
+        </perspective>
+        <perspective id="roadCamera" near="0.1" far="500" angle="45">
+            <from x="25" y="1" z="-4" />
+            <to x="-50" y="1.3" z="0" />
+        </perspective>
+        <perspective id="behindPowerPlantCamera" near="0.1" far="500" angle="45">
+            <from x="-35" y="15" z="8" />
+            <to x="20" y="2" z="-5" />
+        </perspective>
+        <ortho id="positiveXOrthoCamera" near="0.1" far="500" angle="45" left="-25" right="25" top="30" bottom="-4">
+            <from x="50" y="15" z="0" />
             <to x="0" y="4" z="0" />
             <up x="0.0" y="1.0" z="0.0" />
+        </ortho>
+        <ortho id="fromAboveOrthoCamera" near="0.1" far="500" angle="45" left="-15" right="25" top="25" bottom="-25">
+            <from x="0" y="50" z="0" />
+            <to x="0" y="0" z="0" />
+            <up x="0.0" y="0.0" z="1.0" />
         </ortho>
     </views>
 
@@ -23,7 +40,7 @@
     </globals>
 
     <lights>
-        <omni id="demoLight" enabled="1">
+        <omni id="demoLight" enabled="0">
             <location x="9.8" y="11.9" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -32,10 +49,18 @@
         </omni>
         <spot id="plantSpotlight" angle="10" exponent="2" enabled="0">
             <location x="-3" y="3" z="0" w="1.0" />
-            <target x="-6" y="6" z="0" />
+            <target x="-10" y="4" z="0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
+        <spot id="ufoToSignSpotlight" angle="5" exponent="10" enabled="1">
+            <location x="11" y="10" z="-10" w="1.0" />
+            <target x="-5" y="8" z="-2" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0" g="1" b="0" a="1.0" />
+            <specular r="0" g="1" b="0" a="1.0" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </spot>
     </lights>
@@ -147,11 +172,11 @@
             <translate x="-3.5" y="3.8" z="0" />
         </transformation>
         <transformation id="ufo2Pos">
-            <translate x="-6" y="12" z="6" />
+            <translate x="-8" y="-18" z="6" />
             <rotate axis="y" angle="10" />
         </transformation>
         <transformation id="ufo1Pos">
-            <translate x="6" y="15" z="8" />
+            <translate x="10" y="10" z="8" />
             <rotate axis="y" angle="-10" />
         </transformation>
     </transformations>
@@ -271,12 +296,14 @@
             </materials>
             <texture id="sky" length_s="50" length_t="50" />
             <children>
-                <componentref id="skyFront" />
-                <componentref id="skyBack" />
+                <componentref id="sky1" />
+                <componentref id="sky2" />
+                <componentref id="sky3" />
+                <componentref id="sky4" />
             </children>
         </component>
 
-        <component id="skyFront">
+        <component id="sky1">
             <transformation>
                 <translate x="0" y="25" z="15" />
                 <scale x="1" y="1" z="0.6" />
@@ -291,7 +318,40 @@
             </children>
         </component>
 
-        <component id="skyBack">
+        <component id="sky2">
+            <transformation>
+                <translate x="25" y="0" z="15" />
+                <scale x="1" y="1" z="0.6" />
+                <rotate axis="y" angle="-90" />
+                <rotate axis="z" angle="-90" />
+                
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="planeRectangle" />
+            </children>
+        </component>
+
+        <component id="sky3">
+            <transformation>
+                <translate x="0" y="-25" z="15" />
+                <scale x="1" y="1" z="0.6" />
+                <rotate axis="x" angle="-90" />
+                <rotate axis="z" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" /> 
+            <children>
+                <primitiveref id="planeRectangle" />
+            </children>
+        </component>
+
+        <component id="sky4">
             <transformation>  
                 <translate x="-25" y="0" z="15" />
                 <scale x="1" y="1" z="0.6" />
