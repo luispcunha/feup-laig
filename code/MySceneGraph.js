@@ -351,8 +351,8 @@ class MySceneGraph {
     }
 
     /**
-    * Parses the <ambient> node.
-    * @param {ambient block element} ambientsNode
+    * Parses the <globals> node.
+    * @param {globals block element} globalsNode
     */
     parseGlobals(globalsNode) {
         const children = Array.from(globalsNode.children);
@@ -496,6 +496,11 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Parses light attenuation
+     * @param {*} node 
+     * @param {*} messageError 
+     */
     parseAttenuationArray(node, messageError) {
         const array = [
             this.reader.getFloat(node, "constant"),
@@ -520,7 +525,9 @@ class MySceneGraph {
         var children = texturesNode.children;
 
         this.textures = [];
+        // texture with id "inherit", used when a component inherits its parent's texture
         this.textures["inherit"] = "inherit";
+        // texture with id "none", used when a component doesn't apply any texture
         this.textures["none"] = "none";
 
         for (const child of children) {
@@ -564,6 +571,7 @@ class MySceneGraph {
         var children = materialsNode.children;
 
         this.materials = [];
+        // material with id = "inherit" for when a component inherits its parent's material
         this.materials["inherit"] = "inherit";
 
         var grandChildren = [];
@@ -696,6 +704,7 @@ class MySceneGraph {
             grandChildren = child.children;
             // Specifications for the current transformation.
 
+            // parses all operations and gets corresponding matrix
             var transfMatrix = this.parseTransformationOperations(grandChildren, "ID = " + transformationID, 1);
             if (transfMatrix instanceof String || typeof transfMatrix == 'string')
                 return transfMatrix;
@@ -711,6 +720,12 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Parses set of transformations and returns corresponding matrix
+     * @param {*} grandChildren 
+     * @param {*} errMsg 
+     * @param {int} required        How many operations are required
+     */
     parseTransformationOperations(grandChildren, errMsg, required) {
         var transfMatrix = mat4.create();
         var numTransformations = 0;
@@ -852,6 +867,11 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Parses rectangle primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
     parseRectangle(node, id) {
         // x1
         var x1 = this.reader.getFloat(node, 'x1');
@@ -876,6 +896,12 @@ class MySceneGraph {
         return new MyRectangle(this.scene, id, x1, x2, y1, y2);
     }
 
+    
+    /**
+     * Parses triangle primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
     parseTriangle(node, id) {
         // x1
         var x1 = this.reader.getFloat(node, 'x1');
@@ -925,6 +951,12 @@ class MySceneGraph {
         return new MyTriangle(this.scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, 1, 1);
     }
 
+    
+    /**
+     * Parses cylinder primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
     parseCylinder(node, id) {
         // base
         var base = this.reader.getFloat(node, 'base');
@@ -954,6 +986,11 @@ class MySceneGraph {
         return new MyCylinder(this.scene, stacks, slices, base, top, height);
     }
 
+    /**
+     * Parses sphere primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
     parseSphere(node, id) {
         // radius
         var radius = this.reader.getFloat(node, 'radius');
@@ -973,6 +1010,11 @@ class MySceneGraph {
         return new MySphere(this.scene, stacks, slices, radius);
     }
 
+    /**
+     * Parses torus primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
     parseTorus(node, id) {
         // inner
         var inner = this.reader.getFloat(node, 'inner');
@@ -1105,7 +1147,6 @@ class MySceneGraph {
             currentComponent.selectedMaterial = 0;
 
             // Texture
-
             var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
 
             if (this.textures[textureID] == null)
@@ -1113,6 +1154,7 @@ class MySceneGraph {
 
             currentComponent.texture = this.textures[textureID];
 
+            // length_s and length_t only for defined textures that aren't "none" or "inherit"
             if (textureID != "none" && textureID != "inherit") {
                 var length_s = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
                 if (!(length_s != null && !isNaN(length_s)))
@@ -1151,6 +1193,7 @@ class MySceneGraph {
                     primitiveChildren.push(this.primitives[id]);
                 }
                 else if (nodeName == 'componentref') {
+                    // if a component doesn't exist yet, create it (property loaded of create component will be false)
                     if (this.components[id] == null) {
                         this.components[id] = new MyComponent(this.scene, id);
                         componentChildren.push(this.components[id]);
@@ -1163,10 +1206,11 @@ class MySceneGraph {
 
             currentComponent.primitiveChildren = primitiveChildren;
             currentComponent.componentChildren = componentChildren;
-            currentComponent.loaded = true;
+            currentComponent.loaded = true; // mark component as loaded
             this.components[componentID] = currentComponent;
         }
 
+        // checks if all components were correctly loaded and issue a error if not
         const componentIDs = Object.keys(this.components);
         for (const id of componentIDs) {
             if (!this.components[id].loaded)
@@ -1294,7 +1338,8 @@ class MySceneGraph {
     * Displays the scene, processing each node, starting in the root node.
     */
     displayScene() {
-        //TODO: Create display loop for transversing the scene graph
+        /* calls method responsible for recursively processing all nodes 
+        and displaying all leaf nodes of the graph on the root component */
         this.root.process(new CGFappearance(this.scene), null, 1, 1);
     }
 }

@@ -45,6 +45,7 @@ class XMLscene extends CGFscene {
   initCameras() {
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
   }
+
   /**
   * Initializes the scene lights with the values read from the XML file.
   */
@@ -55,7 +56,7 @@ class XMLscene extends CGFscene {
     // Reads the lights from the scene graph.
     for (var key in this.graph.lights) {
       if (i >= 8)
-      break;              // Only eight lights allowed by WebGL.
+        break;              // Only eight lights allowed by WebGL.
 
       if (this.graph.lights.hasOwnProperty(key)) {
         var light = this.graph.lights[key];
@@ -67,8 +68,6 @@ class XMLscene extends CGFscene {
         this.lights[i].setConstantAttenuation(light[6][0]);
         this.lights[i].setLinearAttenuation(light[6][1]);
         this.lights[i].setQuadraticAttenuation(light[6][2]);
-
-        //TODO: spot direction esta mal, falta atenuacao
 
         if (light[1] == "spot") {
           this.lights[i].setSpotCutOff(light[7]);
@@ -82,9 +81,9 @@ class XMLscene extends CGFscene {
 
         this.lights[i].setVisible(true);
         if (light[0])
-        this.lights[i].enable();
+          this.lights[i].enable();
         else
-        this.lights[i].disable();
+          this.lights[i].disable();
 
         this.lights[i].update();
 
@@ -99,6 +98,7 @@ class XMLscene extends CGFscene {
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
   /** Handler called when the graph is finally loaded.
   * As loading is asynchronous, this may be called already after the application has started the run loop
   */
@@ -121,6 +121,9 @@ class XMLscene extends CGFscene {
     this.sceneInited = true;
   }
 
+  /**
+   * Set current camera to the one selected in the interface
+   */
   onCameraChange() {
     this.camera = this.graph.views[this.currentView];
   }
@@ -147,7 +150,7 @@ class XMLscene extends CGFscene {
     for (const light of this.lights) {
       light.update();
     }
-    
+
     if (this.displayAxis)
       this.axis.display();
 
@@ -163,6 +166,9 @@ class XMLscene extends CGFscene {
     // ---- END Background, camera and axis setup
   }
 
+  /**
+   * Changes the material of all graph components that have multiple materials defined
+   */
   cycleMaterials() {
     let keys = Object.keys(this.graph.components);
 
@@ -171,6 +177,9 @@ class XMLscene extends CGFscene {
     }
   }
 
+  /**
+   * Updates the visibility of all lights according to this.displayLights bool value (controlable in the interface)
+   */
   setLightVisibility() {
     for (const light of this.lights) {
       light.setVisible(this.displayLights);
