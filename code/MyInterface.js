@@ -22,7 +22,7 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by default)
         this.settingsFolder = this.gui.addFolder("Settings");
-
+        this.settingsFolder.open();
         // checkbox to control light visibility
         this.settingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => {
             this.scene.setLightVisibility();
