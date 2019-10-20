@@ -29,7 +29,14 @@
         <texture id="ufo" file="scenes/images/test.png" />
         <texture id="chimneyLogo" file="scenes/images/plantlogo.jpg" />
         <texture id="chimney" file="scenes/images/chimney.jpg" />
-    </textures>
+        <texture id="road" file="scenes/images/road.jpg" />
+        <texture id="grass" file="scenes/images/grass.jpg" />
+        <texture id="sidewalk" file="scenes/images/sidewalk.jpg" />
+        <texture id="smoke" file="scenes/images/smoke.jpg" />
+        <texture id="stonewall" file="scenes/images/stonewall.jpg" />
+        <texture id="metal" file="scenes/images/metal.jpg" />
+        <texture id="chimneybase" file="scenes/images/chimneybase.jpg" />
+    </textures> 
 
     <materials>
         <material id="demoMaterial" shininess="10">
@@ -63,7 +70,7 @@
             <specular r="0" g="0.6" b="0" a="1.0" />
         </material>
         <material id="greenLightOff" shininess="10">
-            <emission r="0" g="0" b="0" a="1.0" />
+            <emission r="0" g="0" b="0" a="1.0" /> 
             <ambient r="0" g="0.2" b="0" a="1.0" />
             <diffuse r="0" g="0.2" b="0" a="1.0" />
             <specular r="0" g="0.5" b="0" a="1.0" />
@@ -87,13 +94,21 @@
             <scale x="1" y="-1" z="1" />
         </transformation>
         <transformation id="semaphorePosition">
-            <translate x="-3.5" y="4" z="0" />
+            <translate x="-3.5" y="3.8" z="0" />
         </transformation>
     </transformations>
 
     <primitives>
         <primitive id="floorRectangle">
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />
+        </primitive>
+
+        <primitive id="roadRectangle">
+            <rectangle x1="-4" x2="4" y1="-5" y2="25" />
+        </primitive>
+
+        <primitive id="sideWalkRectangle">
+            <rectangle x1="-1" x2="1" y1="-5" y2="25" />
         </primitive>
 
         <primitive id="cubeRectangle">
@@ -129,7 +144,7 @@
         <!-- wall around power plant -->
 
         <primitive id="powerPlantWallRectangle">
-            <rectangle x1="-10" x2="10" y1="-1" y2="1" />
+            <rectangle x1="-10" x2="10" y1="-1.5" y2="1.5" />
         </primitive>
 
         <primitive id="poleCylinder"> 
@@ -143,7 +158,7 @@
         <!-- chimney related primitives -->
 
         <primitive id="chimneyBaseTorus">
-            <torus inner="0.5" outer="4.4" slices="5" loops="24" />
+            <torus inner="0.5" outer="4.4" slices="5" loops="32" />
         </primitive>
         <primitive id="chimneyLayer1Cylinder">
             <cylinder base="4.4" top="3.6" height="3" stacks="6" slices="32" />
@@ -161,7 +176,7 @@
             <cylinder base="3" top="3.2" height="1.8" stacks="4" slices="32" />
         </primitive>
         <primitive id="chimneyTopTorus">
-            <torus inner="0.15" outer="3.2" slices="5" loops="24" />
+            <torus inner="0.15" outer="3.2" slices="5" loops="32" />
         </primitive>
         <primitive id="smokeRingTorus">
             <torus inner="1.8" outer="1.5" slices="12" loops="24" />
@@ -181,6 +196,7 @@
                 <componentref id="powerPlantWalls" />
                 <componentref id="chimneyPatch" />
                 <componentref id="floor" />
+                <componentref id="fullRoad" />
                 <componentref id="ufo" />
                 <componentref id="semaphore" />
             </children>
@@ -192,9 +208,80 @@
             <materials>
                 <material id="demoMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="grass" length_s="3" length_t="3" />
             <children>
                 <primitiveref id="floorRectangle" />
+            </children>
+        </component>
+
+        <component id="fullRoad">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="sideWalkRight" />
+                <componentref id="sideWalkLeft" />
+                <componentref id="road" />
+            </children>
+        </component>
+
+        <component id="road">
+            <transformation>
+                <translate x="20" y="0" z="0.01" />
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="road" length_s="8" length_t="1" />
+            <children>
+                <primitiveref id="roadRectangle" />
+            </children>
+        </component>
+
+        <component id="sideWalkRight">
+            <transformation>
+                <translate x="0" y="-5" z="0" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="sideWalkTemplate" />
+            </children>
+        </component>
+
+        
+
+        <component id="sideWalkLeft">
+            <transformation>
+                <translate x="0" y="5" z="0" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="sideWalkTemplate" />
+            </children>
+        </component>
+
+
+        <component id="sideWalkTemplate">
+            <transformation>
+                <translate x="10" y="0" z="0.12" />
+                <scale x="30" y="2" z="0.24" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sidewalk" length_s="0.12" length_t="0.33" />
+            <children>
+                <componentref id="unitCube" />
             </children>
         </component>
 
@@ -204,7 +291,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="cubeTop" />
                 <componentref id="cubeBottom" />
@@ -222,7 +309,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="cubeRectangle" />
             </children>
@@ -236,7 +323,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="cubeRectangle" />
             </children>
@@ -250,7 +337,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="cubeRectangle" />
             </children>
@@ -264,7 +351,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="cubeRectangle" />
             </children>
@@ -278,7 +365,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="cubeRectangle" />
             </children>
@@ -292,7 +379,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="cubeRectangle" />
             </children>
@@ -305,7 +392,7 @@
             <materials>
                 <material id="wallDemoMaterial" />
             </materials>
-            <texture id="inherit" />
+            <texture id="none" />
             <children>
                 <primitiveref id="poleCylinder" />
             </children>
@@ -639,9 +726,9 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="demoMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="stonewall" length_s="10" length_t="8" />
             <children>
                 <componentref id="rightWall" />
                 <componentref id="leftWall" />
@@ -655,7 +742,7 @@
                 <translate x="-15" y="-14.5" z="0" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -668,7 +755,7 @@
                 <translate x="-15" y="14.5" z="0" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -683,7 +770,7 @@
                 <rotate axis="z" angle="90" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -696,7 +783,7 @@
                 <translate x="-5.5" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -725,7 +812,7 @@
 
         <component id="signFront">
             <transformation>
-                <translate x="0" y="0" z="5" />
+                <translate x="0" y="0" z="6" />
                 <rotate axis="y" angle="90"/>
                 <rotate axis="z" angle="90" />
             </transformation>
@@ -740,7 +827,7 @@
 
         <component id="signBack">
             <transformation>
-                <translate x="0" y="0" z="5" />
+                <translate x="0" y="0" z="6" />
                 <rotate axis="y" angle="-90"/>
                 <rotate axis="z" angle="90" />
             </transformation>
@@ -755,12 +842,12 @@
 
         <component id="signRightPole">
             <transformation>
-                <translate x="0" y="-3.5" z="2" />
+                <translate x="0" y="-3.5" z="3" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="demoMaterial" />
             </materials>
-            <texture id="inherit" />
+            <texture id="metal" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="poleCylinder" />
             </children>
@@ -768,12 +855,12 @@
 
         <component id="signLeftPole">
             <transformation>
-                <translate x="0" y="3.5" z="2" />
+                <translate x="0" y="3.5" z="3" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="demoMaterial" />
             </materials>
-            <texture id="inherit" />
+            <texture id="metal" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="poleCylinder" />
             </children>
@@ -811,9 +898,9 @@
 
         <component id="frontWallLeftCover">
             <transformation>
-                <translate x="0" y="3" z="1" />
+                <translate x="0" y="3" z="1.5" />
                 <rotate axis="x" angle="90" />
-                <scale x="0.05" y="1" z="1" />
+                <scale x="0.05" y="1" z="1.5" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -826,9 +913,9 @@
 
         <component id="frontWallRightCover">
             <transformation>
-                <translate x="0" y="-3" z="1" />
+                <translate x="0" y="-3" z="1.5" />
                 <rotate axis="x" angle="-90" />
-                <scale x="0.05" y="1" z="1" />
+                <scale x="0.05" y="1" z="1.5" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -855,7 +942,7 @@
 
         <component id="wallFrontSide">
             <transformation>
-                <translate x="0" y="-0.5" z="1" />
+                <translate x="0" y="-0.5" z="1.5" />
                 <rotate axis="x" angle="90" />
             </transformation>
             <materials>
@@ -869,7 +956,7 @@
 
         <component id="wallBackSide">
             <transformation>
-                <translate x="0" y="0.5" z="1" />
+                <translate x="0" y="0.5" z="1.5" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
@@ -883,8 +970,8 @@
 
         <component id="wallTopSide">
             <transformation>
-                <translate x="0" y="0" z="2" />
-                <scale x="1" y="0.5" z="1" />
+                <translate x="0" y="0" z="3" />
+                <scale x="1" y="0.333" z="1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -973,7 +1060,7 @@
             <materials>
                 <material id="demoMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="chimneybase" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="chimneyBaseTorus" />
                 <componentref id="chimneyTemplate" />
@@ -1054,7 +1141,7 @@
             <materials>
                 <material id="demoMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="smoke" length_s="1" length_t="1" />
             <children>
                 <componentref id="smokeRing1" />
                 <componentref id="smokeRing2" />
@@ -1072,7 +1159,7 @@
             <materials>
                 <material id="demoMaterial" />
             </materials>
-            <texture id="none" />
+            <texture id="smoke" length_s="1" length_t="1" />
             <children>
                 <componentref id="smokeRing1" />
                 <componentref id="smokeRing2" />
