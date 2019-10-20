@@ -1,7 +1,11 @@
-/**
-* TODO: documentation
-*/
 class MySphere extends CGFobject {
+  /**
+   * Yields a sphere with the main axis along _scene_'s z axis
+   * @param {CGFscene} scene 
+   * @param {Number} stacks number of paralel divisions in each hemisphere
+   * @param {Number} slices number of meridians
+   * @param {Number} radius 
+   */
   constructor(scene, stacks, slices, radius) {
     super(scene);
     this.stacks = stacks;
@@ -11,6 +15,9 @@ class MySphere extends CGFobject {
   }
 
   initBuffers() {
+    /* while we would usually generate the vertices first, there is a
+    scalar mapping we can do from the normals to the vertices, and
+    we save on a unnecessary division */
     this.generateNormals();
     this.generateVertices();
     this.generateIndices();

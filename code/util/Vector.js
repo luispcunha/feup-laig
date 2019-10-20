@@ -14,14 +14,30 @@ class Vector {
         return [this.x, this.y, this.z];
     }
 
+    /**
+     * Returns a scaled version of the vector such that its length is 1
+     * @returns {Vector}
+     */
     normalized() {
         return new Vector(...this.toCoordArray.map(coord => coord / this.length));
     }
 
+    /**
+     * Also called the dot product, inner product, or projection product
+     * @param {Vector} vec1 
+     * @param {Vector} vec2
+     * @return {Number}
+     */
     static scalarProduct(vec1, vec2) {
         return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z + vec2.z;
     }
 
+    /**
+     * Also known as vector product or directed area product.
+     * @param {*} vec1 
+     * @param {*} vec2 
+     * @return {Vector}
+     */
     static crossProduct(vec1, vec2) {
         return new Vector(
             vec1.y * vec2.z - vec1.z * vec2.y,

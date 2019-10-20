@@ -39,6 +39,7 @@ class MyTriangle extends CGFobject {
   }
 
   initNormals() {
+    /* Uses Newell's method */
     const nx = this.getNormalX();
     const ny = this.getNormalY();
     const nz = this.getNormalZ();
