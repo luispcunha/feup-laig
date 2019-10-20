@@ -5,47 +5,55 @@
     <scene root="root" axis_length="5" />
 
     <views default="pV1">
-
         <perspective id="pV1" near="0.1" far="500" angle="45">
-
             <from x="-15" y="12" z="18" />
-
             <to x="0" y="0" z="0" />
-
         </perspective>
 
-        <!-- On axis z+ looking to z- -->
-        <ortho id="oV1"  near="0.1" far="500" left="10" right="10" top="10" bottom="10" >
+        <perspective id="table_perspective" near="0.1" far="500" angle="45">
+            <from x="0" y="8" z="12" />
+            <to x="-1" y="1" z="-4" />
+        </perspective>
 
-            <from x="0" y="0" z="0" />
+        <perspective id="lamp_perspective" near="0.1" far="500" angle="45">
+            <from x="5" y="8" z="8" />
+            <to x="4" y="0" z="-4" />
+        </perspective>
 
-            <to x="0" y="-15" z="0" />
+        <perspective id="top_table" near="0.1" far="500" angle="45">
+            <from x="-1" y="10" z="3" />
+            <to x="-1" y="0" z="0" />
+        </perspective>
 
-            <up x="0" y="1" z="0" /> <!-- opcional, default 0,1,0 -->
+        <perspective id="olympics_logo" near="0.1" far="500" angle="45">
+            <from x="4" y="9" z="-9" />
+            <to x="4" y="9" z="-20" />
+        </perspective>
 
-        </ortho>
+        <perspective id="statue_perspective" near="0.1" far="500" angle="45">
+            <from x="-9" y="13" z="-2" />
+            <to x="-9" y="0" z="-20" />
+        </perspective>
 
-        <!-- On axis x+ looking to x- -->
-        <ortho id="oV2"  near="0.1" far="500" left="200" right="200" top="200" bottom="200" >
+        <perspective id="door_perspective" near="0.1" far="500" angle="45">
+            <from x="11" y="8" z="-4" />
+            <to x="11" y="0" z="-20" />
+        </perspective>
 
-            <from x="20" y="15" z="0" />
+        <perspective id="cr7Draw" near="0.1" far="500" angle="45">
+            <from x="5" y="8" z="-16" />
+            <to x="20" y="8" z="-16" />
+        </perspective>
 
-            <to x="0" y="15" z="0" />
+        <perspective id="tv_setup" near="0.1" far="500" angle="45">
+            <from x="3" y="9" z="8" />
+            <to x="20" y="2" z="8" />
+        </perspective>
 
-            <up x="0" y="1" z="0" /> <!-- opcional, default 0,1,0 -->
-
-        </ortho>
-
-        <!-- On axis y+ looking to y- -->
-        <ortho id="oV3"  near="0.1" far="500" left="200" right="200" top="200" bottom="200" >
-
-            <from x="0" y="15" z="0" />
-
-            <to x="0" y="0" z="0" />
-
-            <up x="0" y="1" z="0" /> <!-- opcional, default 0,1,0 -->
-
-        </ortho>
+        <perspective id="fernando_mendes_perspective" near="0.1" far="500" angle="45">
+            <from x="10" y="5" z="8" />
+            <to x="20" y="2" z="8" />
+        </perspective>
 
         <ortho id="topDown" near="0.1" far="500" angle="45" left="-20" right="20" top="20" bottom="-20">
             <from x="0" y="45" z="0" />
@@ -67,49 +75,39 @@
     <lights>
 
         <omni id="sunLight" enabled="1" >
-
             <location x="0" y="15" z="0" w="1" />
-
             <ambient r="0.2" g="0.2" b="0.2" a="1" />
-
             <diffuse r="1" g="1" b="1" a="1" />
-
             <specular r="1" g="1" b="1" a="1" />
-
             <attenuation constant="1" linear="0" quadratic="0" />
-
         </omni> 
 
 
-        <spot id="lamp_spot_light" enabled="1" angle="45" exponent="10">
-            <location x="5" y="4" z="-1" w="1.0" />
-            <target x="5" y="0" z="-1" />
+        <spot id="lamp_light" enabled="1" angle="25" exponent="1">
+            <location x="5" y="5" z="-3.7" w="1.0" />
+            <target x="0" y="2.5" z="0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </spot>   
 
-        <!--probably will be used for the lamp--> 
-        <!-- in on/off interface enabled is 0 or 1--> 
-        
+        <omni id="tv_light" enabled="1" >
+            <location x="18" y="3.5" z="9" w="1" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni> 
 
-       <!-- <spot id="ss" enabled="tt" angle="ff" exponent="ff">
-
-            <location x="ff" y="ff" z="ff" w=”ff” />
-
-            <target x="ff" y="ff" z="ff" />
-
-            <ambient r="ff" g="ff" b="ff" a="ff" />
-
-            <diffuse r="ff" g="ff" b="ff" a="ff" />
-
-            <specular r="ff" g="ff" b="ff" a="ff" />
-
-            <attenuation constant="ff" linear="ff" quadratic="ff" />
-
-        </spot> 
-        -->
+        <spot id="olympics_light" enabled="1" angle="5" exponent="1">
+            <location x="4" y="9" z="-18" w="1.0" />
+            <target x="4" y="9" z="-19.5" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>  
 
     </lights>
 
@@ -1514,7 +1512,7 @@
             <materials>   
                 <material id="state" />
             </materials>
-            <texture id="state" length_s="1" length_t="1" />
+            <texture id="none"/>
             <children>
                 <componentref id="head"/>
                 <componentref id="body"/>
