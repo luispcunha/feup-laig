@@ -71,11 +71,29 @@
             <diffuse r="0" g="0" b="00" a="1.0" />
             <specular r="1" g="1" b="1" a="1.0" />
         </material>
-        <material id="ufo" shininess="12">
+        <material id="ufoBlue" shininess="12">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.2" g="0.46" b="0.6" a="1.0" />
             <diffuse r="0.1" g="0.23" b="0.3" a="1.0" />
             <specular r="0.25" g="0.57" b="0.75" a="1.0" />
+        </material>
+        <material id="ufoGreen" shininess="12">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.17" g="0.34" b="0.24" a="1.0" />
+            <diffuse r="0.09" g="0.17" b="0.12" a="1.0" />
+            <specular r="0.26" g="0.53" b="0.36" a="1.0" />
+        </material>
+        <material id="ufoYellowDiff" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.66" g="0.65" b="0.51" a="1.0" />
+            <diffuse r="0.66" g="0.65" b="0.51" a="1.0" />
+            <specular r="0.33" g="0.32" b="0.25" a="1.0" />
+        </material>
+        <material id="ufoPinkDiff" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.73" g="0.62" b="0.74" a="1.0" />
+            <diffuse r="0.73" g="0.62" b="0.74" a="1.0" />
+            <specular r="0.37" g="0.31" b="0.37" a="1.0" />
         </material>
         <material id="wallDemoMaterial" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -84,7 +102,7 @@
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
         </material>
         <material id="redLightOn" shininess="10">
-            <emission r="0.4" g="0" b="0" a="1.0" />
+            <emission r="0.5" g="0" b="0" a="1.0" />
             <ambient r="0.3" g="0" b="0" a="1.0" />
             <diffuse r="0.3" g="0" b="0" a="1.0" />
             <specular r="0.6" g="0" b="0" a="1.0" />
@@ -96,10 +114,10 @@
             <specular r="0.5" g="0" b="0" a="1.0" />
         </material>
         <material id="greenLightOn" shininess="10">
-            <emission r="0" g="0.3" b="0" a="1.0" />
-            <ambient r="0" g="0.3" b="0" a="1.0" />
-            <diffuse r="0" g="0.3" b="0" a="1.0" />
-            <specular r="0" g="0.6" b="0" a="1.0" />
+            <emission r="0" g="0.5" b="0" a="1.0" />
+            <ambient r="0" g="0.2" b="0" a="1.0" />
+            <diffuse r="0" g="0.2" b="0" a="1.0" />
+            <specular r="0" g="0.8" b="0" a="1.0" />
         </material>
         <material id="greenLightOff" shininess="10">
             <emission r="0" g="0" b="0" a="1.0" /> 
@@ -108,10 +126,10 @@
             <specular r="0" g="0.5" b="0" a="1.0" />
         </material>
         <material id="yellowLightOn" shininess="10">
-            <emission r="0.3" g="0.2" b="0" a="1.0" />
-            <ambient r="0.3" g="0.2" b="0" a="1.0" />
-            <diffuse r="0.3" g="0.2" b="0" a="1.0" />
-            <specular r="0.6" g="0.5" b="0" a="1.0" />
+            <emission r="0.4" g="0.3" b="0" a="1.0" />
+            <ambient r="0.35" g="0.25" b="0" a="1.0" />
+            <diffuse r="0.35" g="0.25" b="0" a="1.0" />
+            <specular r="0.7" g="0.5" b="0" a="1.0" />
         </material>
         <material id="yellowLightOff" shininess="10">
             <emission r="0" g="0" b="0" a="1.0" />
@@ -127,6 +145,14 @@
         </transformation>
         <transformation id="semaphorePosition">
             <translate x="-3.5" y="3.8" z="0" />
+        </transformation>
+        <transformation id="ufo2Pos">
+            <translate x="-6" y="12" z="6" />
+            <rotate axis="y" angle="10" />
+        </transformation>
+        <transformation id="ufo1Pos">
+            <translate x="6" y="15" z="8" />
+            <rotate axis="y" angle="-10" />
         </transformation>
     </transformations>
 
@@ -229,7 +255,8 @@
                 <componentref id="chimneyPatch" />
                 <componentref id="floor" />
                 <componentref id="fullRoad" />
-                <componentref id="ufo" />
+                <componentref id="ufo1" />
+                <componentref id="ufo2" />
                 <componentref id="semaphore" />
                 <componentref id="plantFloor" />
                 <componentref id="sky" />
@@ -662,14 +689,39 @@
             </children>
         </component>
 
-
-        <component id="ufo">
+        <component id="ufo2">
             <transformation>
-                <translate x="6" y="15" z="8" />
-                <rotate axis="y" angle="-10" />
+                <transformationref id="ufo2Pos" />
             </transformation>
             <materials>
-                <material id="ufo" />
+                <material id="ufoBlue" />
+                <material id="ufoGreen" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ufoTemplate" />
+            </children>
+        </component>
+
+        <component id="ufo1">
+            <transformation>
+                <transformationref id="ufo1Pos" />
+            </transformation>
+            <materials>
+                <material id="ufoGreen" />
+                <material id="ufoBlue" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="ufoTemplate" />
+            </children>
+        </component>
+
+        <component id="ufoTemplate">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -688,6 +740,8 @@
                 <rotate axis="z" angle="22.5" />
             </transformation>
             <materials>
+                <material id="ufoPinkDiff" />
+                <material id="ufoYellowDiff" />
                 <material id="inherit" />
             </materials>
             <texture id="none" />
@@ -701,6 +755,8 @@
                 <translate x="0" y="0" z="0.35" />
             </transformation>
             <materials>
+                <material id="ufoYellowDiff" />
+                <material id="ufoPinkDiff" />
                 <material id="inherit" />
             </materials>
             <texture id="none" />
@@ -778,13 +834,14 @@
         <component id="ornamentSphere2">
             <transformation>
                 <rotate axis="z" angle="45" />
+                <translate x="0" y="4.5" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="ornamentSphere1" />
+                <primitiveref id="ufoMiniSphere" />
             </children>
         </component>
 
