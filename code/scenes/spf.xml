@@ -40,7 +40,7 @@
     </globals>
 
     <lights>
-        <omni id="demoLight" enabled="0">
+        <omni id="demoLight" enabled="1">
             <location x="9.8" y="11.9" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -55,7 +55,7 @@
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </spot>
-        <spot id="ufoToSignSpotlight" angle="5" exponent="10" enabled="1">
+        <spot id="ufoToSignSpotlight" angle="5" exponent="10" enabled="0">
             <location x="11" y="10" z="-10" w="1.0" />
             <target x="-5" y="8" z="-2" />
             <ambient r="0" g="0" b="0" a="1.0" />
@@ -81,6 +81,9 @@
         <texture id="plantfloor" file="scenes/images/plantfloor.jpg" />
         <texture id="sky" file="scenes/images/simpsonsclouds.jpg" />
         <texture id="dome" file="scenes/images/dome.jpg" />
+        <texture id="baseball" file="scenes/images/baseball.jpg" />
+        <texture id="teamlogoA" file="scenes/images/spfisotopesA.jpg" />
+        <texture id="teamlogoB" file="scenes/images/spfisotopesB.jpg" />
     </textures> 
 
     <materials>
@@ -171,6 +174,9 @@
         <transformation id="semaphorePosition">
             <translate x="-3.5" y="3.8" z="0" />
         </transformation>
+        <transformation id="baseballStickPosition">
+            <translate x="0" y="0" z="0" />
+        </transformation>
         <transformation id="ufo2Pos">
             <translate x="-8" y="-18" z="6" />
             <rotate axis="y" angle="10" />
@@ -221,7 +227,19 @@
         </primitive>
 
         <primitive id="ufoMiniSphere">
-            <sphere radius="0.3" slices="8" stacks="8" />
+            <sphere radius="0.3" slices="20" stacks="20" />
+        </primitive>
+
+        <primitive id="baseballTeamTriangleA">
+            <triangle   x1="0" y1="0" z1="3"
+                        x2="0" y2="0" z2="5"
+                        x3="3" y3="0" z3="4" />
+        </primitive>
+
+        <primitive id="baseballTeamTriangleB">
+            <triangle   x1="0" y1="0" z1="5"
+                        x2="0" y2="0" z2="3"
+                        x3="3" y3="0" z3="4" />
         </primitive>
 
         <!-- wall around power plant -->
@@ -285,8 +303,78 @@
                 <componentref id="semaphore" />
                 <componentref id="plantFloor" />
                 <componentref id="sky" />
+                <componentref id="baseballFanStick" />
             </children>
         </component>
+
+        <component id="baseballFanStick">
+            <transformation>
+                <transformationref id="baseballStickPosition" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="baseballPole" />
+                <componentref id="baseball" />
+                <componentref id="baseballFlagA" />
+                <componentref id="baseballFlagB" />
+            </children>
+        </component>
+
+        <component id="baseballPole">
+            <transformation>
+                <scale x="1.2" y="1.2" z="1.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="poleCylinder" />
+            </children>
+        </component>
+
+        <component id="baseball">
+            <transformation>
+                <translate x="0" y="0" z="6" />
+                <scale x="3" y="3" z="3" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="baseball" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="ufoMiniSphere" />
+            </children>
+        </component>
+
+        <component id="baseballFlagA">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="teamlogoA" length_s="2" length_t="3" />
+            <children>
+                <primitiveref id="baseballTeamTriangleA" />
+            </children>
+        </component>
+
+        <component id="baseballFlagB">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="teamlogoB" length_s="2" length_t="3" />
+            <children>
+                <primitiveref id="baseballTeamTriangleB" />
+            </children>
+        </component>
+
+
 
         <component id="sky">
             <transformation>
