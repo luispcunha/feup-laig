@@ -19,7 +19,7 @@
 
     <globals>
         <ambient r="0.25" g="0.25" b="0.25" a="1.0" />
-        <background r="0.4" g="0.75" b="0.9" a="1.0" />
+        <background r="0.6" g="0.85" b="0.98" a="1.0" />
     </globals>
 
     <lights>
@@ -43,7 +43,7 @@
     <textures>
         <texture id="demoTexture" file="scenes/images/vidral.jpg" />
         <texture id="welcomeSign" file="scenes/images/welcome.jpg" />
-        <texture id="ufo" file="scenes/images/test.png" />
+        <texture id="ufo" file="scenes/images/metalTex.jpg" />
         <texture id="chimneyLogo" file="scenes/images/plantlogo.jpg" />
         <texture id="chimney" file="scenes/images/chimney.jpg" />
         <texture id="road" file="scenes/images/road.jpg" />
@@ -54,6 +54,8 @@
         <texture id="metal" file="scenes/images/metal.jpg" />
         <texture id="chimneybase" file="scenes/images/chimneybase.jpg" />
         <texture id="plantfloor" file="scenes/images/plantfloor.jpg" />
+        <texture id="sky" file="scenes/images/simpsonsclouds.jpg" />
+        <texture id="dome" file="scenes/images/dome.jpg" />
     </textures> 
 
     <materials>
@@ -63,7 +65,19 @@
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
             <specular r="0.1" g="0.1" b="0.1" a="1.0" />
         </material>
-        <material id="wallDemoMaterial" shininess="20">
+        <material id="ufoDome" shininess="6">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.6" g="0.6" b="0.6" a="1.0" />
+            <diffuse r="0" g="0" b="00" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </material>
+        <material id="ufo" shininess="12">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.2" g="0.46" b="0.6" a="1.0" />
+            <diffuse r="0.1" g="0.23" b="0.3" a="1.0" />
+            <specular r="0.25" g="0.57" b="0.75" a="1.0" />
+        </material>
+        <material id="wallDemoMaterial" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.2" g="0.2" b="0.6" a="1.0" />
             <diffuse r="0.2" g="0.2" b="0.5" a="1.0" />
@@ -82,7 +96,7 @@
             <specular r="0.5" g="0" b="0" a="1.0" />
         </material>
         <material id="greenLightOn" shininess="10">
-            <emission r="0" g="0" b="0" a="1.0" />
+            <emission r="0" g="0.3" b="0" a="1.0" />
             <ambient r="0" g="0.3" b="0" a="1.0" />
             <diffuse r="0" g="0.3" b="0" a="1.0" />
             <specular r="0" g="0.6" b="0" a="1.0" />
@@ -117,7 +131,7 @@
     </transformations>
 
     <primitives>
-        <primitive id="floorRectangle">
+        <primitive id="planeRectangle">
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />
         </primitive>
 
@@ -144,11 +158,11 @@
         </primitive>
 
         <primitive id="ufoTorus">
-            <torus inner="3" outer="2" slices="3" loops="32" />
+            <torus inner="3" outer="2" slices="3" loops="40" />
         </primitive>
 
         <primitive id="ufoSphere">
-            <sphere radius="2" slices="20" stacks="20" />
+            <sphere radius="2" slices="36" stacks="36" />
         </primitive>
 
         <primitive id="ufoCylinder">
@@ -218,6 +232,51 @@
                 <componentref id="ufo" />
                 <componentref id="semaphore" />
                 <componentref id="plantFloor" />
+                <componentref id="sky" />
+            </children>
+        </component>
+
+        <component id="sky">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sky" length_s="50" length_t="50" />
+            <children>
+                <componentref id="skyFront" />
+                <componentref id="skyBack" />
+            </children>
+        </component>
+
+        <component id="skyFront">
+            <transformation>
+                <translate x="0" y="25" z="15" />
+                <scale x="1" y="1" z="0.6" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="planeRectangle" />
+            </children>
+        </component>
+
+        <component id="skyBack">
+            <transformation>  
+                <translate x="-25" y="0" z="15" />
+                <scale x="1" y="1" z="0.6" />
+                <rotate axis="z" angle="90" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="planeRectangle" />
             </children>
         </component>
         
@@ -229,7 +288,7 @@
             </materials>
             <texture id="grass" length_s="3" length_t="3" />
             <children>
-                <primitiveref id="floorRectangle" />
+                <primitiveref id="planeRectangle" />
             </children>
         </component>
 
@@ -243,7 +302,7 @@
             </materials>
             <texture id="plantfloor" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="floorRectangle" />
+                <primitiveref id="planeRectangle" />
             </children>
         </component>
 
@@ -420,12 +479,12 @@
 
         <component id="semaphorePole">
             <transformation>
-                <scale x="1.4" y="1.4" z="0.8" />
+                <scale x="1.6" y="1.6" z="0.8" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="poleCylinder" />
             </children>
@@ -436,7 +495,7 @@
                 <translate x="0" y="0" z="3.6" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -453,7 +512,7 @@
                 <scale x="0.8" y="0.8" z="1.6" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -467,7 +526,7 @@
                 <scale x="0.65" y="0.65" z="0.6" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -528,9 +587,9 @@
                 <transformationref id="semaphorePosition" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
-            <texture id="inherit" />
+            <texture id="metal" length_s="1" length_t="1" />
             <children>
                 <componentref id="semaphorePole" />
                 <componentref id="semaphoreHead" />
@@ -541,7 +600,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -556,7 +615,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -569,7 +628,7 @@
                 <rotate axis="z" angle="90" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -582,7 +641,7 @@
                 <rotate axis="z" angle="180" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -595,7 +654,7 @@
                 <rotate axis="z" angle="270" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -610,7 +669,7 @@
                 <rotate axis="y" angle="-10" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="ufo" />
             </materials>
             <texture id="none" />
             <children>
@@ -734,9 +793,9 @@
                 <translate x="0" y="0" z="1" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="ufoDome" />
             </materials>
-            <texture id="none" />
+            <texture id="dome" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="ufoSphere" />
             </children>
@@ -749,7 +808,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="ufo" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="ufoTorus" />
             </children>
