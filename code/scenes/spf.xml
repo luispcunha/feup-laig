@@ -9,8 +9,8 @@
     </views>
 
     <globals>
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-        <background r="0.0" g="0.0" b="0.0" a="1.0" />
+        <ambient r="0.25" g="0.25" b="0.25" a="1.0" />
+        <background r="0.4" g="0.75" b="0.9" a="1.0" />
     </globals>
 
     <lights>
@@ -36,6 +36,7 @@
         <texture id="stonewall" file="scenes/images/stonewall.jpg" />
         <texture id="metal" file="scenes/images/metal.jpg" />
         <texture id="chimneybase" file="scenes/images/chimneybase.jpg" />
+        <texture id="plantfloor" file="scenes/images/plantfloor.jpg" />
     </textures> 
 
     <materials>
@@ -199,6 +200,7 @@
                 <componentref id="fullRoad" />
                 <componentref id="ufo" />
                 <componentref id="semaphore" />
+                <componentref id="plantFloor" />
             </children>
         </component>
         
@@ -209,6 +211,20 @@
                 <material id="demoMaterial" />
             </materials>
             <texture id="grass" length_s="3" length_t="3" />
+            <children>
+                <primitiveref id="floorRectangle" />
+            </children>
+        </component>
+
+         <component id="plantFloor">
+            <transformation>
+                <translate x="-15" y="0" z="0.01" />
+                <scale x="0.4" y="0.6" z="0" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="plantfloor" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="floorRectangle" />
             </children>
@@ -817,7 +833,7 @@
                 <rotate axis="z" angle="90" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="demoMaterial" />
             </materials>
             <texture id="welcomeSign" length_s="7" length_t="2" />
             <children>
@@ -832,9 +848,9 @@
                 <rotate axis="z" angle="90" />
             </transformation>
             <materials>
-                <material id="wallDemoMaterial" />
+                <material id="demoMaterial" />
             </materials>
-            <texture id="inherit" />
+            <texture id="welcomeSign" length_s="7" length_t="2" />
             <children>
                 <primitiveref id="signRectangle" />
             </children>
