@@ -173,7 +173,7 @@ class MySceneGraph {
         if ((index = nodeNames.indexOf("animations")) == -1)
             return this.errMissingNode("animations");
         else {
-            if (index != PRIMITIVES_INDEX)
+            if (index != ANIMATIONS_INDEX)
                 this.onXMLMinorError(this.errOutOfOrder("animations", ANIMATIONS_INDEX, index));
 
             //Parse animations block

@@ -1,6 +1,6 @@
 class KeyframeAnimation extends Animation {
-    constructor(scene, keyframes) {
-        this.scene = scene;
+    constructor(scene, id, keyframes) {
+        super(scene, id);
         this.keyframes = keyframes;
         this.sumT = 0;
         this.segment = 0;
