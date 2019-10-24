@@ -230,6 +230,9 @@
         </transformation>
     </transformations>
 
+    <animations>
+    </animations>
+
     <primitives>
         <primitive id="planeRectangle">
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />

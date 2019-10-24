@@ -8,12 +8,22 @@ class KeyframeAnimation extends Animation {
     }
 
     update(t) {
-        //TODO: update animation matrix
+        this.sumT += t;
 
+        if (this.sumT > this.keyframes[this.segment].t) {
+            this.sumT -= this.keyframes[this.segment].t;
+            this.segment++;
+        }
+
+        const segmentExecProgress = this.sumT / this.keyframes[this.segment].t; 
+
+        
+
+        //TODO: update animation matrix
     }
 
     apply() {
         //TODO: apply animation matrix
-
+        this.scene.multMatrix(this.currentAnimationMatrix);
     }
 }

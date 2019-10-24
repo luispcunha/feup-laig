@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATIONS_INDEX = 7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
 * MySceneGraph class, representing the scene graph.
@@ -165,6 +166,18 @@ class MySceneGraph {
 
             //Parse transformations block
             if ((error = this.parseTransformations(nodes[index])) != null)
+                return error;
+        }
+
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return this.errMissingNode("animations");
+        else {
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError(this.errOutOfOrder("animations", ANIMATIONS_INDEX, index));
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
 
@@ -1342,4 +1355,21 @@ class MySceneGraph {
         and displaying all leaf nodes of the graph on the root component */
         this.root.process(new CGFappearance(this.scene), null, 1, 1);
     }
+
+    /**
+    * Parses the <animations> block.
+    * @param {animations block element} animationsNode
+    */
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children;
+
+        this.animations = [];
+
+        var grandChildren = [];
+
+        this.log("TODO: parse animations");
+        return null;
+    }
 }
+
+
