@@ -37,6 +37,8 @@ class XMLscene extends CGFscene {
 
     this.displayAxis = false;
     this.displayLights = false;
+
+    this.lastT = 0;
   }
 
   /**
@@ -184,5 +186,10 @@ class XMLscene extends CGFscene {
     for (const light of this.lights) {
       light.setVisible(this.displayLights);
     }
+  }
+
+  update(t) {
+    let deltaT = t - this.lastT;
+    this.lastT = t;
   }
 }
