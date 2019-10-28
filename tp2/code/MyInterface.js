@@ -23,13 +23,10 @@ class MyInterface extends CGFinterface {
         // add a group of controls (and open/expand by default)
         this.settingsFolder = this.gui.addFolder("Settings");
         this.settingsFolder.open();
-        // checkbox to control light visibility
-        this.settingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => {
-            this.scene.setLightVisibility();
-        });
 
-        // checkbox to control axis visibility
-        this.settingsFolder.add(this.scene, "displayAxis").name("Display Axis");
+        this.initDisplaySettings();
+
+
 
         this.initKeys();
 
@@ -37,23 +34,42 @@ class MyInterface extends CGFinterface {
     }
 
     /**
-     * Adds dropdown to select camera to the settings interface.
+     * Adds folder with checkboxes to control the visibility of lights and axis.
      */
-    initCameraOptions() {
-      this.settingsFolder.add(this.scene, "currentView", Object.keys(this.scene.graph.views)).name("Current Camera").onChange(() => {
-          this.scene.onCameraChange();
-          this.setActiveCamera(this.scene.camera);
-      });
+    initDisplaySettings() {
+        this.displaySettingsFolder = this.settingsFolder.addFolder("Display");
+        this.displaySettingsFolder.add(this.scene, "displayLights")
+            .name("Display Lights")
+            .onChange(() => {
+                this.scene.setLightVisibility();
+            });
+        this.displaySettingsFolder.add(this.scene, "displayAxis").name("Display Axis");
+
+    }
+
+    /**
+     * Adds folder with dropdown to select current cameras
+     */
+    initCameraSettings(viewsList) {
+        this.cameraSettingsFolder = this.settingsFolder.addFolder("Active Cameras");
+        // Dropdown for the main camera
+        this.cameraSettingsFolder.add(this.scene, "currentMainView", viewsList)
+            .name("Main Camera")
+            .onChange(() => {
+                this.scene.onMainCameraChange();
+                this.setActiveCamera(this.scene.camera);
+            });
     }
 
     /**
      * Adds checkboxes to toggle lights on/off
      */
-    initLightOptions() {
-        const keys = Object.keys(this.scene.graph.lights);
+    initLightSettings() {
+        this.lightSettingsFolder = this.settingsFolder.addFolder("Active Lights");
 
+        const keys = Object.keys(this.scene.graph.lights);
         for (let i = 0; i < keys.length; i++) {
-            this.settingsFolder.add(this.scene.lights[i], 'enabled').name(keys[i]);
+            this.lightSettingsFolder.add(this.scene.lights[i], 'enabled').name(keys[i]);
         }
     }
 
@@ -101,4 +117,3 @@ class MyInterface extends CGFinterface {
         return this.activeKeys[keyCode] || false;
     }
 }
- 
