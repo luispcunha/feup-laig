@@ -114,7 +114,12 @@ class XMLscene extends CGFscene {
     this.initLights();
 
     this.currentMainView = this.graph.defaultView;
-    this.camera = this.graph.views[this.currentMainView];
+    this.onMainCameraChange();
+
+    this.displaySecurityCamera = false;
+    this.currentSecondaryView = this.graph.defaultView;
+    this.onSecurityCameraChange();
+
 
     this.interface.initCameraSettings(Object.keys(this.graph.views));
     this.interface.initLightSettings();
@@ -128,12 +133,22 @@ class XMLscene extends CGFscene {
    */
   onMainCameraChange() {
     this.camera = this.graph.views[this.currentMainView];
+    this.interface.setActiveCamera(this.camera);
+  }
+
+  onSecurityCameraChange() {
+    this.securityCamera = this.graph.views[this.graph.currentSecondaryView];
+  }
+
+
+  display() {
+    this.render();
   }
 
   /**
-  * Displays the scene.
+  * Renders the scene.
   */
-  display() {
+  render() {
     // ---- BEGIN Background, camera and axis setup
 
     // Clear image and depth buffer everytime we update the scene
@@ -172,11 +187,7 @@ class XMLscene extends CGFscene {
    * Changes the material of all graph components that have multiple materials defined
    */
   cycleMaterials() {
-    let keys = Object.keys(this.graph.components);
-
-    for (const key of keys) {
-      this.graph.components[key].cycleMaterials();
-    }
+    this.graph.cycleMaterials();
   }
 
   /**

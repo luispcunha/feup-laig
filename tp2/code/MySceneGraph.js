@@ -909,7 +909,7 @@ class MySceneGraph {
         return new MyRectangle(this.scene, x1, x2, y1, y2);
     }
 
-    
+
     /**
      * Parses triangle primitive
      * @param {*} node 
@@ -964,7 +964,7 @@ class MySceneGraph {
         return new MyTriangle(this.scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, 1, 1);
     }
 
-    
+
     /**
      * Parses cylinder primitive
      * @param {*} node 
@@ -1369,6 +1369,12 @@ class MySceneGraph {
 
         this.log("TODO: parse animations");
         return null;
+    }
+
+    cycleMaterials() {
+        for (const key in this.components) {
+            this.components[key].cycleMaterials();
+        }
     }
 }
 

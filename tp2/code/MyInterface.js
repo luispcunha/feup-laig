@@ -25,9 +25,6 @@ class MyInterface extends CGFinterface {
         this.settingsFolder.open();
 
         this.initDisplaySettings();
-
-
-
         this.initKeys();
 
         return true;
@@ -38,11 +35,7 @@ class MyInterface extends CGFinterface {
      */
     initDisplaySettings() {
         this.displaySettingsFolder = this.settingsFolder.addFolder("Display");
-        this.displaySettingsFolder.add(this.scene, "displayLights")
-            .name("Display Lights")
-            .onChange(() => {
-                this.scene.setLightVisibility();
-            });
+        this.displaySettingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => this.scene.setLightVisibility());
         this.displaySettingsFolder.add(this.scene, "displayAxis").name("Display Axis");
 
     }
@@ -53,12 +46,11 @@ class MyInterface extends CGFinterface {
     initCameraSettings(viewsList) {
         this.cameraSettingsFolder = this.settingsFolder.addFolder("Active Cameras");
         // Dropdown for the main camera
-        this.cameraSettingsFolder.add(this.scene, "currentMainView", viewsList)
-            .name("Main Camera")
-            .onChange(() => {
-                this.scene.onMainCameraChange();
-                this.setActiveCamera(this.scene.camera);
-            });
+        this.cameraSettingsFolder.add(this.scene, "currentMainView", viewsList).name("Main Camera").onChange(() => this.scene.onMainCameraChange());
+        // Checkbox to enable/disable security camera
+        this.cameraSettingsFolder.add(this.scene, "displaySecurityCamera").name("Display Security Camera");
+        // Dropdown for the security camera
+        this.cameraSettingsFolder.add(this.scene, "currentSecondaryView", viewsList).name("Security Camera").onChange(() => this.scene.onSecurityCameraChange());
     }
 
     /**
