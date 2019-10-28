@@ -66,6 +66,7 @@
                 <translate x="0" y="0" z="1" />
                 <scale x="2" y="1" z="1" />
             </transformation>
+            <animationref id="demoAnimation" />
             <materials>
                 <material id="demoMaterial" />
             </materials>

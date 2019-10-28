@@ -1103,10 +1103,27 @@ class MySceneGraph {
             }
 
             var transformationIndex = nodeNames.indexOf("transformation");
+            if (transformationIndex == -1)
+                return "transformations block doesn't exist for component with id = " + componentID;
+            
             var materialsIndex = nodeNames.indexOf("materials");
-            var textureIndex = nodeNames.indexOf("texture");
-            var childrenIndex = nodeNames.indexOf("children");
+            if (materialsIndex == -1)
+                return "materials block doesn't exist for component with id = " + componentID;
 
+            var textureIndex = nodeNames.indexOf("texture");
+            if (textureIndex == -1)
+                return "texture doesn't exist for component with id = " + componentID;
+
+            var childrenIndex = nodeNames.indexOf("children");
+            if (childrenIndex == -1)
+                return "children block doesn't exist for component with id = " + componentID;
+
+            var animationIndex = nodeNames.indexOf("animationref");
+            if (animationIndex == -1)
+                return "animation reference doesn't exist for component with id = " +  animationID;
+            if (animationIndex != transformationIndex + 1)
+                this.onXMLMinorError("animation reference should be immediately after transformations block");
+            
 
             // Transformations
             grandgrandChildren = grandChildren[transformationIndex].children;
@@ -1134,6 +1151,15 @@ class MySceneGraph {
             }
 
             currentComponent.transformation = transfMatrix;
+
+            // Animations
+            var animationID = this.reader.getString(grandChildren[animationIndex], 'id');
+
+            if (this.animations[animationID] == null)
+               return "no animation with ID " + animationID + " (component ID = " + componentID + ")";
+
+            currentComponent.animation = this.animations[animationID];
+
 
             // Materials
             var numMaterials = 0;
@@ -1425,7 +1451,7 @@ class MySceneGraph {
         
         // <translate>
         if ((index = nodeNames.indexOf("translate")) == -1)
-            return this.errMissingNode("translate in animations block with id = " + id);
+            return "translate in animations block with id = " + id;
         else {
             if (index != TRANSLATE_INDEX)
                 this.onXMLMinorError(this.errOutOfOrder("translate in animation with = " + id , TRANSLATE_INDEX, index));
@@ -1438,7 +1464,7 @@ class MySceneGraph {
 
         // <rotate>
         if ((index = nodeNames.indexOf("rotate")) == -1)
-            return this.errMissingNode("rotate in animations block with id = " + id);
+            return "rotate in animations block with id = " + id;
         else {
             if (index != ROTATE_INDEX)
                 this.onXMLMinorError(this.errOutOfOrder("rotate in animation with id = " + id , ROTATE_INDEX, index));
@@ -1451,7 +1477,7 @@ class MySceneGraph {
 
         // <scale>
         if ((index = nodeNames.indexOf("scale")) == -1)
-            return this.errMissingNode("scale in animations block with id = " + id);
+            return "scale in animations block with id = " + id;
         else {
             if (index != SCALE_INDEX)
                 this.onXMLMinorError(this.errOutOfOrder("scale in animation with = " + id , SCALE_INDEX, index));
