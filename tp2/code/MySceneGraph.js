@@ -10,7 +10,11 @@ var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
 var ANIMATIONS_INDEX = 7;
 var PRIMITIVES_INDEX = 8;
-var COMPONENTS_INDEX = 9;
+var COMPONENTS_INDEX = 9;   
+
+var TRANSLATE_INDEX = 0;
+var ROTATE_INDEX = 1;
+var SCALE_INDEX = 2;
 
 /**
 * MySceneGraph class, representing the scene graph.
@@ -1361,15 +1365,106 @@ class MySceneGraph {
     * @param {animations block element} animationsNode
     */
     parseAnimations(animationsNode) {
-        var children = animationsNode.children;
+        let children = animationsNode.children;
 
         this.animations = [];
+        let grandChildren = [];
+        
+        // Any number of transformations.
+        for (const child of children) {
+            if (child.nodeName != "animation") {
+                this.onXMLMinorError("unknown tag <" + child.nodeName + ">");
+                continue;
+            }
 
-        var grandChildren = [];
+            // Get id of the current transformation.
+            var animationID = this.reader.getString(child, 'id');
+            if (animationID == null)
+                return "no ID defined for animation";
 
-        this.log("TODO: parse animations");
+            // Checks for repeated IDs.
+            if (this.animations[animationID] != null)
+                return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+
+            grandChildren = child.children;
+            const nodeNames = Array.from(grandChildren).map(node => node.nodeName);
+            let index = nodeNames.indexOf("keyframe");
+            if (index == -1)
+                return "keyframe doesn't exist for animation with id = " + animationID;
+
+            if (nodeNames.length > 0) {
+                for (name of nodeNames)
+                    if (name != "keyframe")
+                        this.onXMLMinorError("unknown tag <" + name + ">");
+            } 
+
+
+            // parses keyframe
+            var keyframe = this.parseKeyframe(grandChildren[index], animationID);
+            if (keyframe instanceof String || typeof keyframe == 'string')
+                return keyframe;
+
+            this.animations[animationID] = new KeyframeAnimation(animationID, keyframe);
+        }
+
+        this.log("Parsed animations.");
         return null;
     }
+
+     /**
+     * Parses set of transformations and returns corresponding matrix
+     * @param {*} node 
+     * @param {*} errMsg 
+     */
+    parseKeyframe(keyframeNode, id) {
+        
+        const nodeNames = Array.from(keyframeNode.children).map(node => node.nodeName);
+
+        let index, translate, rotate, scale;
+        var instant = this.reader.getFloat(keyframeNode, "instant");
+        
+        // <translate>
+        if ((index = nodeNames.indexOf("translate")) == -1)
+            return this.errMissingNode("translate in animations block with id = " + id);
+        else {
+            if (index != TRANSLATE_INDEX)
+                this.onXMLMinorError(this.errOutOfOrder("translate in animation with = " + id , TRANSLATE_INDEX, index));
+            
+            const x = this.reader.getFloat(keyframeNode.children[index], "x");
+            const y = this.reader.getFloat(keyframeNode.children[index], "y");
+            const z = this.reader.getFloat(keyframeNode.children[index], "z");
+            translate = new KFTransformation(x, y, z);
+        }
+
+        // <rotate>
+        if ((index = nodeNames.indexOf("rotate")) == -1)
+            return this.errMissingNode("rotate in animations block with id = " + id);
+        else {
+            if (index != ROTATE_INDEX)
+                this.onXMLMinorError(this.errOutOfOrder("rotate in animation with id = " + id , ROTATE_INDEX, index));
+            
+            const x = this.reader.getFloat(keyframeNode.children[index], "angle_x");
+            const y = this.reader.getFloat(keyframeNode.children[index], "angle_y");
+            const z = this.reader.getFloat(keyframeNode.children[index], "angle_z");
+            rotate = new KFTransformation(x, y, z);
+        }
+
+        // <scale>
+        if ((index = nodeNames.indexOf("scale")) == -1)
+            return this.errMissingNode("scale in animations block with id = " + id);
+        else {
+            if (index != SCALE_INDEX)
+                this.onXMLMinorError(this.errOutOfOrder("scale in animation with = " + id , SCALE_INDEX, index));
+            
+            const x = this.reader.getFloat(keyframeNode.children[index], "x");
+            const y = this.reader.getFloat(keyframeNode.children[index], "y");
+            const z = this.reader.getFloat(keyframeNode.children[index], "z");
+            scale = new KFTransformation(x, y, z);
+        }
+
+        return new Keyframe(instant, scale, rotate, translate);
+    }
+
 
     cycleMaterials() {
         for (const key in this.components) {

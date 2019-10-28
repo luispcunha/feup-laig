@@ -1,8 +1,8 @@
 class Keyframe {
-    constructor(t, scale, rotation, translation) {
+    constructor(t, scale, rotate, translate) {
         this.t = t;
         this.scale = scale;
-        this.rotation = rotation;
-        this.translation = translation;
+        this.rotate = rotate;
+        this.translate = translate;
     }
 }
