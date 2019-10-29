@@ -1119,9 +1119,7 @@ class MySceneGraph {
                 return "children block doesn't exist for component with id = " + componentID;
 
             var animationIndex = nodeNames.indexOf("animationref");
-            if (animationIndex == -1)
-                return "animation reference doesn't exist for component with id = " +  animationID;
-            if (animationIndex != transformationIndex + 1)
+            if (animationIndex != -1 && animationIndex != transformationIndex + 1)
                 this.onXMLMinorError("animation reference should be immediately after transformations block");
             
 
@@ -1153,12 +1151,14 @@ class MySceneGraph {
             currentComponent.transformation = transfMatrix;
 
             // Animations
-            var animationID = this.reader.getString(grandChildren[animationIndex], 'id');
+            if (animationIndex != -1) {
+                var animationID = this.reader.getString(grandChildren[animationIndex], 'id');
 
-            if (this.animations[animationID] == null)
-               return "no animation with ID " + animationID + " (component ID = " + componentID + ")";
+                if (this.animations[animationID] == null)
+                    return "no animation with ID " + animationID + " (component ID = " + componentID + ")";
 
-            currentComponent.animation = this.animations[animationID];
+                currentComponent.animation = this.animations[animationID];
+            }
 
 
             // Materials

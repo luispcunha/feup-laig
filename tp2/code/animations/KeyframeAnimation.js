@@ -28,8 +28,7 @@ class KeyframeAnimation extends Animation {
             }
 
             const segmentExecProgress = this.sumT / (this.keyframes[this.segment].t - this.keyframes[this.segment - 1].t); 
-            const translate = KFTransformation.interpolate(this.keyframes[this.segment - 1].translate, this.keyframes[this.segment].translate, segmentExecProgress);
-            this.animationMatrix = mat4.translate(this.animationMatrix, mat4.create(), translate);
+            this.animationMatrix = Keyframe.computeAnimMatrix(this.keyframes[this.segment - 1], this.keyframes[this.segment], segmentExecProgress);
         }
     }
 

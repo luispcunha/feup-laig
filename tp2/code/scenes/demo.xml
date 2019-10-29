@@ -48,17 +48,17 @@
         <animation id="demoAnimation">
             <keyframe instant="2">
                 <translate x="2" y="0" z="0" />  
-                <rotate angle_x="1" angle_y="1" angle_z="1" />
+                <rotate angle_x="180" angle_y="0" angle_z="0" />
                 <scale x="2" y="2" z="2" />
             </keyframe>
             <keyframe instant="4">
                 <translate x="4" y="0" z="0" />  
-                <rotate angle_x="1" angle_y="1" angle_z="1" />
+                <rotate angle_x="360" angle_y="0" angle_z="0" />
                 <scale x="2" y="2" z="2" />
             </keyframe>
             <keyframe instant="6">
                 <translate x="6" y="0" z="0" />  
-                <rotate angle_x="1" angle_y="1" angle_z="1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="2" y="2" z="2" />
             </keyframe>
         </animation>
@@ -66,7 +66,7 @@
 
     <primitives>
         <primitive id="demoRectangle">
-            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            <rectangle x1="-2" y1="-2" x2="2" y2="2" />
         </primitive>
     </primitives>
 
@@ -75,6 +75,19 @@
             <transformation>
             </transformation>
             <animationref id="demoAnimation" />
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="demoTexture" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="demoRectangle" />
+                <componentref id="rectangleBack" />
+            </children>
+        </component>
+        <component id="rectangleBack">
+            <transformation>
+                <rotate axis="x" angle="-180" />
+            </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
