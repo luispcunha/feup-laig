@@ -1417,20 +1417,24 @@ class MySceneGraph {
             let index = nodeNames.indexOf("keyframe");
             if (index == -1)
                 return "keyframe doesn't exist for animation with id = " + animationID;
-
-            if (nodeNames.length > 0) {
-                for (name of nodeNames)
-                    if (name != "keyframe")
+            
+            let numKeyframes = 0;
+            let keyframes = [];
+            
+            for (const keyframeNode of grandChildren) {
+                if (keyframeNode.nodeName != "keyframe")
                         this.onXMLMinorError("unknown tag <" + name + ">");
+
+                // parse keyframe
+                let keyframe = this.parseKeyframe(keyframeNode, animationID);
+                if (keyframe instanceof String || typeof keyframe == 'string')
+                    return keyframe;
+                
+                keyframes.push(keyframe);
+                numKeyframes++;
             } 
 
-
-            // parses keyframe
-            var keyframe = this.parseKeyframe(grandChildren[index], animationID);
-            if (keyframe instanceof String || typeof keyframe == 'string')
-                return keyframe;
-
-            this.animations[animationID] = new KeyframeAnimation(animationID, keyframe);
+            this.animations[animationID] = new KeyframeAnimation(this.scene, animationID, keyframes);
         }
 
         this.log("Parsed animations.");

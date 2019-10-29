@@ -35,7 +35,7 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(100);
 
-    this.displayAxis = false;
+    this.displayAxis = true;
     this.displayLights = false;
 
     this.lastT = 0;
@@ -202,5 +202,12 @@ class XMLscene extends CGFscene {
   update(t) {
     let deltaT = t - this.lastT;
     this.lastT = t;
+
+    if (this.graph.loadedOk) {
+      const keys = Object.keys(this.graph.animations);
+    
+      for (const key of keys)
+        this.graph.animations[key].update(deltaT);
+    }
   }
 }

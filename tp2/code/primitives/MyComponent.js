@@ -60,6 +60,7 @@ class MyComponent {
 
         // multiply parent transformation matrix with this node's transformation matrix
         this.scene.multMatrix(this.transformation);
+        this.animation.apply();
 
         let material, texture, lengthS, lengthT;
 

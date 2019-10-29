@@ -1,29 +1,39 @@
 class KeyframeAnimation extends Animation {
     constructor(scene, id, keyframes) {
         super(scene, id);
-        this.keyframes = keyframes;
+        this.keyframes = [new Keyframe()];
+        this.keyframes.push(...keyframes);
         this.sumT = 0;
-        this.segment = 0;
-        this.currentAnimationMatrix;
+        this.segment = 1;
+        this.animationMatrix = mat4.create();
+        this.animationEnded = false;
     }
 
     update(t) {
-        this.sumT += t;
+        // TODO: add rotate and scale animations
+        if (! this.animationEnded) {
+            this.sumT += t;
+            const segmentT = this.keyframes[this.segment].t - this.keyframes[this.segment - 1].t;
 
-        if (this.sumT > this.keyframes[this.segment].t) {
-            this.sumT -= this.keyframes[this.segment].t;
-            this.segment++;
+            if (this.sumT > segmentT) {
+                this.sumT -= segmentT;
+                this.segment++;
+                
+                if (this.segment == this.keyframes.length) {
+                    const translate = this.keyframes[this.segment - 1].translate.getArray();
+                    this.animationMatrix = mat4.translate(this.animationMatrix, mat4.create(), translate);
+                    this.animationEnded = true;
+                    return;
+                }
+            }
+
+            const segmentExecProgress = this.sumT / (this.keyframes[this.segment].t - this.keyframes[this.segment - 1].t); 
+            const translate = KFTransformation.interpolate(this.keyframes[this.segment - 1].translate, this.keyframes[this.segment].translate, segmentExecProgress);
+            this.animationMatrix = mat4.translate(this.animationMatrix, mat4.create(), translate);
         }
-
-        const segmentExecProgress = this.sumT / this.keyframes[this.segment].t; 
-
-        
-
-        //TODO: update animation matrix
     }
 
     apply() {
-        //TODO: apply animation matrix
-        this.scene.multMatrix(this.currentAnimationMatrix);
+        this.scene.multMatrix(this.animationMatrix);
     }
 }

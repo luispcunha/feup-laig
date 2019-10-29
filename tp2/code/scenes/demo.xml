@@ -47,7 +47,17 @@
     <animations>
         <animation id="demoAnimation">
             <keyframe instant="2">
-                <translate x="1" y="0" z="0" />  
+                <translate x="2" y="0" z="0" />  
+                <rotate angle_x="1" angle_y="1" angle_z="1" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="4">
+                <translate x="4" y="0" z="0" />  
+                <rotate angle_x="1" angle_y="1" angle_z="1" />
+                <scale x="2" y="2" z="2" />
+            </keyframe>
+            <keyframe instant="6">
+                <translate x="6" y="0" z="0" />  
                 <rotate angle_x="1" angle_y="1" angle_z="1" />
                 <scale x="2" y="2" z="2" />
             </keyframe>
@@ -56,15 +66,13 @@
 
     <primitives>
         <primitive id="demoRectangle">
-            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive>
     </primitives>
 
     <components>
         <component id="demoRoot">
             <transformation>
-                <translate x="0" y="0" z="1" />
-                <scale x="2" y="1" z="1" />
             </transformation>
             <animationref id="demoAnimation" />
             <materials>
