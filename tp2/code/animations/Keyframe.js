@@ -13,16 +13,35 @@ class Keyframe {
         }
     }
 
-    static computeAnimMatrix(keyframe1, keyframe2, progress) {
+    getAnimationMatrix() {
         let animationMatrix = mat4.create();
         
-        const translate = KFTransformation.interpolate(keyframe1.translate, keyframe2.translate, progress);
+        animationMatrix = mat4.translate(animationMatrix, animationMatrix, this.translate.getArray());
+        
+        animationMatrix = mat4.rotateX(animationMatrix, animationMatrix, this.rotate.x * Math.PI / 180);
+        animationMatrix = mat4.rotateY(animationMatrix, animationMatrix, this.rotate.y * Math.PI / 180);
+        animationMatrix = mat4.rotateZ(animationMatrix, animationMatrix, this.rotate.z * Math.PI / 180);
+
+        animationMatrix = mat4.scale(animationMatrix, animationMatrix, this.scale.getArray());
+        
+        return animationMatrix;
+    }
+
+    static computeAnimMatrix(keyframe1, keyframe2, currentTime) {
+        let animationMatrix = mat4.create();
+        let progress = currentTime / (keyframe2.t - keyframe1.t); 
+            
+        
+        const translate = KFTransformation.computeLinearInterpolation(keyframe1.translate, keyframe2.translate, progress);
         animationMatrix = mat4.translate(animationMatrix, animationMatrix, translate);
         
-        const rotate = KFTransformation.interpolate(keyframe1.rotate, keyframe2.rotate, progress);
+        const rotate = KFTransformation.computeLinearInterpolation(keyframe1.rotate, keyframe2.rotate, progress);
         animationMatrix = mat4.rotateX(animationMatrix, animationMatrix, rotate[0] * Math.PI / 180);
         animationMatrix = mat4.rotateY(animationMatrix, animationMatrix, rotate[1] * Math.PI / 180);
         animationMatrix = mat4.rotateZ(animationMatrix, animationMatrix, rotate[2] * Math.PI / 180);
+
+        const scale = KFTransformation.computeScaleGeoProg(keyframe1.scale, keyframe2.scale, keyframe1.t, keyframe2.t, currentTime);
+        animationMatrix = mat4.scale(animationMatrix, animationMatrix, scale);
         
         return animationMatrix;
     }

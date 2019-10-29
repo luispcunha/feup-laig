@@ -20,15 +20,13 @@ class KeyframeAnimation extends Animation {
                 this.segment++;
                 
                 if (this.segment == this.keyframes.length) {
-                    const translate = this.keyframes[this.segment - 1].translate.getArray();
-                    this.animationMatrix = mat4.translate(this.animationMatrix, mat4.create(), translate);
+                    this.animationMatrix = this.keyframes[this.segment - 1].getAnimationMatrix();
                     this.animationEnded = true;
                     return;
                 }
             }
-
-            const segmentExecProgress = this.sumT / (this.keyframes[this.segment].t - this.keyframes[this.segment - 1].t); 
-            this.animationMatrix = Keyframe.computeAnimMatrix(this.keyframes[this.segment - 1], this.keyframes[this.segment], segmentExecProgress);
+            
+            this.animationMatrix = Keyframe.computeAnimMatrix(this.keyframes[this.segment - 1], this.keyframes[this.segment], this.sumT);
         }
     }
 

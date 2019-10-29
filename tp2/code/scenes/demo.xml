@@ -46,20 +46,15 @@
 
     <animations>
         <animation id="demoAnimation">
-            <keyframe instant="2">
-                <translate x="2" y="0" z="0" />  
-                <rotate angle_x="180" angle_y="0" angle_z="0" />
-                <scale x="2" y="2" z="2" />
-            </keyframe>
-            <keyframe instant="4">
-                <translate x="4" y="0" z="0" />  
+            <keyframe instant="5">
+                <translate x="8" y="0" z="0" />  
                 <rotate angle_x="360" angle_y="0" angle_z="0" />
                 <scale x="2" y="2" z="2" />
             </keyframe>
-            <keyframe instant="6">
-                <translate x="6" y="0" z="0" />  
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />  
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="2" y="2" z="2" />
+                <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
     </animations>
