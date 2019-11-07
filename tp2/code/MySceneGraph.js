@@ -10,7 +10,7 @@ var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
 var ANIMATIONS_INDEX = 7;
 var PRIMITIVES_INDEX = 8;
-var COMPONENTS_INDEX = 9;   
+var COMPONENTS_INDEX = 9;
 
 var TRANSLATE_INDEX = 0;
 var ROTATE_INDEX = 1;
@@ -515,8 +515,8 @@ class MySceneGraph {
 
     /**
      * Parses light attenuation
-     * @param {*} node 
-     * @param {*} messageError 
+     * @param {*} node
+     * @param {*} messageError
      */
     parseAttenuationArray(node, messageError) {
         const array = [
@@ -739,8 +739,8 @@ class MySceneGraph {
 
     /**
      * Parses set of transformations and returns corresponding matrix
-     * @param {*} grandChildren 
-     * @param {*} errMsg 
+     * @param {*} grandChildren
+     * @param {*} errMsg
      * @param {int} required        How many operations are required
      */
     parseTransformationOperations(grandChildren, errMsg, required) {
@@ -771,7 +771,7 @@ class MySceneGraph {
                         return "invalid angle in rotate transformation for " + errMsg;
 
                     // convert degrees to radians
-                    angle = angle * Math.PI / 180;
+                    angle = angle * DEGREE_TO_RAD;
 
                     var axis = this.reader.getString(grandchild, "axis");
                     switch (axis) {
@@ -886,8 +886,8 @@ class MySceneGraph {
 
     /**
      * Parses rectangle primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parseRectangle(node, id) {
         // x1
@@ -916,8 +916,8 @@ class MySceneGraph {
 
     /**
      * Parses triangle primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parseTriangle(node, id) {
         // x1
@@ -971,8 +971,8 @@ class MySceneGraph {
 
     /**
      * Parses cylinder primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parseCylinder(node, id) {
         // base
@@ -1005,8 +1005,8 @@ class MySceneGraph {
 
     /**
      * Parses sphere primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parseSphere(node, id) {
         // radius
@@ -1029,8 +1029,8 @@ class MySceneGraph {
 
     /**
      * Parses torus primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parseTorus(node, id) {
         // inner
@@ -1105,7 +1105,7 @@ class MySceneGraph {
             var transformationIndex = nodeNames.indexOf("transformation");
             if (transformationIndex == -1)
                 return "transformations block doesn't exist for component with id = " + componentID;
-            
+
             var materialsIndex = nodeNames.indexOf("materials");
             if (materialsIndex == -1)
                 return "materials block doesn't exist for component with id = " + componentID;
@@ -1121,7 +1121,7 @@ class MySceneGraph {
             var animationIndex = nodeNames.indexOf("animationref");
             if (animationIndex != -1 && animationIndex != transformationIndex + 1)
                 this.onXMLMinorError("animation reference should be immediately after transformations block");
-            
+
 
             // Transformations
             grandgrandChildren = grandChildren[transformationIndex].children;
@@ -1381,7 +1381,7 @@ class MySceneGraph {
     * Displays the scene, processing each node, starting in the root node.
     */
     displayScene() {
-        /* calls method responsible for recursively processing all nodes 
+        /* calls method responsible for recursively processing all nodes
         and displaying all leaf nodes of the graph on the root component */
         this.root.process(new CGFappearance(this.scene), null, 1, 1);
     }
@@ -1395,7 +1395,7 @@ class MySceneGraph {
 
         this.animations = [];
         let grandChildren = [];
-        
+
         // Any number of transformations.
         for (const child of children) {
             if (child.nodeName != "animation") {
@@ -1417,22 +1417,22 @@ class MySceneGraph {
             let index = nodeNames.indexOf("keyframe");
             if (index == -1)
                 return "keyframe doesn't exist for animation with id = " + animationID;
-            
+
             let numKeyframes = 0;
             let keyframes = [];
-            
+
             for (const keyframeNode of grandChildren) {
                 if (keyframeNode.nodeName != "keyframe")
-                        this.onXMLMinorError("unknown tag <" + name + ">");
+                    this.onXMLMinorError("unknown tag <" + name + ">");
 
                 // parse keyframe
                 let keyframe = this.parseKeyframe(keyframeNode, animationID);
                 if (keyframe instanceof String || typeof keyframe == 'string')
                     return keyframe;
-                
+
                 keyframes.push(keyframe);
                 numKeyframes++;
-            } 
+            }
 
             this.animations[animationID] = new KeyframeAnimation(this.scene, animationID, keyframes);
         }
@@ -1441,25 +1441,25 @@ class MySceneGraph {
         return null;
     }
 
-     /**
-     * Parses set of transformations and returns corresponding matrix
-     * @param {*} node 
-     * @param {*} errMsg 
-     */
+    /**
+    * Parses set of transformations and returns corresponding matrix
+    * @param {*} node
+    * @param {*} errMsg
+    */
     parseKeyframe(keyframeNode, id) {
-        
+
         const nodeNames = Array.from(keyframeNode.children).map(node => node.nodeName);
 
         let index, translate, rotate, scale;
         var instant = this.reader.getFloat(keyframeNode, "instant");
-        
+
         // <translate>
         if ((index = nodeNames.indexOf("translate")) == -1)
             return "translate in animations block with id = " + id;
         else {
             if (index != TRANSLATE_INDEX)
-                this.onXMLMinorError(this.errOutOfOrder("translate in animation with = " + id , TRANSLATE_INDEX, index));
-            
+                this.onXMLMinorError(this.errOutOfOrder("translate in animation with = " + id, TRANSLATE_INDEX, index));
+
             const x = this.reader.getFloat(keyframeNode.children[index], "x");
             const y = this.reader.getFloat(keyframeNode.children[index], "y");
             const z = this.reader.getFloat(keyframeNode.children[index], "z");
@@ -1471,12 +1471,12 @@ class MySceneGraph {
             return "rotate in animations block with id = " + id;
         else {
             if (index != ROTATE_INDEX)
-                this.onXMLMinorError(this.errOutOfOrder("rotate in animation with id = " + id , ROTATE_INDEX, index));
-            
+                this.onXMLMinorError(this.errOutOfOrder("rotate in animation with id = " + id, ROTATE_INDEX, index));
+
             const x = this.reader.getFloat(keyframeNode.children[index], "angle_x");
             const y = this.reader.getFloat(keyframeNode.children[index], "angle_y");
             const z = this.reader.getFloat(keyframeNode.children[index], "angle_z");
-            rotate = new KFTransformation(x, y, z);
+            rotate = new KFTransformation(x * DEGREE_TO_RAD, y * DEGREE_TO_RAD, z * DEGREE_TO_RAD);
         }
 
         // <scale>
@@ -1484,8 +1484,8 @@ class MySceneGraph {
             return "scale in animations block with id = " + id;
         else {
             if (index != SCALE_INDEX)
-                this.onXMLMinorError(this.errOutOfOrder("scale in animation with = " + id , SCALE_INDEX, index));
-            
+                this.onXMLMinorError(this.errOutOfOrder("scale in animation with = " + id, SCALE_INDEX, index));
+
             const x = this.reader.getFloat(keyframeNode.children[index], "x");
             const y = this.reader.getFloat(keyframeNode.children[index], "y");
             const z = this.reader.getFloat(keyframeNode.children[index], "z");
@@ -1502,5 +1502,3 @@ class MySceneGraph {
         }
     }
 }
-
-
