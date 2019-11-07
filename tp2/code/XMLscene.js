@@ -81,7 +81,7 @@ class XMLscene extends CGFscene {
           );
         }
 
-        this.lights[i].setVisible(true);
+        this.lights[i].setVisible(this.displayLights);
         if (light[0])
           this.lights[i].enable();
         else
@@ -193,7 +193,7 @@ class XMLscene extends CGFscene {
   /**
    * Updates the visibility of all lights according to this.displayLights bool value (controlable in the interface)
    */
-  setLightVisibility() {
+  onLightVisibilityChange() {
     for (const light of this.lights) {
       light.setVisible(this.displayLights);
     }
@@ -205,7 +205,7 @@ class XMLscene extends CGFscene {
 
     if (this.graph.loadedOk) {
       const keys = Object.keys(this.graph.animations);
-    
+
       for (const key of keys)
         this.graph.animations[key].update(deltaT);
     }

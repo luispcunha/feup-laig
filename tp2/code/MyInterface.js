@@ -35,7 +35,7 @@ class MyInterface extends CGFinterface {
      */
     initDisplaySettings() {
         this.displaySettingsFolder = this.settingsFolder.addFolder("Display");
-        this.displaySettingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => this.scene.setLightVisibility());
+        this.displaySettingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => this.scene.onLightVisibilityChange());
         this.displaySettingsFolder.add(this.scene, "displayAxis").name("Display Axis");
 
     }
@@ -77,7 +77,7 @@ class MyInterface extends CGFinterface {
 
     /**
      * Event handler for when the user presses and releases a key
-     * @param {Event} event 
+     * @param {Event} event
      */
     processKeyboard(event) {
         if (event.code == "KeyM") {
@@ -87,7 +87,7 @@ class MyInterface extends CGFinterface {
 
     /**
      * Event handler for when the user presses a key
-     * @param {Event} event 
+     * @param {Event} event
      */
     processKeyDown(event) {
         this.activeKeys[event.code] = true;
@@ -95,7 +95,7 @@ class MyInterface extends CGFinterface {
 
     /**
      * Event handler for when the user releases a key
-     * @param {Event} event 
+     * @param {Event} event
      */
     processKeyUp(event) {
         this.activeKeys[event.code] = false;
