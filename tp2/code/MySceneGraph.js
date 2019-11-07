@@ -908,25 +908,25 @@ class MySceneGraph {
 
     /**
      * Parses plane primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parsePlane(node, id) {
-        var npartsU = this.reader.getInteger(node, 'npartsU');
-        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
+        const npartsU = this.reader.getInteger(node, 'npartsU');
+        if (!Number.isInteger(npartsU))
             return "unable to parse slices of the primitive for ID = " + id;
 
-        var npartsV = this.reader.getInteger(node, 'npartsV');
-        if (!(loops != null && !isNaN(loops) && Number.isInteger(loops)))
+        const npartsV = this.reader.getInteger(node, 'npartsV');
+        if (!Number.isInteger(npartsV))
             return "unable to parse loops of the primitive for ID = " + id;
 
-        return "primitive plane doesn't exist";
+        return new MyPlane(this.scene, npartsU, npartsV);
     }
 
     /**
      * Parses path primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parsePatch(node, id) {
         var npointsU = this.reader.getInteger(node, 'npointsU');
@@ -952,8 +952,8 @@ class MySceneGraph {
 
     /**
      * Parses control points of patch primitive
-     * @param {*} node 
-     * @param {*} id 
+     * @param {*} node
+     * @param {*} id
      */
     parseControlPoints(node, npointsU, npointsV, id) {
         const children = node.children;
@@ -985,11 +985,11 @@ class MySceneGraph {
         return ctrlPts;
     }
 
-     /**
-     * Parses cylinder2 primitive
-     * @param {*} node 
-     * @param {*} id 
-     */
+    /**
+    * Parses cylinder2 primitive
+    * @param {*} node
+    * @param {*} id
+    */
     parseCylinder2(node, id) {
         // base
         var base = this.reader.getFloat(node, 'base');
