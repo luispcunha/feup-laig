@@ -947,7 +947,7 @@ class MySceneGraph {
 
         var controlPoints = this.parseControlPoints(node, npointsU, npointsV, id);
 
-        return "primitive patch doesn't exist";
+        return `npointsU ${npointsU} npointsV ${npointsV} npartsU ${npartsU} npartsV ${npartsV}`;
     }
 
     /**
@@ -956,9 +956,33 @@ class MySceneGraph {
      * @param {*} id 
      */
     parseControlPoints(node, npointsU, npointsV, id) {
-        
+        const children = node.children;
+        if (children.length != npointsU * npointsV) {
+            return `Wrong number of control points for primitive id = ${id} (is ${children.length}, should be ${npointsU * npointsV})`;
+        }
 
-        return "primitive patch doesn't exist";
+        for (const child of children) {
+            if (child.nodeName != 'controlpoint')
+                return `Unknown tag in control points for primitive id = ${id}`;
+        }
+
+        let ctrlPts = [];
+        let ctrlPtsIndex = 0;
+        for (let i = 0; i < npointsU; i++) {
+
+            let uCtrlPts = [];
+
+            for (let j = 0; j < npointsV; j++) {
+                const coords = this.parseCoordinates3D(children[ctrlPtsIndex], `Unable to parse coordinates of control point for primitive with id = ${id}`, 'xx', 'yy', 'zz');
+                coords.push(1);
+                uCtrlPts.push(coords);
+                ctrlPtsIndex++;
+            }
+
+            ctrlPts.push(uCtrlPts);
+        }
+
+        return ctrlPts;
     }
 
      /**
@@ -1382,21 +1406,27 @@ class MySceneGraph {
     * @param {block element} node
     * @param {message to be displayed in case of error} messageError
     */
-    parseCoordinates3D(node, messageError) {
+    parseCoordinates3D(node, messageError, xString, yString, zString) {
         var position = [];
 
+        if (arguments.length < 5) {
+            xString = 'x';
+            yString = 'y';
+            zString = 'z';
+        }
+
         // x
-        var x = this.reader.getFloat(node, 'x');
+        var x = this.reader.getFloat(node, xString);
         if (!(x != null && !isNaN(x)))
             return "unable to parse x-coordinate of the " + messageError;
 
         // y
-        var y = this.reader.getFloat(node, 'y');
+        var y = this.reader.getFloat(node, yString);
         if (!(y != null && !isNaN(y)))
             return "unable to parse y-coordinate of the " + messageError;
 
         // z
-        var z = this.reader.getFloat(node, 'z');
+        var z = this.reader.getFloat(node, zString);
         if (!(z != null && !isNaN(z)))
             return "unable to parse z-coordinate of the " + messageError;
 
