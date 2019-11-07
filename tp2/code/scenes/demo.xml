@@ -3,7 +3,7 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="30" y="15" z="30" />
+            <from x="5" y="5" z="5" />
             <to x="0" y="-2" z="0" />
         </perspective>
     </views>
@@ -46,14 +46,9 @@
 
     <animations>
         <animation id="demoAnimation">
-            <keyframe instant="5">
-                <translate x="8" y="0" z="0" />
-                <rotate angle_x="360" angle_y="0" angle_z="0" />
-                <scale x="2" y="2" z="2" />
-            </keyframe>
-            <keyframe instant="10">
+            <keyframe instant="20">
                 <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <rotate angle_x="0" angle_y="2160" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
@@ -82,12 +77,12 @@
         <component id="demoRoot">
             <transformation>
             </transformation>
+            <animationref id="demoAnimation" />
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="demoPlane" />
                 <primitiveref id="demoPatch" />
             </children>
         </component>

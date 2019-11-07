@@ -1,20 +1,21 @@
-class MyPlane extends CGFnurbsObject {
+class MyPlane extends CGFobject {
     constructor(scene, npartsU, npartsV) {
+        super(scene);
         const surface = new CGFnurbsSurface(1, 1,
-            [ // control points
+            [ // control points~
                 [ // u = 0
-                    [-0.5, 0, -0.5], // v = 0
-                    [-0.5, 0, 0.5] // v = 1
+                    [0.5, 0, -0.5, 1], // v = 0
+                    [0.5, 0, 0.5, 1] // v = 1
                 ],
                 [ // u = 1
-                    [0.5, 0, -0.5], // v = 0
-                    [0.5, 0, 0.5] // v = 1
+                    [-0.5, 0, -0.5, 1], // v = 0
+                    [-0.5, 0, 0.5, 1] // v = 1
                 ]
             ]);
-        super(scene, npartsU, npartsV, surface);
-    }
+        
+        this.nurbsObject = new CGFnurbsObject(this.scene, npartsU, npartsV, surface); 
 
-    scaleTexCoords(length_s, length_t) {
-        return;
+        this.scaleTexCoords = (ls, lt) => {}
+        this.display = () => { this.nurbsObject.display() }
     }
 }
