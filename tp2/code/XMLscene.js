@@ -33,7 +33,7 @@ class XMLscene extends CGFscene {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     this.axis = new CGFaxis(this);
-    this.setUpdatePeriod(100);
+    this.setUpdatePeriod(20);
 
     this.displayAxis = true;
     this.displayLights = false;

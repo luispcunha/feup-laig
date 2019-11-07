@@ -947,7 +947,7 @@ class MySceneGraph {
 
         var controlPoints = this.parseControlPoints(node, npointsU, npointsV, id);
 
-        return `npointsU ${npointsU} npointsV ${npointsV} npartsU ${npartsU} npartsV ${npartsV}`;
+        return new MyPatch(this.scene, npointsU - 1, npointsV - 1, npartsU, npartsV, controlPoints);
     }
 
     /**
@@ -961,25 +961,16 @@ class MySceneGraph {
             return `Wrong number of control points for primitive id = ${id} (is ${children.length}, should be ${npointsU * npointsV})`;
         }
 
+        let ctrlPts = [];
+       
         for (const child of children) {
+            
             if (child.nodeName != 'controlpoint')
                 return `Unknown tag in control points for primitive id = ${id}`;
-        }
 
-        let ctrlPts = [];
-        let ctrlPtsIndex = 0;
-        for (let i = 0; i < npointsU; i++) {
+            const coords = this.parseCoordinates3D(child, `Unable to parse coordinates of control point for primitive with id = ${id}`, 'xx', 'yy', 'zz');
 
-            let uCtrlPts = [];
-
-            for (let j = 0; j < npointsV; j++) {
-                const coords = this.parseCoordinates3D(children[ctrlPtsIndex], `Unable to parse coordinates of control point for primitive with id = ${id}`, 'xx', 'yy', 'zz');
-                coords.push(1);
-                uCtrlPts.push(coords);
-                ctrlPtsIndex++;
-            }
-
-            ctrlPts.push(uCtrlPts);
+            ctrlPts.push(coords);
         }
 
         return ctrlPts;
