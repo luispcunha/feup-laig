@@ -835,7 +835,8 @@ class MySceneGraph {
             if (grandChildren.length != 1 ||
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
-                    grandChildren[0].nodeName != 'torus')) {
+                    grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' &&
+                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2')) {
                 return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)"
             }
 
@@ -878,10 +879,120 @@ class MySceneGraph {
 
                 this.primitives[primitiveId] = torus;
             }
+            else if (primitiveType == 'plane') {
+                var plane = this.parsePlane(grandChildren[0], primitiveId);
+                if (plane instanceof String || typeof plane == 'string')
+                    return plane;
+
+                this.primitives[primitiveId] = plane;
+            }
+            else if (primitiveType == 'patch') {
+                var patch = this.parsePatch(grandChildren[0], primitiveId);
+                if (patch instanceof String || typeof patch == 'string')
+                    return patch;
+
+                this.primitives[primitiveId] = patch;
+            }
+            else if (primitiveType == 'cylinder2') {
+                var cylinder2 = this.parseCylinder2(grandChildren[0], primitiveId);
+                if (cylinder2 instanceof String || typeof cylinder2 == 'string')
+                    return cylinder2;
+
+                this.primitives[primitiveId] = cylinder2;
+            }
         }
 
         this.log("Parsed primitives.");
         return null;
+    }
+
+    /**
+     * Parses plane primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
+    parsePlane(node, id) {
+        var npartsU = this.reader.getInteger(node, 'npartsU');
+        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
+            return "unable to parse slices of the primitive for ID = " + id;
+
+        var npartsV = this.reader.getInteger(node, 'npartsV');
+        if (!(loops != null && !isNaN(loops) && Number.isInteger(loops)))
+            return "unable to parse loops of the primitive for ID = " + id;
+
+        return "primitive plane doesn't exist";
+    }
+
+    /**
+     * Parses path primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
+    parsePatch(node, id) {
+        var npointsU = this.reader.getInteger(node, 'npointsU');
+        if (!(npointsU != null && !isNaN(npointsU) && Number.isInteger(npointsU)))
+            return "unable to parse npointsU of the primitive for ID = " + id;
+
+        var npointsV = this.reader.getInteger(node, 'npointsV');
+        if (!(npointsV != null && !isNaN(npointsV) && Number.isInteger(npointsV)))
+            return "unable to parse npointsV of the primitive for ID = " + id;
+
+        var npartsU = this.reader.getInteger(node, 'npartsU');
+        if (!(npartsU != null && !isNaN(npartsU) && Number.isInteger(npartsU)))
+            return "unable to parse npartsU of the primitive for ID = " + id;
+
+        var npartsV = this.reader.getInteger(node, 'npartsV');
+        if (!(npartsV != null && !isNaN(npartsV) && Number.isInteger(npartsV)))
+            return "unable to parse npartsV of the primitive for ID = " + id;
+
+        var controlPoints = this.parseControlPoints(node, npointsU, npointsV, id);
+
+        return "primitive patch doesn't exist";
+    }
+
+    /**
+     * Parses control points of patch primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
+    parseControlPoints(node, npointsU, npointsV, id) {
+        
+
+        return "primitive patch doesn't exist";
+    }
+
+     /**
+     * Parses cylinder2 primitive
+     * @param {*} node 
+     * @param {*} id 
+     */
+    parseCylinder2(node, id) {
+        // base
+        var base = this.reader.getFloat(node, 'base');
+        if (!(base != null && !isNaN(base)))
+            return "unable to parse base of the primitive for ID = " + id;
+
+        // top
+        var top = this.reader.getFloat(node, 'top');
+        if (!(top != null && !isNaN(top)))
+            return "unable to parse top of the primitive for ID = " + id;
+
+        // height
+        var height = this.reader.getFloat(node, 'height');
+        if (!(height != null && !isNaN(height)))
+            return "unable to parse height of the primitive for ID = " + id;
+
+        // slices
+        var slices = this.reader.getInteger(node, 'slices');
+        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
+            return "unable to parse slices of the primitive for ID = " + id;
+
+        // stacks
+        var stacks = this.reader.getInteger(node, 'stacks');
+        if (!(stacks != null && !isNaN(stacks) && Number.isInteger(stacks)))
+            return "unable to parse stacks of the primitive for ID = " + id;
+
+        return "cylinder2 primitive doesn't exist";
     }
 
     /**
