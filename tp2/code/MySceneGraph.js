@@ -894,7 +894,7 @@ class MySceneGraph {
                 this.primitives[primitiveId] = patch;
             }
             else if (primitiveType == 'cylinder2') {
-                var cylinder2 = this.parseCylinder2(grandChildren[0], primitiveId);
+                var cylinder2 = this.parseCylinder(grandChildren[0], primitiveId, 2);
                 if (cylinder2 instanceof String || typeof cylinder2 == 'string')
                     return cylinder2;
 
@@ -974,40 +974,6 @@ class MySceneGraph {
         }
 
         return ctrlPts;
-    }
-
-    /**
-    * Parses cylinder2 primitive
-    * @param {*} node
-    * @param {*} id
-    */
-    parseCylinder2(node, id) {
-        // base
-        var base = this.reader.getFloat(node, 'base');
-        if (!(base != null && !isNaN(base)))
-            return "unable to parse base of the primitive for ID = " + id;
-
-        // top
-        var top = this.reader.getFloat(node, 'top');
-        if (!(top != null && !isNaN(top)))
-            return "unable to parse top of the primitive for ID = " + id;
-
-        // height
-        var height = this.reader.getFloat(node, 'height');
-        if (!(height != null && !isNaN(height)))
-            return "unable to parse height of the primitive for ID = " + id;
-
-        // slices
-        var slices = this.reader.getInteger(node, 'slices');
-        if (!(slices != null && !isNaN(slices) && Number.isInteger(slices)))
-            return "unable to parse slices of the primitive for ID = " + id;
-
-        // stacks
-        var stacks = this.reader.getInteger(node, 'stacks');
-        if (!(stacks != null && !isNaN(stacks) && Number.isInteger(stacks)))
-            return "unable to parse stacks of the primitive for ID = " + id;
-
-        return "cylinder2 primitive doesn't exist";
     }
 
     /**
@@ -1100,7 +1066,7 @@ class MySceneGraph {
      * @param {*} node
      * @param {*} id
      */
-    parseCylinder(node, id) {
+    parseCylinder(node, id, type) {
         // base
         var base = this.reader.getFloat(node, 'base');
         if (!(base != null && !isNaN(base)))
@@ -1126,6 +1092,9 @@ class MySceneGraph {
         if (!(stacks != null && !isNaN(stacks) && Number.isInteger(stacks)))
             return "unable to parse stacks of the primitive for ID = " + id;
 
+        if (type == 2)
+            return new MyCylinder2(this.scene, stacks, slices, base, top, height);
+            
         return new MyCylinder(this.scene, stacks, slices, base, top, height);
     }
 

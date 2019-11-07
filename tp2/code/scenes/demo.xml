@@ -28,11 +28,17 @@
     </textures>
 
     <materials>
-        <material id="demoMaterial" shininess="10">
+        <material id="demoMaterial2" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="demoMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0" g="1.0" b="0.0" a="1.0" />
+            <diffuse r="0" g="0.6" b="0.0" a="1.0" />
+            <specular r="0" g="0.6" b="0.0" a="1.0" />
         </material>
     </materials>
 
@@ -71,31 +77,37 @@
                 <controlpoint xx="1.5" yy="1.5" zz="0" />
             </patch> 
         </primitive>
+        <primitive id="demoCylinder2">
+            <cylinder2 base="0.2" top="0.2" height="1" slices="16" stacks="8" />
+        </primitive>
+        <primitive id="demoCylinder">
+            <cylinder base="0.2" top="0.2" height="1" slices="16" stacks="8" />
+        </primitive>
     </primitives>
 
     <components>
         <component id="demoRoot">
             <transformation>
             </transformation>
-            <animationref id="demoAnimation" />
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="demoPatch" />
+                <primitiveref id="demoCylinder2" />
+                <componentref id="cylinder" />
             </children>
         </component>
-        <component id="rectangleBack">
+        <component id="cylinder">
             <transformation>
-                <rotate axis="x" angle="-180" />
+                <scale x="1.1" y="1.1" z="1.1" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="demoMaterial2" />
             </materials>
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="demoRectangle" />
+                <primitiveref id="demoCylinder" />
             </children>
         </component>
     </components>
