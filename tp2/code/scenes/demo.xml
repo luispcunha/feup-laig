@@ -66,6 +66,16 @@
         <primitive id="demoRectangle">
             <rectangle x1="-2" y1="-2" x2="2" y2="2" />
         </primitive>
+        <primitive id="demoPatch">
+            <patch npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                <controlpoint xx="-1.5" yy="-1.5" zz="0" />
+                <controlpoint xx="-1.5" yy="1.5" zz="0" />
+                <controlpoint xx="0" yy="-1.5" zz="3" />
+                <controlpoint xx="0" yy="1.5" zz="3" />
+                <controlpoint xx="1.5" yy="-1.5" zz="0" />
+                <controlpoint xx="1.5" yy="1.5" zz="0" />
+            </patch> 
+        </primitive>
     </primitives>
 
     <components>
@@ -78,6 +88,7 @@
             <texture id="demoTexture" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="demoPlane" />
+                <primitiveref id="demoPatch" />
             </children>
         </component>
         <component id="rectangleBack">
