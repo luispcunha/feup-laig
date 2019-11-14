@@ -35,17 +35,31 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(20);
 
+    this.rttTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
+    this.securityCamera = new MySecurityCamera(this, this.gl.canvas.width, this.gl.canvas.height, this.rttTexture);
+    this.secCamShader = new CGFshader(this.gl, "shaders/securityCamera.vert", "shaders/securityCamera.frag");
+
     this.displayAxis = true;
     this.displayLights = false;
+    this.displaySecurityCamera = true;
 
     this.lastT = 0;
+    window.addEventListener('resize', () => this.onWindowResize());
+  }
+
+  onWindowResize() {
+    this.rttTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
+    this.securityCamera.texture = this.rttTexture;
   }
 
   /**
   * Initializes the scene cameras.
   */
   initCameras() {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    const cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    this.currentMainCamera = cam;
+    this.currentSecurityCamera = cam;
+    this.camera = cam;
   }
 
   /**
@@ -116,14 +130,12 @@ class XMLscene extends CGFscene {
     this.currentMainView = this.graph.defaultView;
     this.onMainCameraChange();
 
-    this.displaySecurityCamera = false;
     this.currentSecondaryView = this.graph.defaultView;
     this.onSecurityCameraChange();
 
 
     this.interface.initCameraSettings(Object.keys(this.graph.views));
     this.interface.initLightSettings();
-    this.interface.setActiveCamera(this.camera);
 
     this.sceneInited = true;
   }
@@ -132,25 +144,35 @@ class XMLscene extends CGFscene {
    * Set current camera to the one selected in the interface
    */
   onMainCameraChange() {
-    this.camera = this.graph.views[this.currentMainView];
-    this.interface.setActiveCamera(this.camera);
+    this.currentMainCamera = this.graph.views[this.currentMainView];
+    this.interface.setActiveCamera(this.currentMainCamera);
   }
 
   onSecurityCameraChange() {
-    this.securityCamera = this.graph.views[this.graph.currentSecondaryView];
+    this.currentSecurityCamera = this.graph.views[this.currentSecondaryView];
   }
 
 
   display() {
-    this.render();
+    if (this.displaySecurityCamera) {
+      this.rttTexture.attachToFrameBuffer();
+      this.render(this.currentSecurityCamera);
+      this.rttTexture.detachFromFrameBuffer();
+    }
+    this.render(this.currentMainCamera);
+    if (this.displaySecurityCamera) {
+      this.setActiveShader(this.secCamShader);
+      this.securityCamera.display();
+      this.setActiveShader(this.defaultShader);
+    }
   }
 
   /**
   * Renders the scene.
   */
-  render() {
+  render(camera) {
     // ---- BEGIN Background, camera and axis setup
-
+    this.camera = camera;
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);

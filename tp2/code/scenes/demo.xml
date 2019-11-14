@@ -6,6 +6,10 @@
             <from x="5" y="5" z="5" />
             <to x="0" y="-2" z="0" />
         </perspective>
+        <perspective id="defaultCamera2" near="0.1" far="500" angle="45">
+            <from x="6" y="6" z="6" />
+            <to x="0" y="-2" z="0" />
+        </perspective>
     </views>
 
     <globals>
@@ -75,7 +79,7 @@
                 <controlpoint xx="0" yy="1.5" zz="3" />
                 <controlpoint xx="1.5" yy="-1.5" zz="0" />
                 <controlpoint xx="1.5" yy="1.5" zz="0" />
-            </patch> 
+            </patch>
         </primitive>
         <primitive id="demoCylinder2">
             <cylinder2 base="0.2" top="0.2" height="1" slices="16" stacks="8" />
