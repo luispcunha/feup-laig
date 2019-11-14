@@ -231,6 +231,20 @@
     </transformations>
 
     <animations>
+        <animation id="rotateBall">
+            <keyframe instant="60">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="4320" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="flagAnimation">
+            <keyframe instant="1">
+                <translate x="0" y="0" z="3" />
+                <rotate angle_x="0" angle_y="0" angle_z="360" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
     </animations>
 
     <primitives>
@@ -264,14 +278,14 @@
             <sphere radius="0.3" slices="20" stacks="20" />
         </primitive>
         <primitive id="baseballTeamTriangleA">
-            <triangle   x1="0" y1="0" z1="3"
-                        x2="0" y2="0" z2="5"
-                        x3="3" y3="0" z3="4" />
+            <triangle   x1="0" y1="0" z1="0"
+                        x2="0" y2="0" z2="2"
+                        x3="3" y3="0" z3="1" />
         </primitive>
         <primitive id="baseballTeamTriangleB">
-            <triangle   x1="0" y1="0" z1="5"
-                        x2="0" y2="0" z2="3"
-                        x3="3" y3="0" z3="4" />
+            <triangle   x1="0" y1="0" z1="2"
+                        x2="0" y2="0" z2="0"
+                        x3="3" y3="0" z3="1" />
         </primitive>
         <primitive id="powerPlantWallRectangle">
             <rectangle x1="-10" x2="10" y1="-1.5" y2="1.5" />
@@ -357,8 +371,7 @@
             <children>
                 <componentref id="baseballPole" />
                 <componentref id="baseball" />
-                <componentref id="baseballFlagA" />
-                <componentref id="baseballFlagB" />
+                <componentref id="flag" />
             </children>
         </component>
 
@@ -380,12 +393,27 @@
                 <translate x="0" y="0" z="6" />
                 <scale x="3" y="3" z="3" />
             </transformation>
+            <animationref id="rotateBall" />
             <materials>
                 <material id="baseballDiffuse" />
             </materials>
             <texture id="baseball" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="miniSphere" />
+            </children>
+        </component>
+
+        <component id="flag">
+            <transformation>
+            </transformation>
+            <animationref id="flagAnimation" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="baseballFlagA" />
+                <componentref id="baseballFlagB" />
             </children>
         </component>
 

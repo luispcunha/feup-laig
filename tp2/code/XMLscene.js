@@ -154,6 +154,7 @@ class XMLscene extends CGFscene {
 
 
   display() {
+    // TODO: algo a ver c DEPTH test pq o
     if (this.displaySecurityCamera) {
       this.rttTexture.attachToFrameBuffer();
       this.render(this.currentSecurityCamera);
