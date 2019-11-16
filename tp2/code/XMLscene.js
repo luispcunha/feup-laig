@@ -189,14 +189,14 @@ class XMLscene extends CGFscene {
 
     this.pushMatrix();
 
-    for (const light of this.lights) {
-      light.update();
-    }
-
-    if (this.displayAxis)
-      this.axis.display();
-
     if (this.sceneInited) {
+
+      for (const light of this.lights)
+        light.update();
+
+      if (this.displayAxis)
+        this.axis.display();
+
       // Draw axis
       this.setDefaultAppearance();
 
@@ -227,6 +227,8 @@ class XMLscene extends CGFscene {
   update(t) {
     let deltaT = t - this.lastT;
     this.lastT = t;
+
+    this.secCamShader.setUniformsValues({ timeFactor: t / 5000 % 10});
 
     if (this.graph.loadedOk) {
       const keys = Object.keys(this.graph.animations);
