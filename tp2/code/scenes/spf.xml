@@ -90,7 +90,7 @@
         <texture id="baseball" file="scenes/images/baseball.jpg" />
         <texture id="teamlogoA" file="scenes/images/spfisotopesA.jpg" />
         <texture id="teamlogoB" file="scenes/images/spfisotopesB.jpg" />
-    </textures> 
+    </textures>
 
     <materials>
         <material id="metalMat" shininess="10">
@@ -190,7 +190,7 @@
             <specular r="0" g="0.8" b="0" a="1.0" />
         </material>
         <material id="greenLightOff" shininess="10">
-            <emission r="0" g="0" b="0" a="1.0" /> 
+            <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0" g="0.2" b="0" a="1.0" />
             <diffuse r="0" g="0.2" b="0" a="1.0" />
             <specular r="0" g="0.5" b="0" a="1.0" />
@@ -245,6 +245,136 @@
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
+        <animation id="smoke1">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "2">
+                <translate x="0" y="0.1" z="1" />
+                <rotate angle_x="-2" angle_y="0" angle_z="30" />
+                <scale x="0.9" y="0.9" z="0.65" />
+            </keyframe>
+            <keyframe instant = "8">
+                <translate x="0" y="0.6" z="5" />
+                <rotate angle_x="-8" angle_y="0" angle_z="120" />
+                <scale x="1.3" y="1.3" z="0.8" />
+            </keyframe>
+            <keyframe instant = "24">
+                <translate x="0" y="2.5" z="15" />
+                <rotate angle_x="-15" angle_y="0" angle_z="360" />
+                <scale x="0.5" y="0.5" z="0.3" />
+            </keyframe>
+        </animation>
+        <animation id="smoke2">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "3">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "5">
+                <translate x="0" y="0.1" z="1" />
+                <rotate angle_x="-2" angle_y="0" angle_z="30" />
+                <scale x="0.9" y="0.9" z="0.65" />
+            </keyframe>
+            <keyframe instant = "11">
+                <translate x="0" y="0.6" z="5" />
+                <rotate angle_x="-8" angle_y="0" angle_z="120" />
+                <scale x="1.3" y="1.3" z="0.8" />
+            </keyframe>
+            <keyframe instant = "27">
+                <translate x="0" y="2.5" z="15" />
+                <rotate angle_x="-15" angle_y="0" angle_z="360" />
+                <scale x="0.5" y="0.5" z="0.3" />
+            </keyframe>
+        </animation>
+        <animation id="smoke3">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "6">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "8">
+                <translate x="0" y="0.1" z="1" />
+                <rotate angle_x="-2" angle_y="0" angle_z="30" />
+                <scale x="0.9" y="0.9" z="0.65" />
+            </keyframe>
+            <keyframe instant = "14">
+                <translate x="0" y="0.6" z="5" />
+                <rotate angle_x="-8" angle_y="0" angle_z="120" />
+                <scale x="1.3" y="1.3" z="0.8" />
+            </keyframe>
+            <keyframe instant = "30">
+                <translate x="0" y="2.5" z="15" />
+                <rotate angle_x="-15" angle_y="0" angle_z="360" />
+                <scale x="0.5" y="0.5" z="0.3" />
+            </keyframe>
+        </animation>
+        <animation id="smoke4">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "9">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "11">
+                <translate x="0" y="0.1" z="1" />
+                <rotate angle_x="-2" angle_y="0" angle_z="30" />
+                <scale x="0.9" y="0.9" z="0.65" />
+            </keyframe>
+            <keyframe instant = "17">
+                <translate x="0" y="0.6" z="5" />
+                <rotate angle_x="-8" angle_y="0" angle_z="120" />
+                <scale x="1.3" y="1.3" z="0.8" />
+            </keyframe>
+            <keyframe instant = "33">
+                <translate x="0" y="2.5" z="15" />
+                <rotate angle_x="-15" angle_y="0" angle_z="360" />
+                <scale x="0.5" y="0.5" z="0.3" />
+            </keyframe>
+        </animation>
+        <animation id="smoke5">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "12">
+                <translate x="0" y="-0.4" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.6" y="0.6" z="0.6" />
+            </keyframe>
+            <keyframe instant = "14">
+                <translate x="0" y="0.1" z="1" />
+                <rotate angle_x="-2" angle_y="0" angle_z="30" />
+                <scale x="0.9" y="0.9" z="0.65" />
+            </keyframe>
+            <keyframe instant = "20">
+                <translate x="0" y="0.6" z="5" />
+                <rotate angle_x="-8" angle_y="0" angle_z="120" />
+                <scale x="1.3" y="1.3" z="0.8" />
+            </keyframe>
+            <keyframe instant = "36">
+                <translate x="0" y="2.5" z="15" />
+                <rotate angle_x="-15" angle_y="0" angle_z="360" />
+                <scale x="0.5" y="0.5" z="0.3" />
+            </keyframe>
+        </animation>
     </animations>
 
     <primitives>
@@ -290,7 +420,7 @@
         <primitive id="powerPlantWallRectangle">
             <rectangle x1="-10" x2="10" y1="-1.5" y2="1.5" />
         </primitive>
-        <primitive id="poleCylinder"> 
+        <primitive id="poleCylinder">
             <cylinder base="0.1" top="0.1" height="4" stacks="8" slices="16" />
         </primitive>
         <primitive id="signRectangle">
@@ -358,7 +488,7 @@
                 <componentref id="chimneyPatch" />
                 <componentref id="plantFloor" />
             </children>
-        </component>    
+        </component>
 
         <component id="baseballFanStick">
             <transformation>
@@ -477,7 +607,7 @@
                 <scale x="1" y="1" z="0.6" />
                 <rotate axis="y" angle="-90" />
                 <rotate axis="z" angle="-90" />
-                
+
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -498,14 +628,14 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" /> 
+            <texture id="inherit" />
             <children>
                 <primitiveref id="planeRectangle" />
             </children>
         </component>
 
         <component id="sky4">
-            <transformation>  
+            <transformation>
                 <translate x="-25" y="0" z="15" />
                 <scale x="1" y="1" z="0.6" />
                 <rotate axis="z" angle="90" />
@@ -519,7 +649,7 @@
                 <primitiveref id="planeRectangle" />
             </children>
         </component>
-        
+
         <component id="floor">
             <transformation>
             </transformation>
@@ -756,7 +886,7 @@
                 <componentref id="unitCube" />
             </children>
         </component>
-        
+
         <component id="semaphoreHeadPyramid">
             <transformation>
                 <translate x="0" y="0" z="0.8" />
@@ -1105,7 +1235,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="wallTemplate" />  
+                <componentref id="wallTemplate" />
             </children>
         </component>
 
@@ -1118,7 +1248,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="wallTemplate" />  
+                <componentref id="wallTemplate" />
             </children>
         </component>
 
@@ -1133,7 +1263,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="wallTemplate" />  
+                <componentref id="wallTemplate" />
             </children>
         </component>
 
@@ -1495,18 +1625,18 @@
 
         <component id="smokeRingPatch1">
             <transformation>
-                <translate x="0" y="0" z="12.5" />
-            </transformation>
+                <translate x="0" y="0" z="10" />
+             </transformation>
             <materials>
                 <material id="smokeMat" />
             </materials>
             <texture id="smoke" length_s="1" length_t="1" />
             <children>
-                <componentref id="smokeRing1" />
-                <componentref id="smokeRing2" />
-                <componentref id="smokeRing3" /> 
-                <componentref id="smokeRing5" /> 
-                <componentref id="smokeRing6" /> 
+                <componentref id="smokeRingAnim1" />
+                <componentref id="smokeRingAnim2" />
+                <componentref id="smokeRingAnim3" />
+                <componentref id="smokeRingAnim4" />
+                <componentref id="smokeRingAnim5" />
             </children>
         </component>
 
@@ -1523,7 +1653,68 @@
                 <componentref id="smokeRing1" />
                 <componentref id="smokeRing2" />
                 <componentref id="smokeRing3" />
-                <componentref id="smokeRing4" />    
+                <componentref id="smokeRing4" />
+            </children>
+        </component>
+
+        <component id="smokeRingAnim1">
+            <transformation>
+            </transformation>
+            <animationref id="smoke1" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim2">
+            <transformation>
+            </transformation>
+            <animationref id="smoke2" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim3">
+            <transformation>
+            </transformation>
+            <animationref id="smoke3" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim4">
+            <transformation>
+            </transformation>
+            <animationref id="smoke4" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim5">
+            <transformation>
+            </transformation>
+            <animationref id="smoke5" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
             </children>
         </component>
 
