@@ -39,7 +39,7 @@ class XMLscene extends CGFscene {
     this.securityCamera = new MySecurityCamera(this, this.gl.canvas.width, this.gl.canvas.height, this.rttTexture);
     this.secCamShader = new CGFshader(this.gl, "shaders/securityCamera.vert", "shaders/securityCamera.frag");
 
-    this.displayAxis = true;
+    this.displayAxis = false;
     this.displayLights = false;
     this.displaySecurityCamera = true;
 
@@ -228,7 +228,7 @@ class XMLscene extends CGFscene {
     let deltaT = t - this.lastT;
     this.lastT = t;
 
-    this.secCamShader.setUniformsValues({ timeFactor: t / 5000 % 10});
+    this.secCamShader.setUniformsValues({ timeFactor: t / 5000 % 10 });
 
     if (this.graph.loadedOk) {
       const keys = Object.keys(this.graph.animations);
