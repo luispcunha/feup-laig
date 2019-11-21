@@ -417,8 +417,8 @@
                         x2="0" y2="0" z2="0"
                         x3="3" y3="0" z3="1" />
         </primitive>
-        <primitive id="powerPlantWallRectangle">
-            <rectangle x1="-10" x2="10" y1="-1.5" y2="1.5" />
+        <primitive id="powerPlantWallPlane">
+            <plane npartsU="64" npartsV="64" />
         </primitive>
         <primitive id="poleCylinder">
             <cylinder base="0.1" top="0.1" height="4" stacks="8" slices="16" />
@@ -475,7 +475,6 @@
                 <componentref id="powerPlant" />
             </children>
         </component>
-
         <component id="powerPlant">
             <transformation>
             </transformation>
@@ -1388,30 +1387,29 @@
         <component id="frontWallLeftCover">
             <transformation>
                 <translate x="0" y="3" z="1.5" />
-                <rotate axis="x" angle="90" />
-                <scale x="0.05" y="1" z="1.5" />
+                <rotate axis="z" angle="180" />
+                <scale x="1" y="1" z="3" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <primitiveref id="powerPlantWallPlane" />
             </children>
         </component>
 
         <component id="frontWallRightCover">
             <transformation>
                 <translate x="0" y="-3" z="1.5" />
-                <rotate axis="x" angle="-90" />
-                <scale x="0.05" y="1" z="1.5" />
+                <scale x="1" y="1" z="3" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <primitiveref id="powerPlantWallPlane" />
             </children>
         </component>
 
@@ -1432,42 +1430,56 @@
         <component id="wallFrontSide">
             <transformation>
                 <translate x="0" y="-0.5" z="1.5" />
-                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="180" />
+
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <componentref id="wallPlane" />
             </children>
         </component>
 
         <component id="wallBackSide">
             <transformation>
                 <translate x="0" y="0.5" z="1.5" />
-                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <componentref id="wallPlane" />
             </children>
         </component>
 
         <component id="wallTopSide">
             <transformation>
                 <translate x="0" y="0" z="3" />
-                <scale x="1" y="0.333" z="1" />
+                <rotate axis="x" angle="90" />
+                <scale x="1" y="1" z="0.333" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <componentref id="wallPlane" />
+            </children>
+        </component>
+
+        <component id="wallPlane">
+            <transformation>
+                <scale x="20" y="1" z="3" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallPlane" />
             </children>
         </component>
 
@@ -1495,7 +1507,7 @@
             <texture id="none" />
             <children>
                 <componentref id="fullChimneyTemplate" />
-                <componentref id="smokeRingPatch1" />
+                <componentref id="smokeRingAnimatedPatch" />
             </children>
         </component>
 
@@ -1623,7 +1635,7 @@
             </children>
         </component>
 
-        <component id="smokeRingPatch1">
+        <component id="smokeRingAnimatedPatch">
             <transformation>
                 <translate x="0" y="0" z="10" />
              </transformation>
@@ -1639,6 +1651,25 @@
                 <componentref id="smokeRingAnim5" />
             </children>
         </component>
+
+
+        <component id="smokeRingPatch1">
+            <transformation>
+                <translate x="0" y="0" z="10" />
+             </transformation>
+            <materials>
+                <material id="smokeMat" />
+            </materials>
+            <texture id="smoke" length_s="1" length_t="1" />
+            <children>
+                <componentref id="smokeRing1" />
+                <componentref id="smokeRing2" />
+                <componentref id="smokeRing3" />
+                <componentref id="smokeRing5" />
+                <componentref id="smokeRing6" />
+            </children>
+        </component>
+
 
         <component id="smokeRingPatch2">
             <transformation>
