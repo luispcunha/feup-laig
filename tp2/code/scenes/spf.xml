@@ -90,7 +90,7 @@
         <texture id="baseball" file="scenes/images/baseball.jpg" />
         <texture id="teamlogoA" file="scenes/images/spfisotopesA.jpg" />
         <texture id="teamlogoB" file="scenes/images/spfisotopesB.jpg" />
-    </textures> 
+    </textures>
 
     <materials>
         <material id="metalMat" shininess="10">
@@ -190,7 +190,7 @@
             <specular r="0" g="0.8" b="0" a="1.0" />
         </material>
         <material id="greenLightOff" shininess="10">
-            <emission r="0" g="0" b="0" a="1.0" /> 
+            <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0" g="0.2" b="0" a="1.0" />
             <diffuse r="0" g="0.2" b="0" a="1.0" />
             <specular r="0" g="0.5" b="0" a="1.0" />
@@ -287,10 +287,10 @@
                         x2="0" y2="0" z2="0"
                         x3="3" y3="0" z3="1" />
         </primitive>
-        <primitive id="powerPlantWallRectangle">
-            <rectangle x1="-10" x2="10" y1="-1.5" y2="1.5" />
+        <primitive id="powerPlantWallPlane">
+            <plane npartsU="64" npartsV="64" />
         </primitive>
-        <primitive id="poleCylinder"> 
+        <primitive id="poleCylinder">
             <cylinder base="0.1" top="0.1" height="4" stacks="8" slices="16" />
         </primitive>
         <primitive id="signRectangle">
@@ -345,7 +345,6 @@
                 <componentref id="powerPlant" />
             </children>
         </component>
-
         <component id="powerPlant">
             <transformation>
             </transformation>
@@ -358,7 +357,7 @@
                 <componentref id="chimneyPatch" />
                 <componentref id="plantFloor" />
             </children>
-        </component>    
+        </component>
 
         <component id="baseballFanStick">
             <transformation>
@@ -477,7 +476,7 @@
                 <scale x="1" y="1" z="0.6" />
                 <rotate axis="y" angle="-90" />
                 <rotate axis="z" angle="-90" />
-                
+
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -498,14 +497,14 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" /> 
+            <texture id="inherit" />
             <children>
                 <primitiveref id="planeRectangle" />
             </children>
         </component>
 
         <component id="sky4">
-            <transformation>  
+            <transformation>
                 <translate x="-25" y="0" z="15" />
                 <scale x="1" y="1" z="0.6" />
                 <rotate axis="z" angle="90" />
@@ -519,7 +518,7 @@
                 <primitiveref id="planeRectangle" />
             </children>
         </component>
-        
+
         <component id="floor">
             <transformation>
             </transformation>
@@ -756,7 +755,7 @@
                 <componentref id="unitCube" />
             </children>
         </component>
-        
+
         <component id="semaphoreHeadPyramid">
             <transformation>
                 <translate x="0" y="0" z="0.8" />
@@ -1105,7 +1104,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="wallTemplate" />  
+                <componentref id="wallTemplate" />
             </children>
         </component>
 
@@ -1118,7 +1117,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="wallTemplate" />  
+                <componentref id="wallTemplate" />
             </children>
         </component>
 
@@ -1133,7 +1132,7 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="wallTemplate" />  
+                <componentref id="wallTemplate" />
             </children>
         </component>
 
@@ -1258,30 +1257,29 @@
         <component id="frontWallLeftCover">
             <transformation>
                 <translate x="0" y="3" z="1.5" />
-                <rotate axis="x" angle="90" />
-                <scale x="0.05" y="1" z="1.5" />
+                <rotate axis="z" angle="180" />
+                <scale x="1" y="1" z="3" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <primitiveref id="powerPlantWallPlane" />
             </children>
         </component>
 
         <component id="frontWallRightCover">
             <transformation>
                 <translate x="0" y="-3" z="1.5" />
-                <rotate axis="x" angle="-90" />
-                <scale x="0.05" y="1" z="1.5" />
+                <scale x="1" y="1" z="3" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <primitiveref id="powerPlantWallPlane" />
             </children>
         </component>
 
@@ -1302,42 +1300,56 @@
         <component id="wallFrontSide">
             <transformation>
                 <translate x="0" y="-0.5" z="1.5" />
-                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="180" />
+
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <componentref id="wallPlane" />
             </children>
         </component>
 
         <component id="wallBackSide">
             <transformation>
                 <translate x="0" y="0.5" z="1.5" />
-                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <componentref id="wallPlane" />
             </children>
         </component>
 
         <component id="wallTopSide">
             <transformation>
                 <translate x="0" y="0" z="3" />
-                <scale x="1" y="0.333" z="1" />
+                <rotate axis="x" angle="90" />
+                <scale x="1" y="1" z="0.333" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="powerPlantWallRectangle" />
+                <componentref id="wallPlane" />
+            </children>
+        </component>
+
+        <component id="wallPlane">
+            <transformation>
+                <scale x="20" y="1" z="3" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="powerPlantWallPlane" />
             </children>
         </component>
 
@@ -1504,9 +1516,9 @@
             <children>
                 <componentref id="smokeRing1" />
                 <componentref id="smokeRing2" />
-                <componentref id="smokeRing3" /> 
-                <componentref id="smokeRing5" /> 
-                <componentref id="smokeRing6" /> 
+                <componentref id="smokeRing3" />
+                <componentref id="smokeRing5" />
+                <componentref id="smokeRing6" />
             </children>
         </component>
 
@@ -1523,7 +1535,7 @@
                 <componentref id="smokeRing1" />
                 <componentref id="smokeRing2" />
                 <componentref id="smokeRing3" />
-                <componentref id="smokeRing4" />    
+                <componentref id="smokeRing4" />
             </children>
         </component>
 
