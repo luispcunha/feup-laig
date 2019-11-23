@@ -231,148 +231,406 @@
     </transformations>
 
     <animations>
+        <animation id="baseballStickAnim">
+            <keyframe instant="0">
+                <translate x="0" y="0" z="-4" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="4">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
         <animation id="rotateBall">
             <keyframe instant="60">
                 <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="0" angle_z="4320" />
+                <rotate angle_x="0" angle_y="0" angle_z="5400" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
         <animation id="flagAnimation">
-            <keyframe instant="1">
+            <keyframe instant="4">
+                <translate x="0" y="0" z="-2" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="5">
                 <translate x="0" y="0" z="3" />
-                <rotate angle_x="0" angle_y="0" angle_z="360" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
         <animation id="smoke1">
             <keyframe instant = "0">
-                <translate x="0" y="-0.4" z="0" />
+                <translate x="0" y="-0.4" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "2">
-                <translate x="0" y="0.1" z="1" />
-                <rotate angle_x="-2" angle_y="0" angle_z="30" />
-                <scale x="0.9" y="0.9" z="0.65" />
+            <keyframe instant ="1.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="2">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="8">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
             <keyframe instant = "8">
-                <translate x="0" y="0.6" z="5" />
-                <rotate angle_x="-8" angle_y="0" angle_z="120" />
-                <scale x="1.3" y="1.3" z="0.8" />
+                <translate x="0" y="-0.4" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "24">
-                <translate x="0" y="2.5" z="15" />
-                <rotate angle_x="-15" angle_y="0" angle_z="360" />
-                <scale x="0.5" y="0.5" z="0.3" />
+            <keyframe instant ="9.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="10">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="16">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
         <animation id="smoke2">
             <keyframe instant = "0">
-                <translate x="0" y="-0.4" z="0" />
+                <translate x="0" y="-0.4" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "3">
-                <translate x="0" y="-0.4" z="0" />
+            <keyframe instant = "1">
+                <translate x="0" y="-0.5" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "5">
-                <translate x="0" y="0.1" z="1" />
-                <rotate angle_x="-2" angle_y="0" angle_z="30" />
-                <scale x="0.9" y="0.9" z="0.65" />
+            <keyframe instant ="2.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
             </keyframe>
-            <keyframe instant = "11">
-                <translate x="0" y="0.6" z="5" />
-                <rotate angle_x="-8" angle_y="0" angle_z="120" />
-                <scale x="1.3" y="1.3" z="0.8" />
+            <keyframe instant ="3">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
             </keyframe>
-            <keyframe instant = "27">
-                <translate x="0" y="2.5" z="15" />
-                <rotate angle_x="-15" angle_y="0" angle_z="360" />
-                <scale x="0.5" y="0.5" z="0.3" />
+            <keyframe instant ="9">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+            <keyframe instant = "9">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="10.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="11">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="17">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
         <animation id="smoke3">
             <keyframe instant = "0">
-                <translate x="0" y="-0.4" z="0" />
+                <translate x="0" y="-0.4" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "6">
-                <translate x="0" y="-0.4" z="0" />
+            <keyframe instant = "2">
+                <translate x="0" y="-0.5" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "8">
-                <translate x="0" y="0.1" z="1" />
-                <rotate angle_x="-2" angle_y="0" angle_z="30" />
-                <scale x="0.9" y="0.9" z="0.65" />
+            <keyframe instant ="3.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
             </keyframe>
-            <keyframe instant = "14">
-                <translate x="0" y="0.6" z="5" />
-                <rotate angle_x="-8" angle_y="0" angle_z="120" />
-                <scale x="1.3" y="1.3" z="0.8" />
+            <keyframe instant ="4">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
             </keyframe>
-            <keyframe instant = "30">
-                <translate x="0" y="2.5" z="15" />
-                <rotate angle_x="-15" angle_y="0" angle_z="360" />
-                <scale x="0.5" y="0.5" z="0.3" />
+            <keyframe instant ="10">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+            <keyframe instant = "10">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="11.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="12">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="18">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
         <animation id="smoke4">
             <keyframe instant = "0">
-                <translate x="0" y="-0.4" z="0" />
+                <translate x="0" y="-0.4" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "9">
-                <translate x="0" y="-0.4" z="0" />
+            <keyframe instant = "3">
+                <translate x="0" y="-0.5" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="4.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="5">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="11">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
             <keyframe instant = "11">
-                <translate x="0" y="0.1" z="1" />
-                <rotate angle_x="-2" angle_y="0" angle_z="30" />
-                <scale x="0.9" y="0.9" z="0.65" />
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "17">
-                <translate x="0" y="0.6" z="5" />
-                <rotate angle_x="-8" angle_y="0" angle_z="120" />
-                <scale x="1.3" y="1.3" z="0.8" />
+            <keyframe instant ="12.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
             </keyframe>
-            <keyframe instant = "33">
-                <translate x="0" y="2.5" z="15" />
-                <rotate angle_x="-15" angle_y="0" angle_z="360" />
-                <scale x="0.5" y="0.5" z="0.3" />
+            <keyframe instant ="13">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="19">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
         <animation id="smoke5">
             <keyframe instant = "0">
-                <translate x="0" y="-0.4" z="0" />
+                <translate x="0" y="-0.4" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant = "4">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="5.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="6">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="12">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
             <keyframe instant = "12">
-                <translate x="0" y="-0.4" z="0" />
+                <translate x="0" y="-0.5" z="-0.5" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="0.6" y="0.6" z="0.6" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="13.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="14">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="20">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id="smoke6">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant = "5">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="6.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="7">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="13">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+            <keyframe instant = "13">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="14.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="15">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="21">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id="smoke7">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant = "6">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="7.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="8">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="14">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
             <keyframe instant = "14">
-                <translate x="0" y="0.1" z="1" />
-                <rotate angle_x="-2" angle_y="0" angle_z="30" />
-                <scale x="0.9" y="0.9" z="0.65" />
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
             </keyframe>
-            <keyframe instant = "20">
-                <translate x="0" y="0.6" z="5" />
-                <rotate angle_x="-8" angle_y="0" angle_z="120" />
-                <scale x="1.3" y="1.3" z="0.8" />
+            <keyframe instant ="15.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
             </keyframe>
-            <keyframe instant = "36">
-                <translate x="0" y="2.5" z="15" />
-                <rotate angle_x="-15" angle_y="0" angle_z="360" />
-                <scale x="0.5" y="0.5" z="0.3" />
+            <keyframe instant ="16">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="22">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id="smoke8">
+            <keyframe instant = "0">
+                <translate x="0" y="-0.4" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant = "7">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="8.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="9">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="15">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+            <keyframe instant = "15">
+                <translate x="0" y="-0.5" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.7" y="0.7" z="0.5" />
+            </keyframe>
+            <keyframe instant ="16.5">
+                <translate x="0" y="1.5" z="5.5" />
+                <rotate angle_x="-3" angle_y="0" angle_z="67.5" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="17">
+                <translate x="0" y="2" z="7" />
+                <rotate angle_x="-4" angle_y="0" angle_z="90" />
+                <scale x="1.4" y="1.4" z="0.7" />
+            </keyframe>
+            <keyframe instant ="23">
+                <translate x="0" y="6" z="28" />
+                <rotate angle_x="-20" angle_y="0" angle_z="360" />
+                <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
     </animations>
@@ -493,6 +751,7 @@
             <transformation>
                 <transformationref id="baseballStickPosition" />
             </transformation>
+            <animationref id="baseballStickAnim" />
             <materials>
                 <material id="inherit" />
             </materials>
@@ -1521,7 +1780,7 @@
             <texture id="none" />
             <children>
                 <componentref id="fullChimneyTemplate" />
-                <componentref id="smokeRingPatch2" />
+                <componentref id="smokeRingAnimatedPatch" />
             </children>
         </component>
 
@@ -1649,6 +1908,9 @@
                 <componentref id="smokeRingAnim3" />
                 <componentref id="smokeRingAnim4" />
                 <componentref id="smokeRingAnim5" />
+                <componentref id="smokeRingAnim6" />
+                <componentref id="smokeRingAnim7" />
+                <componentref id="smokeRingAnim8" />
             </children>
         </component>
 
@@ -1740,6 +2002,42 @@
             <transformation>
             </transformation>
             <animationref id="smoke5" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim6">
+            <transformation>
+            </transformation>
+            <animationref id="smoke6" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim7">
+            <transformation>
+            </transformation>
+            <animationref id="smoke7" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="smokeRingAnim8">
+            <transformation>
+            </transformation>
+            <animationref id="smoke8" />
             <materials>
                 <material id="inherit" />
             </materials>
