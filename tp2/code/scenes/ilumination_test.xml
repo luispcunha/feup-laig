@@ -1,0 +1,174 @@
+<lxs>
+    <scene root="root" axis_length="5" />
+
+    <views default="mainCamera">
+        <perspective id="mainCamera" near="0.1" far="500" angle="45">
+            <from x="3" y="3" z="3" />
+            <to x="0" y="1" z="0" />
+        </perspective>
+    </views>
+
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.0" g="0.0" b="0.0" a="0.9" />
+    </globals>
+
+    <lights>
+        <spot id="ceiling_light" enabled="1" angle="30" exponent="0">
+            <location x="-1" y="3" z="1" w="1" />
+            <target x="-1" y="0" z="1" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="1.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="1.0" g="0.0" b="0.0" a="1.0" />
+            <attenuation constant="1.0" linear="0.0" quadratic="0.0" />
+        </spot>
+    </lights>
+
+    <textures>
+        <!-- TODO: change this in case you don't have this texture -->
+        <texture id="test_tex" file="scenes/images/rocks.jpg" />
+    </textures>
+
+    <materials>
+        <material id="wood_material" shininess="1">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="null_transformation">
+            <translate x="0" y="0" z="0" />
+        </transformation>
+    </transformations>
+
+    <animations>
+    </animations>
+
+    <primitives>
+        <primitive id="wall_primitive">
+            <plane npartsU="200" npartsV="200" />
+        </primitive>
+    </primitives>
+
+    <components>
+        <component id="root">
+            <transformation>
+                <transformationref id="null_transformation" />
+            </transformation>
+            <materials>
+                <material id="wood_material" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="walls" />
+                <componentref id="floor" />
+            </children>
+        </component>
+
+        <component id="floor">
+            <transformation>
+                <scale x="8" y="1" z="8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="wall_primitive" />
+            </children>
+        </component>
+
+        <component id="walls">
+            <transformation>
+                <transformationref id="null_transformation" />
+            </transformation>
+            <materials>
+                <material id="wood_material" />
+            </materials>
+            <!-- wall_tex -->
+            <texture id="none" />
+            <children>
+                <componentref id="wall1" />
+                <componentref id="wall2" />
+                <componentref id="wall3" />
+                <componentref id="wall4" />
+            </children>
+        </component>
+
+        <component id="wall_component">
+            <transformation>
+                <scale x="8" y="4" z="1" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="wall_primitive" />
+            </children>
+        </component>
+
+        <component id="wall1">
+            <transformation>
+                <translate x="0" y="2" z="-4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wall_component" />
+            </children>
+
+        </component>
+
+        <component id="wall2">
+            <transformation>
+                <rotate axis="y" angle="90" />
+                <translate x="0" y="2" z="-4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wall_component" />
+            </children>
+
+        </component>
+
+        <component id="wall3">
+            <transformation>
+                <rotate axis="y" angle="180" />
+                <translate x="0" y="2" z="-4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wall_component" />
+            </children>
+
+        </component>
+
+        <component id="wall4">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+                <translate x="0" y="2" z="-4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="wall_component" />
+            </children>
+
+        </component>
+    </components>
+</lxs>

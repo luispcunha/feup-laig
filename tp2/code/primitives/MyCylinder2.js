@@ -1,25 +1,25 @@
 /**
- * This class provides a primitive in the shape of a cylinder, with no 
- * caps, variable height, bottom and top radius.
+ * This class provides a primitive in the shape of a cylinder, with no
+ * caps, variable height, bottom and top radius, taking advantage of nurbs objects.
  */
 class MyCylinder2 extends CGFobject {
     /**
-     * Will yield a new Cylinder with the rotating axis on 
+     * Will yield a new Cylinder with the rotating axis on
      * _scene_'s z axis.
      * @constructor
-     * @param {CGFscene} scene 
-     * @param {Number} stacks the number of  subdivisions along the 
+     * @param {CGFscene} scene
+     * @param {Number} stacks the number of  subdivisions along the
      * cylinder's height.
-     * @param {Number} slices the number of angular subdivisions of the 
+     * @param {Number} slices the number of angular subdivisions of the
      * curves' discretisation
-     * @param {Number} bottomRadius 
-     * @param {Number} topRadius 
-     * @param {Number} height 
+     * @param {Number} bottomRadius
+     * @param {Number} topRadius
+     * @param {Number} height
      */
     constructor(scene, stacks, slices, bottomRadius, topRadius, height) {
-        super(scene);    
-        
-        const hBottom = 4 / 3 * bottomRadius; 
+        super(scene);
+
+        const hBottom = 4 / 3 * bottomRadius;
         const hTop = 4 / 3 * topRadius;
 
         const surface = new CGFnurbsSurface(1, 3,
@@ -37,12 +37,15 @@ class MyCylinder2 extends CGFobject {
                     [0, -topRadius, height, 1] // v = 3
                 ]
             ]);
-        
+
         this.semiCylinder = new CGFnurbsObject(this.scene, stacks, slices, surface);
 
         this.scaleTexCoords = (lengthS, lengthT) => {}
     }
 
+    /**
+     * Display primitive.
+     */
     display() {
         this.semiCylinder.display();
         this.scene.pushMatrix();

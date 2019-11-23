@@ -223,11 +223,15 @@ class XMLscene extends CGFscene {
     }
   }
 
+  /**
+   * Updates all animations in the scene.
+   */
   update(t) {
     let deltaT = t - this.lastT;
     this.lastT = t;
 
-    this.secCamShader.setUniformsValues({ timeFactor: t / 5000 % 10 });
+    const shaderTimeFactor = 5000;
+    this.secCamShader.setUniformsValues({ timeFactor: t / shaderTimeFactor % 1 });
 
     if (this.graph.loadedOk) {
       const keys = Object.keys(this.graph.animations);
