@@ -225,8 +225,7 @@
             <rotate axis="y" angle="10" />
         </transformation>
         <transformation id="ufo1Pos">
-            <translate x="10" y="10" z="8" />
-            <rotate axis="y" angle="-10" />
+            <translate x="8" y="0" z="20" />
         </transformation>
     </transformations>
 
@@ -259,6 +258,571 @@
             <keyframe instant="5">
                 <translate x="0" y="0" z="3.2" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="ufo1anim">
+            <keyframe instant="0">
+                <translate x="10" y="0" z="12" />
+                <rotate angle_x="0" angle_y="0" angle_z="-180" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="4">
+                <translate x="8" y="0" z="-8" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="4.00000">
+                <translate x="8.00000" y="0.00000" z="-8.02885"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0.00000"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="4.25000">
+                <translate x="7.75130" y="1.97923" z="-8.05769"/>
+                <rotate angle_x="0" angle_y="0" angle_z="14.32394"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="4.50000">
+                <translate x="7.02066" y="3.83540" z="-8.08654"/>
+                <rotate angle_x="0" angle_y="0" angle_z="28.64789"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="4.75000">
+                <translate x="5.85351" y="5.45311" z="-8.11538"/>
+                <rotate angle_x="0" angle_y="0" angle_z="42.97183"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="5.00000">
+                <translate x="4.32242" y="6.73177" z="-8.14423"/>
+                <rotate angle_x="0" angle_y="0" angle_z="57.29578"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="5.25000">
+                <translate x="2.52258" y="7.59188" z="-8.17308"/>
+                <rotate angle_x="0" angle_y="0" angle_z="71.61972"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="5.50000">
+                <translate x="0.56590" y="7.97996" z="-8.20192"/>
+                <rotate angle_x="0" angle_y="0" angle_z="85.94367"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="5.75000">
+                <translate x="-1.42597" y="7.87189" z="-8.23077"/>
+                <rotate angle_x="0" angle_y="0" angle_z="100.26761"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="6.00000">
+                <translate x="-3.32917" y="7.27438" z="-8.25962"/>
+                <rotate angle_x="0" angle_y="0" angle_z="114.59156"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="6.25000">
+                <translate x="-5.02539" y="6.22459" z="-8.28846"/>
+                <rotate angle_x="0" angle_y="0" angle_z="128.91550"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="6.50000">
+                <translate x="-6.40915" y="4.78778" z="-8.31731"/>
+                <rotate angle_x="0" angle_y="0" angle_z="143.23945"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="6.75000">
+                <translate x="-7.39442" y="3.05329" z="-8.34615"/>
+                <rotate angle_x="0" angle_y="0" angle_z="157.56339"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="7.00000">
+                <translate x="-7.91994" y="1.12896" z="-8.37500"/>
+                <rotate angle_x="0" angle_y="0" angle_z="171.88734"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="7.25000">
+                <translate x="-7.95304" y="-0.86556" z="-8.40385"/>
+                <rotate angle_x="0" angle_y="0" angle_z="186.21128"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="7.50000">
+                <translate x="-7.49165" y="-2.80627" z="-8.43269"/>
+                <rotate angle_x="0" angle_y="0" angle_z="200.53523"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="7.75000">
+                <translate x="-6.56447" y="-4.57249" z="-8.46154"/>
+                <rotate angle_x="0" angle_y="0" angle_z="214.85917"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="8.00000">
+                <translate x="-5.22915" y="-6.05442" z="-8.49038"/>
+                <rotate angle_x="0" angle_y="0" angle_z="229.18312"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="8.25000">
+                <translate x="-3.56870" y="-7.15991" z="-8.51923"/>
+                <rotate angle_x="0" angle_y="0" angle_z="243.50706"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="8.50000">
+                <translate x="-1.68637" y="-7.82024" z="-8.54808"/>
+                <rotate angle_x="0" angle_y="0" angle_z="257.83101"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="8.75000">
+                <translate x="0.30082" y="-7.99434" z="-8.57692"/>
+                <rotate angle_x="0" angle_y="0" angle_z="272.15495"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="9.00000">
+                <translate x="2.26930" y="-7.67139" z="-8.60577"/>
+                <rotate angle_x="0" angle_y="0" angle_z="286.47890"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="9.25000">
+                <translate x="4.09668" y="-6.87148" z="-8.63462"/>
+                <rotate angle_x="0" angle_y="0" angle_z="300.80284"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="9.50000">
+                <translate x="5.66936" y="-5.64432" z="-8.66346"/>
+                <rotate angle_x="0" angle_y="0" angle_z="315.12679"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="9.75000">
+                <translate x="6.88954" y="-4.06623" z="-8.69231"/>
+                <rotate angle_x="0" angle_y="0" angle_z="329.45073"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="10.00000">
+                <translate x="7.68136" y="-2.23532" z="-8.72115"/>
+                <rotate angle_x="0" angle_y="0" angle_z="343.77468"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="10.25000">
+                <translate x="7.99560" y="-0.26543" z="-8.75000"/>
+                <rotate angle_x="0" angle_y="0" angle_z="358.09862"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="10.50000">
+                <translate x="7.81270" y="1.72096" z="-8.77885"/>
+                <rotate angle_x="0" angle_y="0" angle_z="372.42257"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="10.75000">
+                <translate x="7.14405" y="3.60035" z="-8.80769"/>
+                <rotate angle_x="0" angle_y="0" angle_z="386.74651"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="11.00000">
+                <translate x="6.03122" y="5.25589" z="-8.83654"/>
+                <rotate angle_x="0" angle_y="0" angle_z="401.07046"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="11.25000">
+                <translate x="4.54339" y="6.58465" z="-8.86538"/>
+                <rotate angle_x="0" angle_y="0" angle_z="415.39440"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="11.50000">
+                <translate x="2.77308" y="7.50400" z="-8.89423"/>
+                <rotate angle_x="0" angle_y="0" angle_z="429.71835"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="11.75000">
+                <translate x="0.83035" y="7.95679" z="-8.92308"/>
+                <rotate angle_x="0" angle_y="0" angle_z="444.04229"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="12.00000">
+                <translate x="-1.16400" y="7.91487" z="-8.95192"/>
+                <rotate angle_x="0" angle_y="0" angle_z="458.36624"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="12.25000">
+                <translate x="-3.08598" y="7.38083" z="-8.98077"/>
+                <rotate angle_x="0" angle_y="0" angle_z="472.69018"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="12.50000">
+                <translate x="-4.81610" y="6.38790" z="-9.00962"/>
+                <rotate angle_x="0" angle_y="0" angle_z="487.01413"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="12.75000">
+                <translate x="-6.24677" y="4.99779" z="-9.03846"/>
+                <rotate angle_x="0" angle_y="0" angle_z="501.33807"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="13.00000">
+                <translate x="-7.28904" y="3.29695" z="-9.06731"/>
+                <rotate angle_x="0" angle_y="0" angle_z="515.66202"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="13.25000">
+                <translate x="-7.87812" y="1.39112" z="-9.09615"/>
+                <rotate angle_x="0" angle_y="0" angle_z="529.98596"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="13.50000">
+                <translate x="-7.97738" y="-0.60121" z="-9.12500"/>
+                <rotate angle_x="0" angle_y="0" angle_z="544.30991"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="13.75000">
+                <translate x="-7.58064" y="-2.55615" z="-9.15385"/>
+                <rotate angle_x="0" angle_y="0" angle_z="558.63385"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="14.00000">
+                <translate x="-6.71257" y="-4.35217" z="-9.18269"/>
+                <rotate angle_x="0" angle_y="0" angle_z="572.95780"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="14.25000">
+                <translate x="-5.42715" y="-5.87759" z="-9.21154"/>
+                <rotate angle_x="0" angle_y="0" angle_z="587.28174"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="14.50000">
+                <translate x="-3.80430" y="-7.03757" z="-9.24038"/>
+                <rotate angle_x="0" angle_y="0" angle_z="601.60568"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="14.75000">
+                <translate x="-1.94491" y="-7.75998" z="-9.26923"/>
+                <rotate angle_x="0" angle_y="0" angle_z="615.92963"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="15.00000">
+                <translate x="0.03541" y="-7.99992" z="-9.29808"/>
+                <rotate angle_x="0" angle_y="0" angle_z="630.25357"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="15.25000">
+                <translate x="2.01352" y="-7.74246" z="-9.32692"/>
+                <rotate angle_x="0" angle_y="0" angle_z="644.57752"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="15.50000">
+                <translate x="3.86644" y="-7.00362" z="-9.35577"/>
+                <rotate angle_x="0" angle_y="0" angle_z="658.90146"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="15.75000">
+                <translate x="5.47896" y="-5.82932" z="-9.38462"/>
+                <rotate angle_x="0" angle_y="0" angle_z="673.22541"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="16.00000">
+                <translate x="6.75083" y="-4.29258" z="-9.41346"/>
+                <rotate angle_x="0" angle_y="0" angle_z="687.54935"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="16.25000">
+                <translate x="7.60297" y="-2.48895" z="-9.44231"/>
+                <rotate angle_x="0" angle_y="0" angle_z="701.87330"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="16.50000">
+                <translate x="7.98239" y="-0.53058" z="-9.47115"/>
+                <rotate angle_x="0" angle_y="0" angle_z="716.19724"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="16.75000">
+                <translate x="7.86550" y="1.46079" z="-9.50000"/>
+                <rotate angle_x="0" angle_y="0" angle_z="730.52119"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="17.00000">
+                <translate x="7.25957" y="3.36134" z="-9.52885"/>
+                <rotate angle_x="0" angle_y="0" angle_z="744.84513"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="17.25000">
+                <translate x="6.20228" y="5.05289" z="-9.55769"/>
+                <rotate angle_x="0" angle_y="0" angle_z="759.16908"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="17.50000">
+                <translate x="4.75937" y="6.43028" z="-9.58654"/>
+                <rotate angle_x="0" angle_y="0" angle_z="773.49302"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="17.75000">
+                <translate x="3.02053" y="7.40786" z="-9.61538"/>
+                <rotate angle_x="0" angle_y="0" angle_z="787.81697"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="18.00000">
+                <translate x="1.09390" y="7.92486" z="-9.64423"/>
+                <rotate angle_x="0" angle_y="0" angle_z="802.14091"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="18.25000">
+                <translate x="-0.90075" y="7.94913" z="-9.67308"/>
+                <rotate angle_x="0" angle_y="0" angle_z="816.46486"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="18.50000">
+                <translate x="-2.83939" y="7.47916" z="-9.70192"/>
+                <rotate angle_x="0" angle_y="0" angle_z="830.78880"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="18.75000">
+                <translate x="-4.60150" y="6.54417" z="-9.73077"/>
+                <rotate angle_x="0" angle_y="0" angle_z="845.11275"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="19.00000">
+                <translate x="-6.07750" y="5.20230" z="-9.75962"/>
+                <rotate angle_x="0" angle_y="0" angle_z="859.43669"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="19.25000">
+                <translate x="-7.17564" y="3.53698" z="-9.78846"/>
+                <rotate angle_x="0" angle_y="0" angle_z="873.76064"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="19.50000">
+                <translate x="-7.82763" y="1.65174" z="-9.81731"/>
+                <rotate angle_x="0" angle_y="0" angle_z="888.08458"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="19.75000">
+                <translate x="-7.99293" y="-0.33619" z="-9.84615"/>
+                <rotate angle_x="0" angle_y="0" angle_z="902.40853"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="20.00000">
+                <translate x="-7.66128" y="-2.30323" z="-9.87500"/>
+                <rotate angle_x="0" angle_y="0" angle_z="916.73247"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="20.25000">
+                <translate x="-6.85328" y="-4.12705" z="-9.90385"/>
+                <rotate angle_x="0" angle_y="0" angle_z="931.05642"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="20.50000">
+                <translate x="-5.61918" y="-5.69428" z="-9.93269"/>
+                <rotate angle_x="0" angle_y="0" angle_z="945.38036"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="20.75000">
+                <translate x="-4.03570" y="-6.90747" z="-9.96154"/>
+                <rotate angle_x="0" angle_y="0" angle_z="959.70431"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="21.00000">
+                <translate x="-2.20131" y="-7.69118" z="-9.99038"/>
+                <rotate angle_x="0" angle_y="0" angle_z="974.02825"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="21.25000">
+                <translate x="-0.23005" y="-7.99669" z="-10.01923"/>
+                <rotate angle_x="0" angle_y="0" angle_z="988.35220"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="21.50000">
+                <translate x="1.75552" y="-7.80501" z="-10.04808"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1002.67614"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="21.75000">
+                <translate x="3.63193" y="-7.12805" z="-10.07692"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1017.00009"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="22.00000">
+                <translate x="5.28253" y="-6.00790" z="-10.10577"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1031.32403"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="22.25000">
+                <translate x="6.60469" y="-4.51421" z="-10.13462"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1045.64798"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="22.50000">
+                <translate x="7.51620" y="-2.73984" z="-10.16346"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1059.97192"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="22.75000">
+                <translate x="7.96039" y="-0.79513" z="-10.19231"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1074.29587"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="23.00000">
+                <translate x="7.90964" y="1.19902" z="-10.22115"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1088.61981"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="23.25000">
+                <translate x="7.36710" y="3.11862" z="-10.25000"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1102.94376"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="23.50000">
+                <translate x="6.36652" y="4.84432" z="-10.27885"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1117.26770"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="23.75000">
+                <translate x="4.97010" y="6.26882" z="-10.30769"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1131.59165"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="24.00000">
+                <translate x="3.26466" y="7.30356" z="-10.33654"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1145.91559"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="24.25000">
+                <translate x="1.35624" y="7.88420" z="-10.36538"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1160.23954"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="24.50000">
+                <translate x="-0.63651" y="7.97464" z="-10.39423"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1174.56348"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="24.75000">
+                <translate x="-2.58968" y="7.56925" z="-10.42308"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1188.88742"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="25.00000">
+                <translate x="-4.38183" y="6.69325" z="-10.45192"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1203.21137"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="25.25000">
+                <translate x="-5.90155" y="5.40109" z="-10.48077"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1217.53531"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="25.50000">
+                <translate x="-7.05433" y="3.77311" z="-10.50962"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1231.85926"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="25.75000">
+                <translate x="-7.76851" y="1.91054" z="-10.53846"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1246.18320"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="26.00000">
+                <translate x="-7.99969" y="-0.07081" z="-10.56731"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1260.50715"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="26.25000">
+                <translate x="-7.73348" y="-2.04776" z="-10.59615"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1274.83109"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="26.50000">
+                <translate x="-6.98644" y="-3.89740" z="-10.62500"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1289.15504"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="26.75000">
+                <translate x="-5.80501" y="-5.50471" z="-10.65385"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1303.47898"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="27.00000">
+                <translate x="-4.26266" y="-6.76976" z="-10.68269"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1317.80293"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="27.25000">
+                <translate x="-2.45528" y="-7.61391" z="-10.71154"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1332.12687"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="27.50000">
+                <translate x="-0.49524" y="-7.98466" z="-10.74038"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1346.45082"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="27.75000">
+                <translate x="1.49559" y="-7.85896" z="-10.76923"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1360.77476"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="28.00000">
+                <translate x="3.39343" y="-7.24463" z="-10.79808"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1375.09871"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="28.25000">
+                <translate x="5.08029" y="-6.17986" z="-10.82692"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1389.42265"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="28.50000">
+                <translate x="6.45128" y="-4.73086" z="-10.85577"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1403.74660"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="28.75000">
+                <translate x="7.42115" y="-2.98772" z="-10.88462"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1418.07054"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="29.00000">
+                <translate x="7.92962" y="-1.05881" z="-10.91346"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1432.39449"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="29.25000">
+                <translate x="7.94506" y="0.93592" z="-10.94231"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1446.71843"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="29.50000">
+                <translate x="7.46652" y="2.87247" z="-10.97115"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1461.04238"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="29.75000">
+                <translate x="6.52375" y="4.63042" z="-11.00000"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1475.36632"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="30.00000">
+                <translate x="5.17535" y="6.10047" z="-11.02885"/>
+                <rotate angle_x="0" angle_y="0" angle_z="1489.69027"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+            <keyframe instant="31">
+                <translate x="5.17535" y="10" z="-11.02885"/>
+                <rotate angle_x="-5" angle_y="0" angle_z="1489.69027"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+
+            <keyframe instant="32">
+                <translate x="5.17535" y="10" z="-11.02885"/>
+                <rotate angle_x="10" angle_y="-2" angle_z="1589.69027"/>
+                <scale x="1" y="1" z="1"/>
+            </keyframe>
+        </animation>
+        <animation id="ufo2anim">
+            <keyframe instant="0">
+                <translate x="-20" y="0" z="10" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="4">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="24">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="720" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
@@ -442,7 +1006,7 @@
             <keyframe instant ="19">
                 <translate x="0" y="6" z="28" />
                 <rotate angle_x="-20" angle_y="0" angle_z="360" />
-                <scale x="0" y="0" z="0" />
+         sand       <scale x="0" y="0" z="0" />
             </keyframe>
         </animation>
         <animation id="smoke5">
@@ -1301,6 +1865,7 @@
             <transformation>
                 <transformationref id="ufo2Pos" />
             </transformation>
+            <animationref id="ufo2anim" />
             <materials>
                 <material id="ufoBlue" />
                 <material id="ufoGreen" />
@@ -1315,6 +1880,7 @@
             <transformation>
                 <transformationref id="ufo1Pos" />
             </transformation>
+            <animationref id="ufo1anim" />
             <materials>
                 <material id="ufoGreen" />
                 <material id="ufoBlue" />

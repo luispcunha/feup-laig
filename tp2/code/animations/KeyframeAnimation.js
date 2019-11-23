@@ -31,7 +31,6 @@ class KeyframeAnimation extends Animation {
             const currentSegment = this.getCurrentSegment();
 
             if (currentSegment == null) {
-                console.log(this.id + "animation ended");
                 this.animationMatrix = this.keyframes[this.keyframes.length - 1].getAnimationMatrix();
                 this.animationEnded = true;
                 return;
