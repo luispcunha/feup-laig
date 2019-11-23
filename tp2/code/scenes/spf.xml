@@ -48,7 +48,7 @@
             <attenuation constant="1" linear="0" quadratic="0" />
         </omni>
         <omni id="sunset" enabled="0">
-            <location x="-20" y="3" z="20" w="1.0" />
+            <location x="-18" y="5" z="18" w="1.0" />
             <ambient r="0.2" g="0.1" b="0" a="1.0" />
             <diffuse r="1.0" g="0.6" b="0.3" a="1.0" />
             <specular r="1.0" g="0.6" b="0.3" a="1.0" />
@@ -257,7 +257,7 @@
                 <scale x="1" y="1" z="1" />
             </keyframe>
             <keyframe instant="5">
-                <translate x="0" y="0" z="3" />
+                <translate x="0" y="0" z="3.2" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
@@ -636,6 +636,9 @@
     </animations>
 
     <primitives>
+        <primitive id="patchPlane">
+            <plane npartsU="100" npartsV="100" />
+        </primitive>
         <primitive id="planeRectangle">
             <rectangle x1="-25" x2="25" y1="-25" y2="25" />
         </primitive>
@@ -731,6 +734,18 @@
                 <componentref id="semaphore" />
                 <componentref id="baseballFanStick" />
                 <componentref id="powerPlant" />
+            </children>
+        </component>
+        <component id="skyPlane">
+            <transformation>
+                <scale x="50" y="1" z="50" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="patchPlane" />
             </children>
         </component>
         <component id="powerPlant">
@@ -846,41 +861,22 @@
 
         <component id="sky1">
             <transformation>
-                <translate x="0" y="25" z="15" />
+                <translate x="0" y="-25" z="15" />
                 <scale x="1" y="1" z="0.6" />
-                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="planeRectangle" />
+                <componentref id="skyPlane" />
             </children>
         </component>
 
         <component id="sky2">
             <transformation>
-                <translate x="25" y="0" z="15" />
+                <translate x="0" y="25" z="15" />
                 <scale x="1" y="1" z="0.6" />
-                <rotate axis="y" angle="-90" />
-                <rotate axis="z" angle="-90" />
-
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="planeRectangle" />
-            </children>
-        </component>
-
-        <component id="sky3">
-            <transformation>
-                <translate x="0" y="-25" z="15" />
-                <scale x="1" y="1" z="0.6" />
-                <rotate axis="x" angle="-90" />
                 <rotate axis="z" angle="180" />
             </transformation>
             <materials>
@@ -888,7 +884,22 @@
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="planeRectangle" />
+                <componentref id="skyPlane" />
+            </children>
+        </component>
+
+        <component id="sky3">
+            <transformation>
+                <translate x="25" y="0" z="15" />
+                <scale x="1" y="1" z="0.6" />
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="skyPlane" />
             </children>
         </component>
 
@@ -896,15 +907,14 @@
             <transformation>
                 <translate x="-25" y="0" z="15" />
                 <scale x="1" y="1" z="0.6" />
-                <rotate axis="z" angle="90" />
-                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="-90" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="planeRectangle" />
+                <componentref id="skyPlane" />
             </children>
         </component>
 
