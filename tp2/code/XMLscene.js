@@ -36,7 +36,7 @@ class XMLscene extends CGFscene {
     this.setUpdatePeriod(20);
 
     this.rttTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-    this.securityCamera = new MySecurityCamera(this, this.gl.canvas.width, this.gl.canvas.height, this.rttTexture);
+    this.securityCamera = new MySecurityCamera(this, this.rttTexture);
     this.secCamShader = new CGFshader(this.gl, "shaders/securityCamera.vert", "shaders/securityCamera.frag");
 
     this.displayAxis = false;
