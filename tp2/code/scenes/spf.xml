@@ -90,6 +90,7 @@
         <texture id="baseball" file="scenes/images/baseball.jpg" />
         <texture id="teamlogoA" file="scenes/images/spfisotopesA.jpg" />
         <texture id="teamlogoB" file="scenes/images/spfisotopesB.jpg" />
+        <texture id="statueFooterPlaqueTexture" file="scenes/images/statuePlaque.png"/>
     </textures>
 
     <materials>
@@ -206,6 +207,24 @@
             <ambient r="0.3" g="0.2" b="0" a="1.0" />
             <diffuse r="0.3" g="0.2" b="0" a="1.0" />
             <specular r="0.6" g="0.5" b="0" a="1.0" />
+        </material>
+        <material id="statueFooterMaterial" shininess="3">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.13" g="0.49" b="0.71" a="1.0" />
+            <diffuse r="0.13" g="0.49" b="0.71" a="1.0" />
+            <specular r="0.325" g="0.1225" b="0.1775" a="1.0" />
+        </material>
+        <material id="statueFooterPlaqueMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+        <material id="statuePatchMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.6" g="0.59" b="0.49" a="1.0" />
+            <diffuse r="1" g="0.98" b="0.82" a="1.0" />
+            <specular r="0.4" g="0.39" b="0.33" a="1.0" />
         </material>
     </materials>
 
@@ -1278,6 +1297,54 @@
         <primitive id="smokeRingTorus">
             <torus inner="1.8" outer="1.5" slices="12" loops="24" />
         </primitive>
+        <primitive id="statuePatchFront">
+            <patch npointsU="4" npointsV="3" npartsU="64" npartsV="64" >
+                <controlpoint xx="0.2" yy="0" zz="0" />
+                <controlpoint xx="0.04" yy="0.9" zz="0.05" />
+                <controlpoint xx="0.1" yy="1.8" zz="0.15" />
+                <controlpoint xx="0.27" yy="0" zz="0.5" />
+                <controlpoint xx="0.33" yy="1.05" zz="0.55" />
+                <controlpoint xx="0.33" yy="2.1" zz="0.9" />
+                <controlpoint xx="0.53" yy="0" zz="0.25" />
+                <controlpoint xx="0.67" yy="1.2" zz="-0.1" />
+                <controlpoint xx="0.67" yy="2.4" zz="0.25" />
+                <controlpoint xx="0.6" yy="0" zz="0.5" />
+                <controlpoint xx="0.9" yy="1.35" zz="0.65" />
+                <controlpoint xx="0.8" yy="2.7" zz="0.35" />
+            </patch>
+        </primitive>
+        <primitive id="statuePatchBack">
+            <patch npointsU="4" npointsV="3" npartsU="64" npartsV="64" >
+                <controlpoint xx="0.6" yy="0" zz="0.5" />
+                <controlpoint xx="0.9" yy="1.35" zz="0.65" />
+                <controlpoint xx="0.8" yy="2.7" zz="0.35" />
+                <controlpoint xx="0.53" yy="0" zz="0.25" />
+                <controlpoint xx="0.67" yy="1.2" zz="-0.1" />
+                <controlpoint xx="0.67" yy="2.4" zz="0.25" />
+                <controlpoint xx="0.27" yy="0" zz="0.5" />
+                <controlpoint xx="0.33" yy="1.05" zz="0.55" />
+                <controlpoint xx="0.33" yy="2.1" zz="0.9" />
+                <controlpoint xx="0.2" yy="0" zz="0" />
+                <controlpoint xx="0.04" yy="0.9" zz="0.05" />
+                <controlpoint xx="0.1" yy="1.8" zz="0.15" />
+            </patch>
+        </primitive>
+        <primitive id="statueFooterPlaque">
+            <patch npointsU="3" npointsV="2" npartsU="16" npartsV="8">
+                <controlpoint xx="-0.335" yy="-0.58" zz="0.22" />
+                <controlpoint xx="-0.335" yy="-0.58" zz="0.45" />
+                <controlpoint xx="0" yy="-0.75" zz="0.22" />
+                <controlpoint xx="0" yy="-0.75" zz="0.45" />
+                <controlpoint xx="0.335" yy="-0.58" zz="0.22" />
+                <controlpoint xx="0.335" yy="-0.58" zz="0.45" />
+            </patch>
+        </primitive>
+        <primitive id="statueFooterCylinder">
+            <cylinder base="0.67" top="0.67" height="0.67" slices="64" stacks="16" />
+        </primitive>
+        <primitive id="statueFooterCapSphere">
+            <sphere radius="0.67" slices="32" stacks="8" />
+        </primitive>
     </primitives>
 
     <components>
@@ -1298,6 +1365,7 @@
                 <componentref id="semaphore" />
                 <componentref id="baseballFanStick" />
                 <componentref id="powerPlant" />
+                <componentref id="statue" />
             </children>
         </component>
         <component id="skyPlane">
@@ -2708,6 +2776,86 @@
             <texture id="inherit" />
             <children>
                 <primitiveref id="smokeRingTorus" />
+            </children>
+        </component>
+        <component id="statue">
+            <transformation>
+                <scale x="2" y="2" z="2" />
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="90" />
+                <translate x="-6" y="0" z="4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="statuePatch" />
+                <componentref id="statueFooter" />
+            </children>
+        </component>
+        <component id="statuePatch">
+            <transformation>
+                <translate x="-0.5" y="0.67" z="-0.25" />
+            </transformation>
+            <materials>
+                <material id="statuePatchMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="statuePatchFront" />
+                <primitiveref id="statuePatchBack" />
+            </children>
+        </component>
+        <component id="statueFooter">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="statueFooterMaterial" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="statueFooterCylinder" />
+                <componentref id="statueFooterBottomCap" />
+                <componentref id="statueFooterTopCap" />
+                <componentref id="statueFooterPlaque" />
+            </children>
+        </component>
+        <component id="statueFooterPlaque">
+            <transformation>
+                <translate x="0" y="-0.01" z="0"/>
+            </transformation>
+            <materials>
+                <material id="statueFooterPlaqueMaterial" />
+            </materials>
+            <texture id="statueFooterPlaqueTexture" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="statueFooterPlaque" />
+            </children>
+        </component>
+        <component id="statueFooterBottomCap">
+            <transformation>
+                <scale x="1" y="1" z="0.01" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="statueFooterCapSphere" />
+            </children>
+        </component>
+        <component id="statueFooterTopCap">
+            <transformation>
+                <translate x="0" y="0" z="0.67" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="statueFooterBottomCap" />
             </children>
         </component>
     </components>
