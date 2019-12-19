@@ -43,7 +43,7 @@ class XMLscene extends CGFscene {
     this.displayLights = false;
     this.displaySecurityCamera = false;
 
-    this.board = new MyBoard(this, 4, 3);
+    this.board = null;
 
     this.lastT = 0;
     window.addEventListener('resize', () => this.onWindowResize());
@@ -156,6 +156,8 @@ class XMLscene extends CGFscene {
 
 
   display() {
+
+
     if (this.displaySecurityCamera) {
       this.rttTexture.attachToFrameBuffer();
       this.render(this.currentSecurityCamera);
@@ -190,6 +192,7 @@ class XMLscene extends CGFscene {
 
     this.pushMatrix();
 
+
     if (this.sceneInited) {
 
       for (const light of this.lights)
@@ -204,8 +207,6 @@ class XMLscene extends CGFscene {
       // Displays the scene (MySceneGraph function).
       this.graph.displayScene();
     }
-
-    this.board.display();
 
     this.popMatrix();
     // ---- END Background, camera and axis setup

@@ -836,8 +836,10 @@ class MySceneGraph {
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
                     grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' &&
-                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2')) {
-                return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)"
+                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2' &&
+                    grandChildren[0].nodeName != 'regpolygon' && grandChildren[0].nodeName != 'board' &&
+                    grandChildren[0].nodeName != 'prism')) {
+                return "There must be exactly 1 primitive type (board, prism, regpolygon, rectangle, triangle, cylinder, sphere or torus)"
             }
 
             // Specifications for the current primitive.
@@ -900,10 +902,72 @@ class MySceneGraph {
 
                 this.primitives[primitiveId] = cylinder2;
             }
+            else if (primitiveType == 'regpolygon') {
+                var regpol = this.parseRegPol(grandChildren[0], primitiveId);
+                if (regpol instanceof String || typeof regpol == 'string')
+                    return regpol;
+
+                this.primitives[primitiveId] = regpol;
+            } else if (primitiveType == 'board') {
+                var board = this.parseBoard(grandChildren[0], primitiveId);
+                if (board instanceof String || typeof board == 'string')
+                    return board;
+
+                this.primitives[primitiveId] = board;
+                this.scene.board = board;
+            }
+            else if (primitiveType == 'prism') {
+                var prism = this.parsePrism(grandChildren[0], primitiveId);
+                if (prism instanceof String || typeof prism == 'string')
+                    return prism;
+
+                this.primitives[primitiveId] = prism;
+            }
         }
 
         this.log("Parsed primitives.");
         return null;
+    }
+
+    /**
+    * Parses regular polygon primitive
+    * @param {*} node
+    * @param {*} id
+    */
+    parseRegPol(node, id) {
+        const nsides = this.reader.getInteger(node, 'nsides');
+        if (!Number.isInteger(nsides))
+            return "unable to parse number of sides of the primitive for ID = " + id;
+
+        const apothem = this.reader.getFloat(node, 'apothem');
+        if (!(apothem != null && !isNaN(apothem)))
+            return "unable to parse apothem of the primitive for ID = " + id;
+
+        return new MyRegPolygon(this.scene, nsides, apothem);
+    }
+
+    /**
+    * Parses prism primitive
+    * @param {*} node
+    * @param {*} id
+    */
+    parsePrism(node, id) {
+        const nsides = this.reader.getInteger(node, 'nsides');
+        if (!Number.isInteger(nsides))
+            return "unable to parse number of sides of the primitive for ID = " + id;
+
+
+        const apothem = this.reader.getFloat(node, 'apothem');
+        if (!(apothem != null && !isNaN(apothem)))
+            return "unable to parse apothem of the primitive for ID = " + id;
+
+
+        const height = this.reader.getFloat(node, 'height');
+        if (!(height != null && !isNaN(height)))
+            return "unable to parse height of the primitive for ID = " + id;
+
+
+        return new MyPrism(this.scene, nsides, apothem, height);
     }
 
     /**
@@ -921,6 +985,18 @@ class MySceneGraph {
             return "unable to parse loops of the primitive for ID = " + id;
 
         return new MyPlane(this.scene, npartsU, npartsV);
+    }
+
+    parseBoard(node, id) {
+        const width = this.reader.getInteger(node, 'height');
+        if (!Number.isInteger(width))
+            return "unable to parse width of the primitive for ID = " + id;
+
+        const height = this.reader.getInteger(node, 'width');
+        if (!Number.isInteger(height))
+            return "unable to parse height of the primitive for ID = " + id;
+
+        return new MyBoard(this.scene, width, height);
     }
 
     /**
@@ -962,9 +1038,9 @@ class MySceneGraph {
         }
 
         let ctrlPts = [];
-       
+
         for (const child of children) {
-            
+
             if (child.nodeName != 'controlpoint')
                 return `Unknown tag in control points for primitive id = ${id}`;
 
@@ -1094,7 +1170,7 @@ class MySceneGraph {
 
         if (type == 2)
             return new MyCylinder2(this.scene, stacks, slices, base, top, height);
-            
+
         return new MyCylinder(this.scene, stacks, slices, base, top, height);
     }
 
@@ -1345,6 +1421,12 @@ class MySceneGraph {
             currentComponent.primitiveChildren = primitiveChildren;
             currentComponent.componentChildren = componentChildren;
             currentComponent.loaded = true; // mark component as loaded
+
+            if (componentID == "octagonTile")
+                this.scene.board.octagonTile = currentComponent;
+            else if (componentID == "squareTile")
+                this.scene.board.squareTile = currentComponent;
+
             this.components[componentID] = currentComponent;
         }
 

@@ -7,14 +7,17 @@ class MyBoard extends CGFobject {
      *
      * @param {CGFscene} scene
      */
-    constructor(scene, lines, columns) {
+    constructor(scene, width, height) {
         super(scene);
-        this.octagonTile = new MyOctagonalTile(scene);
-        this.squareTile = new MySquareTile(scene);
 
-        this.lines = lines;
-        this.columns = columns;
+        this.width = 8;
+        this.height = 8;
+
+        this.lines = 8;
+        this.columns = 8;
     }
+
+    scaleTexCoords(ls, lt) {}
 
 
     logPicking() {
@@ -42,10 +45,12 @@ class MyBoard extends CGFobject {
             for (let j = 0; j < this.lines; j++) {
                 this.scene.pushMatrix();
 
-                this.scene.translate(this.octagonTile.octagon.apothem * 2 * i, 0, this.octagonTile.octagon.apothem * 2 * j);
+                this.scene.translate(0.5 * 2 * i, 0, 0.5 * 2 * j);
 
                 this.scene.registerForPick((i + 1) * (j + 1), `(${i}, ${j})`);
-                this.octagonTile.display();
+
+                this.octagonTile.process(new CGFappearance(this.scene), null, 1, 1);
+
                 this.scene.clearPickRegistration();
 
                 this.displaySquareTiles(i, j);
@@ -56,33 +61,39 @@ class MyBoard extends CGFobject {
     }
 
     displaySquareTiles(column, line) {
+        const octagonSide = Math.tan(Math.PI / 8);
+        const squareApothem = octagonSide;
 
         if (! (column == 0 && line == 0)) {
             this.scene.pushMatrix();
-            this.scene.translate(- this.octagonTile.octagon.apothem, 0, - this.octagonTile.octagon.apothem);
-            this.squareTile.display();
+            this.scene.translate(- 0.5, 0, - 0.5);
+            this.scene.scale(squareApothem, 1, squareApothem);
+            this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
             this.scene.popMatrix();
         }
 
         if (! (column == this.columns - 1 && line == 0)) {
             this.scene.pushMatrix();
-            this.scene.translate(this.octagonTile.octagon.apothem, 0, - this.octagonTile.octagon.apothem);
-            this.squareTile.display();
+            this.scene.translate(0.5, 0, - 0.5);
+            this.scene.scale(squareApothem, 1, squareApothem);
+            this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
             this.scene.popMatrix();
         }
 
         if (line == this.lines - 1) {
             if (column > 0) {
                 this.scene.pushMatrix();
-                this.scene.translate(- this.octagonTile.octagon.apothem, 0, this.octagonTile.octagon.apothem);
-                this.squareTile.display();
+                this.scene.translate(- 0.5, 0, 0.5);
+                this.scene.scale(squareApothem, 0, squareApothem);
+                this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
                 this.scene.popMatrix();
             }
 
             if (column < this.columns - 1) {
                 this.scene.pushMatrix();
-                this.scene.translate(this.octagonTile.octagon.apothem, 0, this.octagonTile.octagon.apothem);
-                this.squareTile.display();
+                this.scene.translate(0.5, 0, 0.5);
+                this.scene.scale(squareApothem, 0, squareApothem);
+                this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
                 this.scene.popMatrix();
             }
         }

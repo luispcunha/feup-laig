@@ -15,8 +15,8 @@
 
     <lights>
         <omni id="demoLight" enabled="1">
-            <location x="9.8" y="11.9" z="10" w="1.0" />
-            <ambient r="0" g="0" b="0" a="1.0" />
+            <location x="0" y="2" z="0" w="1.0" />
+            <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="1" linear="0" quadratic="0" />
@@ -24,6 +24,8 @@
     </lights>
 
     <textures>
+        <texture id="octagonTileTex" file="scenes/images/lightwood.jpg" />
+        <texture id="squareTileTex" file="scenes/images/darkwood.jpg" />
     </textures>
 
     <materials>
@@ -32,6 +34,12 @@
             <ambient r="0" g="1.0" b="0.0" a="1.0" />
             <diffuse r="0" g="0.6" b="0.0" a="1.0" />
             <specular r="0" g="0.6" b="0.0" a="1.0" />
+        </material>
+        <material id="tilesMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.6" g="0.6" b="0.6" a="1.0" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -45,17 +53,85 @@
     </animations>
 
     <primitives>
+        <primitive id="board">
+            <board width="8" height="8" />
+        </primitive>
+
+        <primitive id="octagon">
+            <regpolygon nsides="8" apothem="0.5" />
+        </primitive>
+        <primitive id="square">
+            <regpolygon nsides="4" apothem="0.5" />
+        </primitive>
+        <primitive id="octagonPiecePrism">
+            <prism nsides="8" apothem="0.5" height="0.2" />
+        </primitive>
     </primitives>
 
     <components>
+        <!-- Game related components -->
+        <component id="octagonTile">
+            <transformation>
+                <rotate axis="y" angle="22.5" />
+            </transformation>
+            <materials>
+                <material id="tilesMaterial" />
+            </materials>
+            <texture id="octagonTileTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="octagon" />
+            </children>
+        </component>
+        <component id="squareTile">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="tilesMaterial" />
+            </materials>
+            <texture id="squareTileTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+
+        <component id="octagonPiece">
+            <transformation>
+                <rotate axis="y" angle="22.5" />
+            </transformation>
+            <materials>
+                <material id="tilesMaterial" />
+            </materials>
+            <texture id="octagonTileTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="octagonPiecePrism" />
+                <componentref id="octagonPieceTop" />
+            </children>
+        </component>
+        <component id="octagonPieceTop">
+            <transformation>
+                <translate x="0" y="0.2" z="0" />
+            </transformation>
+            <materials>
+                <material id="tilesMaterial" />
+            </materials>
+            <texture id="octagonTileTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="octagon" />
+            </children>
+        </component>
+
         <component id="demoRoot">
             <transformation>
+                <translate x="1" y="0" z="1" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="none" />
             <children>
+                <primitiveref id="board" />
+                <componentref id="octagonPiece" />
             </children>
         </component>
     </components>

@@ -38,7 +38,7 @@ class MyRegPolygon extends CGFobject {
             this.texCoords.push(0.5 + ca * 0.5, -0.5 * sa + 0.5);
 
             // The normal of the vertices the bisector of the angle created by two edges
-            const normal = [ 0, 0, 1 ];
+            const normal = [ 0, 1, 0 ];
 
             // push normal once for each vertex of this triangle
             this.normals.push(...normal);
@@ -51,10 +51,9 @@ class MyRegPolygon extends CGFobject {
             ang += alphaAng;
         }
 
-        if (this.orientation == -1)
-            this.indices.reverse();
-
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
+
+    scaleTexCoords(ls, lt) {}
 }
