@@ -54,7 +54,7 @@
 
     <primitives>
         <primitive id="board">
-            <board width="8" height="8" />
+            <board width="10" height="10" />
         </primitive>
 
         <primitive id="octagon">
@@ -65,6 +65,9 @@
         </primitive>
         <primitive id="octagonPiecePrism">
             <prism nsides="8" apothem="0.5" height="0.2" />
+        </primitive>
+        <primitive id="squarePiecePrism">
+            <prism nsides="4" apothem="0.5" height="0.2" />
         </primitive>
     </primitives>
 
@@ -121,9 +124,33 @@
             </children>
         </component>
 
+        <component id="squarePiece">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="tilesMaterial" />
+            </materials>
+            <texture id="squareTileTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="squarePiecePrism" />
+                <componentref id="squarePieceTop" />
+            </children>
+        </component>
+        <component id="squarePieceTop">
+            <transformation>
+                <translate x="0" y="0.2" z="0" />
+            </transformation>
+            <materials>
+                <material id="tilesMaterial" />
+            </materials>
+            <texture id="squareTileTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
         <component id="demoRoot">
             <transformation>
-                <translate x="1" y="0" z="1" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -131,7 +158,6 @@
             <texture id="none" />
             <children>
                 <primitiveref id="board" />
-                <componentref id="octagonPiece" />
             </children>
         </component>
     </components>

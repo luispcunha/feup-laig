@@ -10,11 +10,15 @@ class MyBoard extends CGFobject {
     constructor(scene, width, height) {
         super(scene);
 
-        this.width = 8;
-        this.height = 8;
+        this.width = width;
+        this.height = height;
 
         this.lines = 8;
         this.columns = 8;
+
+        this.squaresScale = Math.tan(Math.PI / 8);
+
+        this.boardScale = width / this.lines;
     }
 
     scaleTexCoords(ls, lt) {}
@@ -41,6 +45,9 @@ class MyBoard extends CGFobject {
     display() {
         this.logPicking();
 
+        this.scene.pushMatrix();
+        this.scene.scale(this.boardScale, 1, this.boardScale);
+
         for (let i = 0; i < this.columns; i++) {
             for (let j = 0; j < this.lines; j++) {
                 this.scene.pushMatrix();
@@ -58,16 +65,16 @@ class MyBoard extends CGFobject {
                 this.scene.popMatrix();
             }
         }
+
+        this.scene.popMatrix();
     }
 
     displaySquareTiles(column, line) {
-        const octagonSide = Math.tan(Math.PI / 8);
-        const squareApothem = octagonSide;
 
         if (! (column == 0 && line == 0)) {
             this.scene.pushMatrix();
             this.scene.translate(- 0.5, 0, - 0.5);
-            this.scene.scale(squareApothem, 1, squareApothem);
+            this.scene.scale(this.squaresScale, 1, this.squaresScale);
             this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
             this.scene.popMatrix();
         }
@@ -75,7 +82,7 @@ class MyBoard extends CGFobject {
         if (! (column == this.columns - 1 && line == 0)) {
             this.scene.pushMatrix();
             this.scene.translate(0.5, 0, - 0.5);
-            this.scene.scale(squareApothem, 1, squareApothem);
+            this.scene.scale(this.squaresScale, 1, this.squaresScale);
             this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
             this.scene.popMatrix();
         }
@@ -84,7 +91,7 @@ class MyBoard extends CGFobject {
             if (column > 0) {
                 this.scene.pushMatrix();
                 this.scene.translate(- 0.5, 0, 0.5);
-                this.scene.scale(squareApothem, 0, squareApothem);
+                this.scene.scale(this.squaresScale, 1, this.squaresScale);
                 this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
                 this.scene.popMatrix();
             }
@@ -92,7 +99,7 @@ class MyBoard extends CGFobject {
             if (column < this.columns - 1) {
                 this.scene.pushMatrix();
                 this.scene.translate(0.5, 0, 0.5);
-                this.scene.scale(squareApothem, 0, squareApothem);
+                this.scene.scale(this.squaresScale, 1, this.squaresScale);
                 this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
                 this.scene.popMatrix();
             }
