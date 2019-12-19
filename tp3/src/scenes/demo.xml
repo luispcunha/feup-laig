@@ -63,12 +63,15 @@
         <primitive id="square">
             <regpolygon nsides="4" apothem="0.5" />
         </primitive>
+
         <primitive id="octagonPiecePrism">
             <prism nsides="8" apothem="0.5" height="0.2" />
         </primitive>
+
         <primitive id="squarePiecePrism">
             <prism nsides="4" apothem="0.5" height="0.2" />
         </primitive>
+
     </primitives>
 
     <components>

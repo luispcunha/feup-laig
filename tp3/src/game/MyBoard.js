@@ -18,7 +18,8 @@ class MyBoard extends CGFobject {
 
         this.squaresScale = Math.tan(Math.PI / 8);
 
-        this.boardScale = width / this.lines;
+        this.widthScale = width / this.lines;
+        this.heightScale = height / this.columns;
     }
 
     scaleTexCoords(ls, lt) {}
@@ -46,13 +47,15 @@ class MyBoard extends CGFobject {
         this.logPicking();
 
         this.scene.pushMatrix();
-        this.scene.scale(this.boardScale, 1, this.boardScale);
+        this.scene.translate(- this.width / 2, 0, - this.height / 2);
+        this.scene.scale(this.widthScale, 1, this.heightScale);
+        this.scene.translate(0.5, 0, 0.5);
 
         for (let i = 0; i < this.columns; i++) {
             for (let j = 0; j < this.lines; j++) {
                 this.scene.pushMatrix();
 
-                this.scene.translate(0.5 * 2 * i, 0, 0.5 * 2 * j);
+                this.scene.translate(i, 0, j);
 
                 this.scene.registerForPick((i + 1) * (j + 1), `(${i}, ${j})`);
 
