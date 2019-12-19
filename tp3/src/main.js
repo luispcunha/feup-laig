@@ -11,7 +11,7 @@ function getUrlVars() {
   return vars;
 }
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js', 'primitives/MyPatch.js', 'primitives/MyRectangle.js', 'primitives/MySphere.js', 'primitives/MyCylinder.js', 'primitives/MyCylinder2.js', 'primitives/MyTorus.js', 'primitives/MyPlane.js', 'primitives/MyTriangle.js', 'util/Vector.js', 'util/Point.js', 'animations/Animation.js', 'animations/KeyframeAnimation.js', 'animations/Segment.js', 'animations/Keyframe.js', 'animations/KFTransformation.js', 'MySceneGraph.js', 'MySecurityCamera.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js', 'primitives/MyPatch.js', 'primitives/MyRectangle.js', 'primitives/MySphere.js', 'primitives/MyCylinder.js', 'primitives/MyCylinder2.js', 'primitives/MyTorus.js', 'primitives/MyPlane.js', 'primitives/MyTriangle.js', 'util/Vector.js', 'util/Point.js', 'animations/Animation.js', 'animations/KeyframeAnimation.js', 'animations/Segment.js', 'animations/Keyframe.js', 'animations/KFTransformation.js', 'MySceneGraph.js', 'MySecurityCamera.js', 'primitives/MyRegPolygon.js', 'game/MyOctagonalTile.js', 'game/MySquareTile.js', 'game/MyBoard.js',
 
   main = function () {
     // Standard application, scene and interface setup
@@ -29,7 +29,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js
     // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
     // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
 
-    var filename = getUrlVars()['file'] || "spf.xml";
+    var filename = getUrlVars()['file'] || "demo.xml";
 
     // create and load graph, and associate it to scene.
     // Check console for loading errors
