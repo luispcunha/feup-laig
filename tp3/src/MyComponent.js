@@ -9,12 +9,12 @@ class MyComponent {
         this.id = id;
         this.scene = scene;
 
-        /* property used to prevent that components 
-        created only because they are referenced as other 
+        /* property used to prevent that components
+        created only because they are referenced as other
         component's children really exist and are loaded
         afterwards */
-        this.loaded = false; 
-        
+        this.loaded = false;
+
         // children nodes of the component
         this.componentChildren;
         // children leaf nodes of the component
@@ -53,14 +53,14 @@ class MyComponent {
      * @param lt    T tex coord scale factor of parent node
      */
     process(mat, tex, ls, lt) {
-        /* push current transformation matrix so that other components 
+        /* push current transformation matrix so that other components
         that aren't children of this component  are not affected by this component's
         transformation */
         this.scene.pushMatrix();
 
         // multiply parent transformation matrix with this node's transformation matrix
         this.scene.multMatrix(this.transformation);
-        
+
         if (this.animation)
             this.animation.apply();
 
@@ -74,7 +74,7 @@ class MyComponent {
             material = this.materials[this.selectedMaterial];
         }
 
-        // if this node's texture is the one representing "inherit" behaviour, 
+        // if this node's texture is the one representing "inherit" behaviour,
         // use parent's texture and tex coords scale factors, else
         // if it's the one representing "none" behaviour, set texture to null,
         // else, use own texture and tex coords scale factors
@@ -94,7 +94,7 @@ class MyComponent {
         material.setTexture(texture);
         material.setTextureWrap('REPEAT', 'REPEAT');
         material.apply();
-        
+
         // update tex coords and display leaf node children of this node
         for (let primitive of this.primitiveChildren) {
             primitive.scaleTexCoords(lengthS, lengthT);
@@ -108,5 +108,9 @@ class MyComponent {
 
         // reestablish scene transformation matrix with previously pushed matrix
         this.scene.popMatrix();
+    }
+
+    display() {
+        this.process(new CGFappearance(this.scene), null, 1, 1);
     }
 }

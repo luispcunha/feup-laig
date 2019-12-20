@@ -1422,10 +1422,26 @@ class MySceneGraph {
             currentComponent.componentChildren = componentChildren;
             currentComponent.loaded = true; // mark component as loaded
 
-            if (componentID == "octagonTile")
-                this.scene.board.octagonTile = currentComponent;
-            else if (componentID == "squareTile")
-                this.scene.board.squareTile = currentComponent;
+            switch (componentID) {
+                case "octagonTile":
+                    this.scene.board.octagonTile = currentComponent;
+                    break;
+                case "squareTile":
+                    this.scene.board.squareTile = currentComponent;
+                    break;
+                case "octagonPieceP1":
+                    this.scene.board.octagonPieceP1 = currentComponent;
+                    break;
+                case "octagonPieceP2":
+                    this.scene.board.octagonPieceP2 = currentComponent;
+                    break;
+                case "squarePieceP1":
+                    this.scene.board.squarePieceP1 = currentComponent;
+                    break;
+                case "squarePieceP2":
+                    this.scene.board.squarePieceP2 = currentComponent;
+                    break;
+            }
 
             this.components[componentID] = currentComponent;
         }
@@ -1566,7 +1582,7 @@ class MySceneGraph {
     displayScene() {
         /* calls method responsible for recursively processing all nodes
         and displaying all leaf nodes of the graph on the root component */
-        this.root.process(new CGFappearance(this.scene), null, 1, 1);
+        this.root.display();
     }
 
     /**

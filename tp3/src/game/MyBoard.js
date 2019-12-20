@@ -13,17 +13,38 @@ class MyBoard extends CGFobject {
         this.width = width;
         this.height = height;
 
-        this.lines = 8;
-        this.columns = 8;
+        this.nRows = 8;
+        this.nColumns = 8;
 
         this.squaresScale = Math.tan(Math.PI / 8);
 
-        this.widthScale = width / this.lines;
-        this.heightScale = height / this.columns;
+        this.widthScale = width / this.nRows;
+        this.heightScale = height / this.nColumns;
+
+        this.squareBoard = [
+            [0, 1, 1, 1, 1, 1, 1, 1, 0],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 0, 0, 2],
+            [0, 1, 1, 1, 1, 1, 1, 1, 0]
+        ];
+
+        this.octagonBoard = [
+            [1, 2, 1, 2, 1, 2, 1, 2],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0]
+        ];
     }
-
-    scaleTexCoords(ls, lt) {}
-
 
     logPicking() {
         if (this.scene.pickMode == false) {
@@ -41,7 +62,7 @@ class MyBoard extends CGFobject {
     }
 
     /**
-     * Display security camera.
+     * Display board.
      */
     display() {
         this.logPicking();
@@ -51,19 +72,14 @@ class MyBoard extends CGFobject {
         this.scene.scale(this.widthScale, 1, this.heightScale);
         this.scene.translate(0.5, 0, 0.5);
 
-        for (let i = 0; i < this.columns; i++) {
-            for (let j = 0; j < this.lines; j++) {
+        for (let i = 0; i < this.nColumns; i++) {
+            for (let j = 0; j < this.nRows; j++) {
                 this.scene.pushMatrix();
 
                 this.scene.translate(i, 0, j);
 
-                this.scene.registerForPick((i + 1) * (j + 1), `(${i}, ${j})`);
-
-                this.octagonTile.process(new CGFappearance(this.scene), null, 1, 1);
-
-                this.scene.clearPickRegistration();
-
-                this.displaySquareTiles(i, j);
+                this.displayOctagon(i, j);
+                this.displaySquares(i, j);
 
                 this.scene.popMatrix();
             }
@@ -72,40 +88,73 @@ class MyBoard extends CGFobject {
         this.scene.popMatrix();
     }
 
-    displaySquareTiles(column, line) {
+    displayOctagon(column, row) {
+        switch (this.octagonBoard[row][column]) {
+            case 0:
+                this.scene.registerForPick((column + 1) * (this.nRows * row + 1), `(${column}, ${row})`);
+                this.octagonTile.display();
+                this.scene.clearPickRegistration();
+                break;
+            case 1:
+                this.octagonPieceP1.display();
+                break;
+            case 2:
+                this.octagonPieceP2.display();
+                break;
+        }
+    }
 
-        if (! (column == 0 && line == 0)) {
+    displaySquares(column, row) {
+
+        if (! (column == 0 && row == 0)) {
             this.scene.pushMatrix();
             this.scene.translate(- 0.5, 0, - 0.5);
             this.scene.scale(this.squaresScale, 1, this.squaresScale);
-            this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
+            this.displaySquare(column, row);
             this.scene.popMatrix();
         }
 
-        if (! (column == this.columns - 1 && line == 0)) {
+        if (! (column == this.nColumns - 1 && row == 0)) {
             this.scene.pushMatrix();
             this.scene.translate(0.5, 0, - 0.5);
             this.scene.scale(this.squaresScale, 1, this.squaresScale);
-            this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
+            this.displaySquare(column + 1, row);
             this.scene.popMatrix();
         }
 
-        if (line == this.lines - 1) {
+        if (row == this.nRows - 1) {
             if (column > 0) {
                 this.scene.pushMatrix();
                 this.scene.translate(- 0.5, 0, 0.5);
                 this.scene.scale(this.squaresScale, 1, this.squaresScale);
-                this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
+                this.displaySquare(column, row + 1);
                 this.scene.popMatrix();
             }
 
-            if (column < this.columns - 1) {
+            if (column < this.nColumns - 1) {
                 this.scene.pushMatrix();
                 this.scene.translate(0.5, 0, 0.5);
                 this.scene.scale(this.squaresScale, 1, this.squaresScale);
-                this.squareTile.process(new CGFappearance(this.scene), null, 1, 1);
+                this.displaySquare(column + 1, row + 1);
                 this.scene.popMatrix();
             }
         }
     }
+
+    displaySquare(column, row) {
+        switch (this.squareBoard[row][column]) {
+            case 0:
+                this.squareTile.display();
+                break;
+            case 1:
+                this.squarePieceP1.display();
+                break;
+            case 2:
+                this.squarePieceP2.display();
+                break;
+        }
+    }
+
+
+    scaleTexCoords(ls, lt) {}
 }
