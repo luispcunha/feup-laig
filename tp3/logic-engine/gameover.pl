@@ -1,4 +1,6 @@
 :- use_module(library(clpfd)).
+:- use_module(library(lists)).
+:- use_module(library(sets)).
 :- [graph].
 :- ensure_loaded('game_model.pl').
 
