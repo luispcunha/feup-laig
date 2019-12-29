@@ -996,7 +996,7 @@ class MySceneGraph {
         if (!Number.isInteger(height))
             return "unable to parse height of the primitive for ID = " + id;
 
-        return new MyBoard(this.scene, width, height);
+        return new MyGameBoard(this.scene, width, height);
     }
 
     /**
@@ -1424,10 +1424,10 @@ class MySceneGraph {
 
             switch (componentID) {
                 case "octagonTile":
-                    this.scene.board.octagonTile = currentComponent;
+                    this.scene.board.setOctagonTileComponent(currentComponent);
                     break;
                 case "squareTile":
-                    this.scene.board.squareTile = currentComponent;
+                    this.scene.board.setSquareTileComponent(currentComponent);
                     break;
                 case "octagonPieceP1":
                     this.scene.board.octagonPieceP1 = currentComponent;
