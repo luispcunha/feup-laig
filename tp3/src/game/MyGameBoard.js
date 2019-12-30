@@ -131,4 +131,8 @@ class MyGameBoard extends CGFobject {
             });
         });
     }
+
+    addPiece(column, row, player) {
+        this.octagonTiles[column][row].addPiece(this.octagonPieceComponents, player);
+    }
 }

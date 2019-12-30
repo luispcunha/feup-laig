@@ -1,0 +1,8 @@
+class MyGameSequence {
+    /**
+     * @constructor
+     */
+    constructor() {
+
+    }
+}

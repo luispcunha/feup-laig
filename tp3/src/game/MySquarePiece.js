@@ -17,7 +17,7 @@ class MySquarePiece extends CGFobject {
         this.components[2] = componentP2;
     }
 
-    setComponentP1(component, player) {
+    setComponent(component, player) {
         this.components[player] = component;
     }
 

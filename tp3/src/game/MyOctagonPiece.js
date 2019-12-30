@@ -7,15 +7,16 @@ class MyOctagonPiece extends CGFobject {
      *
      * @param {CGFscene} scene
      */
-    constructor(scene, tile, player) {
+    constructor(scene, tile, player, componentP1, componentP2) {
         super(scene);
         this.tile = tile;
-        this.type = type;
         this.player = player;
-        this.components = {};
+        this.components = [];
+        this.components[1] = componentP1;
+        this.components[2] = componentP2;
     }
 
-    setComponentP1(component, player) {
+    setComponent(component, player) {
         this.components[player] = component;
     }
 

@@ -23,6 +23,10 @@ class MyOctagonTile extends CGFobject {
             this.piece.setComponent(component, player);
     }
 
+    addPiece(components, player) {
+        this.piece = new MyOctagonPiece(this.scene, this, player, components[1], components[2]);
+    }
+
     /**
      * Display board.
      */
