@@ -70,6 +70,8 @@ next(0,1).
 
 %--------------------------------------------
 
+:- ensure_loaded('logic-engine/game_model.pl').
+
 handleInitialState(Request) :-
     member(method(post), Request), !,
     http_read_data(Request, Data, []),
@@ -77,7 +79,7 @@ handleInitialState(Request) :-
     format('Content-type: application/json~n~n'),
     initialFormatAsJSON(Reply).
 
-processInitialStateprocessString([_Par=Val], R):-
+processInitialState([_Par=Val], R):-
     term_string(List, Val),
     R = [_State],
     append(List, R, ListR),
@@ -86,7 +88,7 @@ processInitialStateprocessString([_Par=Val], R):-
 
 initialFormatAsJSON(Reply):-
     write('{'),
-    Fields = [state],				% Response Field Names
+    Fields = [state],
     writeJSON(Fields, Reply).
 
 
