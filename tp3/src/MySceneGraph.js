@@ -914,7 +914,8 @@ class MySceneGraph {
                     return board;
 
                 this.primitives[primitiveId] = board;
-                this.scene.board = board;
+
+                this.scene.gameOrchestrator.setBoard(board);
             }
             else if (primitiveType == 'prism') {
                 var prism = this.parsePrism(grandChildren[0], primitiveId);
@@ -1424,22 +1425,22 @@ class MySceneGraph {
 
             switch (componentID) {
                 case "octagonTile":
-                    this.scene.board.setOctagonTileComponent(currentComponent);
+                    this.scene.gameOrchestrator.getBoard().setOctagonTileComponent(currentComponent);
                     break;
                 case "squareTile":
-                    this.scene.board.setSquareTileComponent(currentComponent);
+                    this.scene.gameOrchestrator.getBoard().setSquareTileComponent(currentComponent);
                     break;
                 case "octagonPieceP1":
-                    this.scene.board.octagonPieceP1 = currentComponent;
+                    this.scene.gameOrchestrator.getBoard().setOctagonPieceComponent(currentComponent, 1);
                     break;
                 case "octagonPieceP2":
-                    this.scene.board.octagonPieceP2 = currentComponent;
+                    this.scene.gameOrchestrator.getBoard().setOctagonPieceComponent(currentComponent, 2);
                     break;
                 case "squarePieceP1":
-                    this.scene.board.squarePieceP1 = currentComponent;
+                    this.scene.gameOrchestrator.getBoard().setSquarePieceComponent(currentComponent, 1);
                     break;
                 case "squarePieceP2":
-                    this.scene.board.squarePieceP2 = currentComponent;
+                    this.scene.gameOrchestrator.getBoard().setSquarePieceComponent(currentComponent, 2);
                     break;
             }
 

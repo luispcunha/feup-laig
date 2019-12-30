@@ -12,6 +12,7 @@ class XMLscene extends CGFscene {
     super();
 
     this.interface = myinterface;
+    this.gameOrchestrator = new MyGameOrchestrator();
   }
 
   /**
@@ -42,8 +43,6 @@ class XMLscene extends CGFscene {
     this.displayAxis = true;
     this.displayLights = false;
     this.displaySecurityCamera = false;
-
-    this.board = null;
 
     this.lastT = 0;
     window.addEventListener('resize', () => this.onWindowResize());
@@ -244,6 +243,8 @@ class XMLscene extends CGFscene {
       for (const key of keys)
         this.graph.animations[key].update(deltaT);
     }
+
+    this.gameOrchestrator.update(deltaT);
   }
 
   logPicking() {

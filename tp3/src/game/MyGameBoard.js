@@ -21,6 +21,9 @@ class MyGameBoard extends CGFobject {
 
         this.initOctagonTiles();
         this.initSquareTiles();
+
+        this.squarePieceComponents = [];
+        this.octagonPieceComponents = [];
     }
 
     initOctagonTiles() {
@@ -105,6 +108,26 @@ class MyGameBoard extends CGFobject {
         this.squareTiles.forEach(row => {
             row.forEach(tile => {
                 tile.setComponent(component);
+            });
+        });
+    }
+
+    setSquarePieceComponent(component, player) {
+        this.squarePieceComponents[player] = component;
+
+        this.squareTiles.forEach(row => {
+            row.forEach(tile => {
+                tile.setPieceComponent(component, player);
+            });
+        });
+    }
+
+    setOctagonPieceComponent(component, player) {
+        this.octagonPieceComponents[player] = component;
+
+        this.octagonTiles.forEach(row => {
+            row.forEach(tile => {
+                tile.setPieceComponent(component, player);
             });
         });
     }

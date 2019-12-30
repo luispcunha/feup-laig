@@ -18,6 +18,11 @@ class MySquareTile extends CGFobject {
         this.component = component;
     }
 
+    setPieceComponent(component, player) {
+        if (this.piece)
+            this.piece.setComponent(component, player);
+    }
+
     /**
      * Display board.
      */
