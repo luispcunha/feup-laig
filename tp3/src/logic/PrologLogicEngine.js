@@ -2,25 +2,26 @@ class PrologLogicEngine extends LogicEngine {
     async getInitialState(width, height) {
         const response = await PrologLogicEngine.makeRequest('initialstate', `[generate_initial_game_state, ${height.toFixed(0)}, ${width.toFixed(0)}, 1, 1]`);
 
-        console.log(`[generate_initial_game_state, ${height.toFixed(0)}, ${width.toFixed(0)}, 1, 1]`);
-
         return PrologLogicEngine.deserializeGameState(response.state);
     }
 
     async isValidMove(gameState, move) {
         const response = await PrologLogicEngine.makeRequest('validmove', `[is_valid_move, ${PrologLogicEngine.serializeGameState(gameState)}, ${move.x}-${move.y}]`);
+
         return response.bool;
     }
 
-    async makeMove(gameState, x, y) {
-        console.log(`[move, ${x}-${y}, ${PrologLogicEngine.serializeGameState(gameState)}]`)
-        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${x}-${y}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
-        return response.newGameState;
+    async makeMove(gameState, move) {
+        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.x}-${move.y}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+
+        return PrologLogicEngine.deserializeGameState(response.newGameState);
     }
 
     async gameOver(gameState) {
-        const response = await makeRequest('gameover', `[checkgameover, ${serializeGameState(gameState)}]`);
-        return response.response;
+        console.log(`[gameover, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+        const response = await PrologLogicEngine.makeRequest('gameover', `[gameover, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+
+        return response.winner;
     }
 
     static async makeRequest(endpoint, requestString) {

@@ -1,12 +1,12 @@
 :- use_module(library(clpfd)).
 :- use_module(library(lists)).
-:- use_module(library(sets)).
 :- [graph].
 :- ensure_loaded('game_model.pl').
+:- ensure_loaded('move.pl').
 
 
 %   In this file:
-% 
+%
 % -  gameover(+Board,-Winner)
 % -  test_for_path(+Gamestate,+Player)
 % -  orient_board(+OctagonBoard,+SquareBoard,+Player,-OrientedOctagonBoard,-OrientedSquareBoard)
@@ -18,23 +18,26 @@
 % -  is_cuttable(+OctagonBoard, +Player, +SquareX, +SquareY)
 
 /**
-*   gameover(+Board,-Winner) 
+*   gameover(+Board,-Winner)
 *
 *   Checks if the game is over, if so returns the player that won.
 */
 
-    
-gameover(GameState,Winner) :- 
-    get_game_previous_player(GameState,Winner),
-    check_for_win(GameState, Winner).
 
-gameover(GameState,Winner) :- 
+gameover(GameState, Winner) :-
+    get_game_previous_player(GameState,Winner),
+    check_for_win(GameState, Winner), !.
+
+gameover(GameState, Winner) :-
     valid_moves(GameState,[]),
-    Winner = 0.
+    Winner = 0, !.
+
+gameover(_, -1).
+
 
 /**
-*   check_for_win(+Gamestate, +Player)   
-*   
+*   check_for_win(+Gamestate, +Player)
+*
 *   Given a game state, check_for_win checks if Player won the game. A player wins the game if there is a path unitting the edges of it's color and if
 *   there is no possible way to cut such path. As such, checking for a win condition envolves two steps: the first is to remove all squares that are
 *   cuttable, this emulates all the possible moves in the games future that might alter the existing paths, the second step is finding if the aforementioned
@@ -49,7 +52,7 @@ check_for_win([OctagonBoard,SquareBoard,Height,Width | _] ,Player) :-
     orient_board(OctagonBoard, NewSquareBoard,Player,OrientedOctagonBoard,OrientedSquareBoard),
     get_real_side_lengths(Player,Width,Height,RealWidth,RealHeight),
 
-    % Get the octagons where the path may start(there are connected with the Player's top board edge). This function is meant to optimize the 
+    % Get the octagons where the path may start(there are connected with the Player's top board edge). This function is meant to optimize the
     % process as there is no need to build the graph(which is an operation that is computationally expensive) if there is no starting pice to begin with.
     get_valid_starters(OrientedOctagonBoard,Player,0,RealWidth,Starters),
 
@@ -72,7 +75,7 @@ check_for_win([OctagonBoard,SquareBoard,Height,Width | _] ,Player) :-
 orient_board(OctagonBoard,SquareBoard,1, OctagonBoard, SquareBoard).
 
 orient_board(OctagonBoard,SquareBoard,2, NewOctagonBoard, NewSquareBoard) :-
-    transpose(OctagonBoard,NewOctagonBoard), 
+    transpose(OctagonBoard,NewOctagonBoard),
     transpose(SquareBoard,NewSquareBoard).
 
 /**
@@ -128,16 +131,16 @@ get_valid_starters(OctagonBoard,Player,Index,Width,Starters) :- nth0(Index,Octag
 fetch_starters(Row,Index,Width, Player, Result) :- fetch_starters_iter(Row,Index,Width,Player,Result,[],0).
 
 fetch_starters_iter([],_,_,_,Result,Result,_).
-fetch_starters_iter([H|T],Index,Width,Player,Result,Acc,N) :-  
-        H =:= Player, 
+fetch_starters_iter([H|T],Index,Width,Player,Result,Acc,N) :-
+        H =:= Player,
         ID is Index*Width + N,
         append(Acc,[ID],Acc1),
-        N1 is N + 1, 
+        N1 is N + 1,
         fetch_starters_iter(T,Index,Width,Player,Result,Acc1,N1).
 
-fetch_starters_iter([H|T],Index,Width,Player,Result,Acc,N) :-  
-        H =\= Player, 
-        N1 is N + 1, 
+fetch_starters_iter([H|T],Index,Width,Player,Result,Acc,N) :-
+        H =\= Player,
+        N1 is N + 1,
         fetch_starters_iter(T,Index,Width,Player,Result,Acc,N1).
 
 /**
@@ -152,7 +155,7 @@ remove_cuttable_squares_aux(_OctagonBoard, [Row | []], _Y, _Player, [Row]).
 
 remove_cuttable_squares_aux(OctagonBoard, [Row | SquareBoard], Y, Player, [NewRow | NewSquareBoard]) :-
     remove_cuttable_squares_row(OctagonBoard, Row, Y, Player, NewRow),
-    YNext is Y + 1, 
+    YNext is Y + 1,
     remove_cuttable_squares_aux(OctagonBoard, SquareBoard, YNext, Player, NewSquareBoard).
 
 remove_cuttable_squares_row(OctagonBoard, [Element | Row], Y, Player, [Element | NewRow]) :-

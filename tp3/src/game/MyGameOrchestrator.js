@@ -14,8 +14,11 @@ class MyGameOrchestrator {
         const whatever = await this.logic.getInitialState(gameboard.nColumns, gameboard.nRows);
         console.log(whatever);
 
-        const newstate = await this.logic.makeMove(whatever, 1, 1);
+        const newstate = await this.logic.makeMove(whatever, {x:1, y:1});
         console.log(newstate);
+
+        const response = await this.logic.gameOver(newstate);
+        console.log(response);
     }
 
     getBoard() {

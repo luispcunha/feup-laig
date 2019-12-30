@@ -11,7 +11,7 @@
 :- http_handler(root(initialstate), handleInitialState, []).
 :- http_handler(root(validmove), handleValidMove, []).
 :- http_handler(root(makemove), handleMakeMove, []).
-:- http_handler(root(gameover), handleGameover, []).
+:- http_handler(root(gameover), handleGameOver, []).
 
 :- http_handler(src('.'), serve_files_in_directory(src), [prefix]).			% Serve files in /pub as requested (for WebGL Game Interface)
 :- http_handler(lib('.'), serve_files_in_directory(lib), [prefix]).
@@ -72,6 +72,8 @@ next(0,1).
 
 :- ensure_loaded('logic-engine/game_model.pl').
 :- ensure_loaded('logic-engine/move.pl').
+:- ensure_loaded('logic-engine/gameover.pl').
+:- ensure_loaded('logic-engine/bot.pl').
 
 handleInitialState(Request) :-
     member(method(post), Request), !,
@@ -110,6 +112,25 @@ processMakeMove([_Par=Val], R) :-
 makeMoveFormatAsJSON(Reply) :-
     write('{'),
     Fields = [newGameState],
+    writeJSON(Fields, Reply).
+
+handleGameOver(Request) :-
+    member(method(post), Request), !,
+    http_read_data(Request, Data, []),
+    processGameOver(Data, Reply),
+    format('Content-type: application/json~n~n'),
+    gameOverFormatAsJSON(Reply).
+
+processGameOver([_Par=Val], R) :-
+    term_string(List, Val),
+    R = [_Winner],
+    append(List, R, ListR),
+    Term =.. ListR,
+    Term.
+
+gameOverFormatAsJSON(Reply) :-
+    write('{'),
+    Fields = [winner],
     writeJSON(Fields, Reply).
 
 
