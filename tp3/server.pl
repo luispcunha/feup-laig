@@ -9,9 +9,9 @@
 :- http_handler(root(game), prepReplyStringToJSON, []).						% Predicate to handle requests on server/game (for Prolog Game Logic)
 
 :- http_handler(root(initialstate), handleInitialState, []).
-:- http_handler(root(validmove), handleValidMove, []).
 :- http_handler(root(makemove), handleMakeMove, []).
 :- http_handler(root(gameover), handleGameOver, []).
+:- http_handler(root(getmove), handleGetMove, []).
 
 :- http_handler(src('.'), serve_files_in_directory(src), [prefix]).			% Serve files in /pub as requested (for WebGL Game Interface)
 :- http_handler(lib('.'), serve_files_in_directory(lib), [prefix]).
@@ -131,6 +131,25 @@ processGameOver([_Par=Val], R) :-
 gameOverFormatAsJSON(Reply) :-
     write('{'),
     Fields = [winner],
+    writeJSON(Fields, Reply).
+
+handleGetMove(Request) :-
+    member(method(post), Request), !,
+    http_read_data(Request, Data, []),
+    processGetMove(Data, Reply),
+    format('Content-type: application/json~n~n'),
+    getMoveFormatAsJSON(Reply).
+
+processGetMove([_Par=Val], R) :-
+    term_string(List, Val),
+    R = [_Move],
+    append(List, R, ListR),
+    Term =.. ListR,
+    Term.
+
+getMoveFormatAsJSON(Reply) :-
+    write('{'),
+    Fields = [move],
     writeJSON(Fields, Reply).
 
 

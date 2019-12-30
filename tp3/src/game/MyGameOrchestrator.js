@@ -19,6 +19,9 @@ class MyGameOrchestrator {
 
         const response = await this.logic.gameOver(newstate);
         console.log(response);
+
+        const move = await this.logic.getGreedyMove(newstate);
+        console.log(move);
     }
 
     getBoard() {

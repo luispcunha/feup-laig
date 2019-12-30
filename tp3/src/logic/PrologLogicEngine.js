@@ -5,12 +5,6 @@ class PrologLogicEngine extends LogicEngine {
         return PrologLogicEngine.deserializeGameState(response.state);
     }
 
-    async isValidMove(gameState, move) {
-        const response = await PrologLogicEngine.makeRequest('validmove', `[is_valid_move, ${PrologLogicEngine.serializeGameState(gameState)}, ${move.x}-${move.y}]`);
-
-        return response.bool;
-    }
-
     async makeMove(gameState, move) {
         const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.x}-${move.y}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
@@ -22,6 +16,18 @@ class PrologLogicEngine extends LogicEngine {
         const response = await PrologLogicEngine.makeRequest('gameover', `[gameover, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return response.winner;
+    }
+
+    async getRandomMove(gameState) {
+        const response = await PrologLogicEngine.makeRequest('getmove', `[random_move, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+
+        return response.move;
+    }
+
+    async getGreedyMove(gameState) {
+        const response = await PrologLogicEngine.makeRequest('getmove', `[greedy_move, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+
+        return response.move;
     }
 
     static async makeRequest(endpoint, requestString) {
