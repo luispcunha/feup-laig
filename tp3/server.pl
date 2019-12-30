@@ -11,7 +11,7 @@
 :- http_handler(root(initialstate), handleInitialState, []).
 :- http_handler(root(validmove), handleValidMove, []).
 :- http_handler(root(makemove), handleMakeMove, []).
-:- http_handler(root(gameover), handleInitialState, []).
+:- http_handler(root(gameover), handleGameover, []).
 
 :- http_handler(src('.'), serve_files_in_directory(src), [prefix]).			% Serve files in /pub as requested (for WebGL Game Interface)
 :- http_handler(lib('.'), serve_files_in_directory(lib), [prefix]).
@@ -25,7 +25,7 @@ server(Port) :-
     http_server(http_dispatch, [port(Port)]).		% Start server on port Port
 
 %Receive Request as String via POST
-prepReplyStringToJSON(Request) :- 
+prepReplyStringToJSON(Request) :-
         member(method(post), Request), !,						% if POST
         http_read_data(Request, Data, []),						% Retrieve POST Data
         processString(Data, Reply),								% Call processing predicate
@@ -40,8 +40,8 @@ prepReplyStringToJSON(_Request) :-								% Fallback for non-POST Requests
 formatAsJSON(Reply):-
         write('{'),												% Start JSON Object
         Fields = [newPlayer, newBoard, message],				% Response Field Names
-        writeJSON(Fields, Reply).								% Format content as JSON 
-        
+        writeJSON(Fields, Reply).								% Format content as JSON
+
 writeJSON([Prop], [Val]):-
     write('"'), write(Prop),
     write('":"'), write(Val), write('"}').						% Last element
@@ -64,13 +64,14 @@ play(Player, Board, Play, NextPlayer, NewBoard, Message):-		% Example play predi
     Board=[[_|A]|B], NewBoard=[[Play|A]|B],						% Example - changes [1,1] to Play
     next(Player, NextPlayer),									% Change Player
     Message = "Move Validated".									% Add some message (Game Over / Invalid Move / ...)
-    
+
 next(1,0).
 next(0,1).
 
 %--------------------------------------------
 
 :- ensure_loaded('logic-engine/game_model.pl').
+:- ensure_loaded('logic-engine/move.pl').
 
 handleInitialState(Request) :-
     member(method(post), Request), !,
@@ -79,16 +80,36 @@ handleInitialState(Request) :-
     format('Content-type: application/json~n~n'),
     initialFormatAsJSON(Reply).
 
-processInitialState([_Par=Val], R):-
+processInitialState([_Par=Val], R) :-
     term_string(List, Val),
     R = [_State],
     append(List, R, ListR),
     Term =.. ListR,
     Term.
 
-initialFormatAsJSON(Reply):-
+initialFormatAsJSON(Reply) :-
     write('{'),
     Fields = [state],
+    writeJSON(Fields, Reply).
+
+
+handleMakeMove(Request) :-
+    member(method(post), Request), !,
+    http_read_data(Request, Data, []),
+    processMakeMove(Data, Reply),
+    format('Content-type: application/json~n~n'),
+    makeMoveFormatAsJSON(Reply).
+
+processMakeMove([_Par=Val], R) :-
+    term_string(List, Val),
+    R = [_NewState],
+    append(List, R, ListR),
+    Term =.. ListR,
+    Term.
+
+makeMoveFormatAsJSON(Reply) :-
+    write('{'),
+    Fields = [newGameState],
     writeJSON(Fields, Reply).
 
 

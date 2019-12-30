@@ -4,10 +4,18 @@ class MyGameOrchestrator {
      */
     constructor() {
         this.gameSequence = new MyGameSequence();
+        this.logic = new PrologLogicEngine();
     }
 
-    setBoard(gameboard) {
+    async setBoard(gameboard) {
         this.gameboard = gameboard;
+
+
+        const whatever = await this.logic.getInitialState(gameboard.nColumns, gameboard.nRows);
+        console.log(whatever);
+
+        const newstate = await this.logic.makeMove(whatever, 1, 1);
+        console.log(newstate);
     }
 
     getBoard() {

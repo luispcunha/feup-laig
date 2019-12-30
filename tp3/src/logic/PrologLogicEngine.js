@@ -1,16 +1,20 @@
 class PrologLogicEngine extends LogicEngine {
     async getInitialState(width, height) {
-        const response = await makeRequest('initialstate', `[generate_initial_game_state, ${height.toFixed(0)}, ${width.toFixed(0)}, P, P]`);
-        return deserializeGameState(response.state);
+        const response = await PrologLogicEngine.makeRequest('initialstate', `[generate_initial_game_state, ${height.toFixed(0)}, ${width.toFixed(0)}, 1, 1]`);
+
+        console.log(`[generate_initial_game_state, ${height.toFixed(0)}, ${width.toFixed(0)}, 1, 1]`);
+
+        return PrologLogicEngine.deserializeGameState(response.state);
     }
 
     async isValidMove(gameState, move) {
-        const response = await makeRequest('validmove', `[is_valid_move, ${serializeGameState(gameState)}, ${move.x}-${move.y}]`);
+        const response = await PrologLogicEngine.makeRequest('validmove', `[is_valid_move, ${PrologLogicEngine.serializeGameState(gameState)}, ${move.x}-${move.y}]`);
         return response.bool;
     }
 
-    async makeMove(gameState, move) {
-        const response = await makeRequest('makemove', `[move, ${move.x}-${move.y}, ${serializeGameState(gameState)}]`);
+    async makeMove(gameState, x, y) {
+        console.log(`[move, ${x}-${y}, ${PrologLogicEngine.serializeGameState(gameState)}]`)
+        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${x}-${y}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
         return response.newGameState;
     }
 
@@ -21,33 +25,49 @@ class PrologLogicEngine extends LogicEngine {
 
     static async makeRequest(endpoint, requestString) {
         const headers = new Headers();
+
         headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        const response = await fetch(`http://localhost:8083/${endpoint}`, { method: 'POST', headers, body: 'requestString=' + encodeURIComponent(requestString) });
+        const response = await fetch(`http://127.0.0.1:8083/${endpoint}`, { method: 'POST', headers, body: 'requestString=' + encodeURIComponent(requestString) });
+
         if (!response.ok) throw 'An error ocurred';
         return await response.json();
     }
 
     static deserializeGameState(serialized) {
+        const elements = serialized.split(',');
+        const lastElements = elements.splice(-6, 6);
+
+        lastElements[lastElements.length - 1] = lastElements[lastElements.length - 1].slice(0, -1);
+
+        const boardsString = elements.join(',') + ']';
+        const boards = JSON.parse(boardsString);
+
         return {
             boards: {
-                octagon: serialized[0],
-                square: serialized[1]
+                octagons: boards[0],
+                squares: boards[1]
             },
             size: {
-                width: serialized[3],
-                height: serialized[2]
+                width: lastElements[0],
+                height: lastElements[1]
             },
             playerTypes: {
-                p1: serialized[4],
-                p2: serialized[5]
+                p1: lastElements[2],
+                p2: lastElements[3],
             },
             nextPlay: {
-                player: serialized[6]
+                player: lastElements[4],
+                cut : lastElements[5]
             }
         };
     }
 
     static serializeGameState(state) {
-        return [state.boards.octagon, state.boards.square, state.size.height, state.size.width, state.playerTypes.p1, state.playerTypes.p2, state.nextPlay.player];
+        const values = [];
+        Object.values(state).forEach(element => {
+            values.push(...Object.values(element));
+        });
+
+        return JSON.stringify(values).replace(/\"/g, "");
     }
 }
