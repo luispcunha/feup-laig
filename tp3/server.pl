@@ -7,6 +7,12 @@
 :- use_module(library(lists)).
 
 :- http_handler(root(game), prepReplyStringToJSON, []).						% Predicate to handle requests on server/game (for Prolog Game Logic)
+
+:- http_handler(root(initialstate), handleInitialState, []).
+:- http_handler(root(validmove), handleValidMove, []).
+:- http_handler(root(makemove), handleMakeMove, []).
+:- http_handler(root(gameover), handleInitialState, []).
+
 :- http_handler(src('.'), serve_files_in_directory(src), [prefix]).			% Serve files in /pub as requested (for WebGL Game Interface)
 :- http_handler(lib('.'), serve_files_in_directory(lib), [prefix]).
 http:location(src, root(src), []).											% Location of /pub alias on server
@@ -61,5 +67,27 @@ play(Player, Board, Play, NextPlayer, NewBoard, Message):-		% Example play predi
     
 next(1,0).
 next(0,1).
+
+%--------------------------------------------
+
+handleInitialState(Request) :-
+    member(method(post), Request), !,
+    http_read_data(Request, Data, []),
+    processInitialState(Data, Reply),
+    format('Content-type: application/json~n~n'),
+    initialFormatAsJSON(Reply).
+
+processInitialStateprocessString([_Par=Val], R):-
+    term_string(List, Val),
+    R = [_State],
+    append(List, R, ListR),
+    Term =.. ListR,
+    Term.
+
+initialFormatAsJSON(Reply):-
+    write('{'),
+    Fields = [state],				% Response Field Names
+    writeJSON(Fields, Reply).
+
 
 :- server(8083).
