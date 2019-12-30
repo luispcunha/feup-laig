@@ -15,9 +15,12 @@
 
 
 /**
-*   generate_initial_game_state(+BoardHeight,+BoardWidth,+P1Type.+P2Type,-InitialGameState)
+*   generate_initial_game_state(+BoardHeight,+BoardWidth,
+*                               +P1Type.+P2Type,
+*                               -InitialGameState)
 *
-*   Generates the an initial gamestate "struct" with the empty boards of the specified height and width (squareboard has side and top/bottom collumns)
+*   Generates the an initial gamestate "struct" with the empty boards of the
+*   specified height and width (squareboard has side and top/bottom collumns)
 *   filled with correct squares. Checks if Width and Height is greater than 2.
 */
 generate_initial_game_state(Height,Width , P1Type, P2Type, [OctagonBoard, SquareBoard, Height, Width, P1Type, P2Type, 1, 1-0 |[]]) :-
@@ -29,7 +32,7 @@ generate_initial_game_state(Height,Width , P1Type, P2Type, [OctagonBoard, Square
 /**
 *   board_get_element_at(+OctagonBoard,+X - +Y, -Element) 
 *
-*   Returns the "color" of the piece ad X-Y in the OctagonBoard
+*   Returns the "color" of the piece at X-Y in the OctagonBoard
 */
 board_get_element_at(Board, X-Y, Element) :-
     nth0(Y, Board, Row),
