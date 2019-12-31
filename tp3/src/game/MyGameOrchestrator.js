@@ -11,8 +11,8 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
-        this.p1type = PlayerType.human;
-        this.p2type = PlayerType.human;
+        this.p1Type = PlayerType.human;
+        this.p2Type = PlayerType.human;
         this.scene = scene;
     }
 
