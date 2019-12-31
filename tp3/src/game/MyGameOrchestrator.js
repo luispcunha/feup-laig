@@ -11,8 +11,8 @@ class MyGameOrchestrator {
     constructor() {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
-        this.p1type = PlayerType.human;
-        this.p2type = PlayerType.human;
+        this.p1Type = PlayerType.human;
+        this.p2Type = PlayerType.human;
     }
 
     async setBoard(board) {
@@ -58,15 +58,19 @@ class MyGameOrchestrator {
     }
 
     async updateGameState(move) {
-        console.log(this.gameSequence.getCurrentState());
-
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
-        const gameover = await this.logic.gameOver(nextState);
-
-        console.log(gameover);
 
         this.gameSequence.addState(nextState);
         this.board.fillBoards(nextState.boards);
+
+        const gameover = await this.logic.gameOver(nextState);
+
+        if (gameover != -1) {
+            console.log("GAME ENDED: " + gameover + " won");
+            return;
+        }
+
+        this.nextTurn();
     }
 
     async onObjectSelected(object, id) {
@@ -76,11 +80,43 @@ class MyGameOrchestrator {
     }
 
     start() {
-        this.resetGameState();
+        const p = this.resetGameState();
+
+        p.then(() => { this.nextTurn() });
     }
 
     undo() {
         this.gameSequence.undo();
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
+    }
+
+    nextTurn() {
+        const nextPlayer = this.gameSequence.getCurrentState().nextPlay.player;
+
+        let level;
+
+        if (nextPlayer == 1)
+            level = this.p1Type;
+        else if (nextPlayer == 2)
+            level = this.p2Type;
+
+        if (level == PlayerType.human)
+            return;
+
+        this.botTurn(level);
+    }
+
+    async botTurn(level) {
+        let move;
+
+
+        if (level == 1)
+            move = await this.logic.getRandomMove(this.gameSequence.getCurrentState());
+        else if (level == 2)
+            move = await this.logic.getGreedyMove(this.gameSequence.getCurrentState());
+
+        console.log(move);
+
+        this.updateGameState(move);
     }
 }

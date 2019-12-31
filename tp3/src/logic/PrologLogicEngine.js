@@ -12,7 +12,6 @@ class PrologLogicEngine extends LogicEngine {
     }
 
     async gameOver(gameState) {
-        console.log(`[gameover, ${PrologLogicEngine.serializeGameState(gameState)}]`);
         const response = await PrologLogicEngine.makeRequest('gameover', `[gameover, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return response.winner;
@@ -21,13 +20,13 @@ class PrologLogicEngine extends LogicEngine {
     async getRandomMove(gameState) {
         const response = await PrologLogicEngine.makeRequest('getmove', `[random_move, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
-        return response.move;
+        return PrologLogicEngine.deserializeMove(response.move);
     }
 
     async getGreedyMove(gameState) {
         const response = await PrologLogicEngine.makeRequest('getmove', `[greedy_move, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
-        return response.move;
+        return PrologLogicEngine.deserializeMove(response.move);
     }
 
     static async makeRequest(endpoint, requestString) {
@@ -38,6 +37,15 @@ class PrologLogicEngine extends LogicEngine {
 
         if (!response.ok) throw 'An error ocurred';
         return await response.json();
+    }
+
+    static deserializeMove(serialized) {
+        const array = serialized.split('-');
+
+        return {
+            x: Number(array[0]),
+            y: Number(array[1])
+        }
     }
 
     static deserializeGameState(serialized) {
@@ -71,6 +79,7 @@ class PrologLogicEngine extends LogicEngine {
 
     static serializeGameState(state) {
         const values = [];
+
         Object.values(state).forEach(element => {
             values.push(...Object.values(element));
         });
