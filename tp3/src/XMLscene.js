@@ -12,7 +12,7 @@ class XMLscene extends CGFscene {
     super();
 
     this.interface = myinterface;
-    this.gameOrchestrator = new MyGameOrchestrator();
+    this.gameOrchestrator = new MyGameOrchestrator(this);
   }
 
   /**
@@ -59,7 +59,6 @@ class XMLscene extends CGFscene {
   initCameras() {
     const cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     this.currentMainCamera = cam;
-    this.currentSecurityCamera = cam;
     this.camera = cam;
   }
 
@@ -131,9 +130,6 @@ class XMLscene extends CGFscene {
     this.currentMainView = this.graph.defaultView;
     this.onMainCameraChange();
 
-    this.currentSecondaryView = this.graph.defaultView;
-    this.onSecurityCameraChange();
-
     this.interface.initCameraSettings(Object.keys(this.graph.views));
     this.interface.initLightSettings();
     this.interface.initGameSettings();
@@ -149,27 +145,10 @@ class XMLscene extends CGFscene {
     this.interface.setActiveCamera(this.currentMainCamera);
   }
 
-  onSecurityCameraChange() {
-    this.currentSecurityCamera = this.graph.views[this.currentSecondaryView];
-  }
-
 
   display() {
     this.gameOrchestrator.managePick(this.pickMode, this.pickResults);
-
-    if (this.displaySecurityCamera) {
-      this.rttTexture.attachToFrameBuffer();
-      this.render(this.currentSecurityCamera);
-      this.rttTexture.detachFromFrameBuffer();
-    }
     this.render(this.currentMainCamera);
-    if (this.displaySecurityCamera) {
-      this.setActiveShader(this.secCamShader);
-      this.gl.disable(this.gl.DEPTH_TEST);
-      this.securityCamera.display();
-      this.gl.enable(this.gl.DEPTH_TEST);
-      this.setActiveShader(this.defaultShader);
-    }
   }
 
   /**

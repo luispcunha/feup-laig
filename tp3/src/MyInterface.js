@@ -46,10 +46,10 @@ class MyInterface extends CGFinterface {
         this.cameraSettingsFolder = this.settingsFolder.addFolder("Active Cameras");
         // Dropdown for the main camera
         this.cameraSettingsFolder.add(this.scene, "currentMainView", viewsList).name("Main Camera").onChange(() => this.scene.onMainCameraChange());
-        // Checkbox to enable/disable security camera
-        this.cameraSettingsFolder.add(this.scene, "displaySecurityCamera").name("Display Security Camera");
-        // Dropdown for the security camera
-        this.cameraSettingsFolder.add(this.scene, "currentSecondaryView", viewsList).name("Security Camera").onChange(() => this.scene.onSecurityCameraChange());
+
+        //this.cameraSettingsFolder.add(this.scene, 'currentP1View', viewsList).name('Player 1\'s Camera').onChange(() => this.scene.onP1CameraChange());
+
+        //this.cameraSettingsFolder.add(this.scene, 'currentP2View', viewsList).name('Player 2\'s Camera').onChange(() => this.scene.onP2CameraChange());
     }
 
     /**

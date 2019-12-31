@@ -8,11 +8,12 @@ class MyGameOrchestrator {
     /**
      * @constructor
      */
-    constructor() {
+    constructor(scene) {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
-        this.p1Type = PlayerType.human;
-        this.p2Type = PlayerType.human;
+        this.p1type = PlayerType.human;
+        this.p2type = PlayerType.human;
+        this.scene = scene;
     }
 
     async setBoard(board) {
@@ -71,6 +72,7 @@ class MyGameOrchestrator {
         }
 
         this.nextTurn();
+        //this.scene.setPlayerCamera(nextState.nextPlay.player);
     }
 
     async onObjectSelected(object, id) {
@@ -100,8 +102,10 @@ class MyGameOrchestrator {
         else if (nextPlayer == 2)
             level = this.p2Type;
 
-        if (level == PlayerType.human)
+        if (level == PlayerType.human) {
+            this.scene.setPlayerCamera(nextPlayer);
             return;
+        }
 
         this.botTurn(level);
     }
