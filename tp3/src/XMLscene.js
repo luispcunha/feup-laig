@@ -134,9 +134,9 @@ class XMLscene extends CGFscene {
     this.currentSecondaryView = this.graph.defaultView;
     this.onSecurityCameraChange();
 
-
     this.interface.initCameraSettings(Object.keys(this.graph.views));
     this.interface.initLightSettings();
+    this.interface.initGameSettings();
 
     this.sceneInited = true;
   }

@@ -30,13 +30,13 @@ class MyGameBoard extends CGFobject {
         this.octagonTiles = [];
 
         let id = 1;
-        for (let i = 0; i < this.nRows; i++) {
-            let row = [];
-            for (let j = 0; j < this.nColumns; j++) {
-                row.push(new MyOctagonTile(this.scene, id, i, j));
+        for (let row = 0; row < this.nRows; row++) {
+            let rowElems = [];
+            for (let column = 0; column < this.nColumns; column++) {
+                rowElems.push(new MyOctagonTile(this.scene, id, row, column));
                 id++;
             }
-            this.octagonTiles.push(row);
+            this.octagonTiles.push(rowElems);
         }
     }
 
@@ -45,25 +45,18 @@ class MyGameBoard extends CGFobject {
 
         this.squareTiles = [];
 
-        let row = [];
-        for (let j = 1; j < this.nColumns; j++) {
-            row.push(new MySquareTile(this.scene, 0, j, scale));
-        }
-        this.squareTiles.push(row);
-
-        for (let i = 1; i < this.nRows; i++) {
-            row = [];
-            for (let j = 0; j <= this.nColumns; j++) {
-                row.push(new MySquareTile(this.scene, i, j, scale));
+        for (let row = 0; row <= this.nRows; row++) {
+            const rowElems = [];
+            for (let column = 0; column <= this.nColumns; column++) {
+                rowElems.push(new MySquareTile(this.scene, row, column, scale));
             }
-            this.squareTiles.push(row);
+            this.squareTiles.push(rowElems);
         }
 
-        row = [];
-        for (let j = 1; j < this.nColumns; j++) {
-            row.push(new MySquareTile(this.scene, this.nRows, j, scale));
-        }
-        this.squareTiles.push(row);
+        this.squareTiles[0][0].display = () => {};
+        this.squareTiles[0][this.nColumns].display = () => {};
+        this.squareTiles[this.nRows][0].display = () => {};
+        this.squareTiles[this.nRows][this.nColumns].display = () => {};
     }
 
     /**
@@ -134,5 +127,40 @@ class MyGameBoard extends CGFobject {
 
     addPiece(column, row, player) {
         this.octagonTiles[column][row].addPiece(this.octagonPieceComponents, player);
+    }
+
+    fillBoards(boards) {
+        for (let row = 0; row < this.squareTiles.length; row++) {
+            for (let column = 0; column < this.squareTiles[row].length; column++) {
+
+                const tile = this.squareTiles[row][column];
+                const elem = boards.squares[row][column];
+
+                if (tile) {
+                    switch (elem) {
+                        case 0:
+                            this.squareTiles[row][column].removePiece();
+                            break;
+                        default:
+                            this.squareTiles[row][column].addPiece(this.squarePieceComponents, elem);
+                            break;
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < boards.octagons.length; i++) {
+            for (let j = 0; j < boards.octagons[i].length; j++) {
+                const elem = boards.octagons[i][j];
+                switch (elem) {
+                    case 0:
+                        this.octagonTiles[i][j].removePiece();
+                        break;
+                    default:
+                        this.octagonTiles[i][j].addPiece(this.octagonPieceComponents, elem);
+                        break;
+                }
+            }
+        }
     }
 }

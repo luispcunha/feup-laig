@@ -37,7 +37,6 @@ class MyInterface extends CGFinterface {
         this.displaySettingsFolder = this.settingsFolder.addFolder("Display");
         this.displaySettingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => this.scene.onLightVisibilityChange());
         this.displaySettingsFolder.add(this.scene, "displayAxis").name("Display Axis");
-
     }
 
     /**
@@ -63,6 +62,13 @@ class MyInterface extends CGFinterface {
         for (let i = 0; i < keys.length; i++) {
             this.lightSettingsFolder.add(this.scene.lights[i], 'enabled').name(keys[i]);
         }
+    }
+
+    initGameSettings() {
+        this.gui.add(this.scene.gameOrchestrator, "start").name("Start");
+        this.gui.add(this.scene.gameOrchestrator, "undo").name("Undo");
+        this.gui.add(this.scene.gameOrchestrator, "p1type", { "Human": PlayerType.human, "Bot lvl 1": PlayerType.lvl1, "Bot lvl 2": PlayerType.lvl2 }).name("Player 1");
+        this.gui.add(this.scene.gameOrchestrator, "p2type", { "Human": PlayerType.human, "Bot lvl 1": PlayerType.lvl1, "Bot lvl 2": PlayerType.lvl2 }).name("Player 2");
     }
 
     /**

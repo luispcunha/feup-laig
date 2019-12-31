@@ -1,3 +1,9 @@
+const PlayerType = {
+    human: 0,
+    lvl1: 1,
+    lvl2: 2
+}
+
 class MyGameOrchestrator {
     /**
      * @constructor
@@ -5,27 +11,16 @@ class MyGameOrchestrator {
     constructor() {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
+        this.p1type = PlayerType.human;
+        this.p2type = PlayerType.human;
     }
 
-    async setBoard(gameboard) {
-        this.gameboard = gameboard;
-
-
-        const whatever = await this.logic.getInitialState(gameboard.nColumns, gameboard.nRows);
-        console.log(whatever);
-
-        const newstate = await this.logic.makeMove(whatever, {x:1, y:1});
-        console.log(newstate);
-
-        const response = await this.logic.gameOver(newstate);
-        console.log(response);
-
-        const move = await this.logic.getGreedyMove(newstate);
-        console.log(move);
+    async setBoard(board) {
+        this.board = board;
     }
 
     getBoard() {
-        return this.gameboard;
+        return this.board;
     }
 
     update(t) {
@@ -33,25 +28,59 @@ class MyGameOrchestrator {
     }
 
     display() {
-        this.gameboard.display();
+        this.board.display();
     }
 
-    managePick(pickMode, pickResults) {
+    async resetGameState() {
+        const state = await this.logic.getInitialState(8, 8);
+
+        this.board.fillBoards(state.boards);
+        this.gameSequence.reset();
+        this.gameSequence.addState(state);
+    }
+
+    async managePick(pickMode, pickResults) {
         if (pickMode == false) {
             if (pickResults != null && pickResults.length > 0) {
 
                 for (let i = 0; i < pickResults.length; i++) {
                     const obj = pickResults[i][0];
                     if (obj) {
-                        const customId = pickResults[i][1];
-                        console.log("Picked object: " + obj + ", with pick id " + customId);
-
-                        this.gameboard.addPiece(obj.column, obj.row, 1);
+                        const uniqueID = pickResults[i][1];
+                        await this.onObjectSelected(obj, uniqueID)
                     }
                 }
 
+                // clear results
                 pickResults.splice(0, pickResults.length);
             }
         }
+    }
+
+    async updateGameState(move) {
+        console.log(this.gameSequence.getCurrentState());
+
+        const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
+        const gameover = await this.logic.gameOver(nextState);
+
+        console.log(gameover);
+
+        this.gameSequence.addState(nextState);
+        this.board.fillBoards(nextState.boards);
+    }
+
+    async onObjectSelected(object, id) {
+        if (object instanceof MyOctagonTile) {
+            this.updateGameState({ x: object.column, y: object.row });
+        }
+    }
+
+    start() {
+        this.resetGameState();
+    }
+
+    undo() {
+        this.gameSequence.undo();
+        this.board.fillBoards(this.gameSequence.getCurrentState().boards);
     }
 }

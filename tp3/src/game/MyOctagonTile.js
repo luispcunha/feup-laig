@@ -7,7 +7,7 @@ class MyOctagonTile extends CGFobject {
      *
      * @param {CGFscene} scene
      */
-    constructor(scene, id, column, row) {
+    constructor(scene, id, row, column) {
         super(scene);
         this.id = id;
         this.column = column;
@@ -25,6 +25,10 @@ class MyOctagonTile extends CGFobject {
 
     addPiece(components, player) {
         this.piece = new MyOctagonPiece(this.scene, this, player, components[1], components[2]);
+    }
+
+    removePiece() {
+        this.piece = null;
     }
 
     /**
