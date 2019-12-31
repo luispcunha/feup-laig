@@ -11,6 +11,8 @@ class MyGameOrchestrator {
     constructor() {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
+        this.animator = new MyAnimator(this);
+
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
     }
@@ -24,11 +26,12 @@ class MyGameOrchestrator {
     }
 
     update(t) {
-
+        this.animator.update(t);
     }
 
     display() {
         this.board.display();
+        this.animator.display();
     }
 
     async resetGameState() {
@@ -109,13 +112,10 @@ class MyGameOrchestrator {
     async botTurn(level) {
         let move;
 
-
         if (level == 1)
             move = await this.logic.getRandomMove(this.gameSequence.getCurrentState());
         else if (level == 2)
             move = await this.logic.getGreedyMove(this.gameSequence.getCurrentState());
-
-        console.log(move);
 
         this.updateGameState(move);
     }

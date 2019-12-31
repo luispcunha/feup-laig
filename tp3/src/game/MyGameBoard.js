@@ -59,6 +59,14 @@ class MyGameBoard extends CGFobject {
         this.squareTiles[this.nRows][this.nColumns].display = () => {};
     }
 
+    getOctagonTile(row, column) {
+        return this.octagonTiles[row][column];
+    }
+
+    getOctagonPiece(row, column) {
+        return this.octagonTiles[row][column].piece;
+    }
+
     /**
      * Display board.
      */
@@ -126,7 +134,7 @@ class MyGameBoard extends CGFobject {
     }
 
     addPiece(column, row, player) {
-        this.octagonTiles[column][row].addPiece(this.octagonPieceComponents, player);
+        this.octagonTiles[column][row].addPiece(this.createOctagonPiece(player));
     }
 
     fillBoards(boards) {
@@ -142,7 +150,7 @@ class MyGameBoard extends CGFobject {
                             this.squareTiles[row][column].removePiece();
                             break;
                         default:
-                            this.squareTiles[row][column].addPiece(this.squarePieceComponents, elem);
+                            this.squareTiles[row][column].addPiece(this.createSquarePiece(elem));
                             break;
                     }
                 }
@@ -157,10 +165,18 @@ class MyGameBoard extends CGFobject {
                         this.octagonTiles[i][j].removePiece();
                         break;
                     default:
-                        this.octagonTiles[i][j].addPiece(this.octagonPieceComponents, elem);
+                        this.octagonTiles[i][j].addPiece(this.createOctagonPiece(elem));
                         break;
                 }
             }
         }
+    }
+
+    createOctagonPiece(player) {
+        return new MyOctagonPiece(this.scene, player, this.octagonPieceComponents[1], this.octagonPieceComponents[2]);
+    }
+
+    createSquarePiece(player) {
+        return new MySquarePiece(this.scene, player, this.squarePieceComponents[1], this.squarePieceComponents[2]);
     }
 }

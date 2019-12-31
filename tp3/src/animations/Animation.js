@@ -23,4 +23,6 @@ class Animation {
      * Applies the animation matrix to the scene
      */
     apply() {}
+
+    isOver() {}
 }

@@ -23,8 +23,12 @@ class MySquareTile extends CGFobject {
             this.piece.setComponent(component, player);
     }
 
-    addPiece(components, player) {
-        this.piece = new MyOctagonPiece(this.scene, this, player, components[1], components[2]);
+    getPiece(piece) {
+        return piece;
+    }
+
+    addPiece(piece) {
+        this.piece = piece;
     }
 
     removePiece() {

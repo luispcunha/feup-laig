@@ -7,9 +7,8 @@ class MyOctagonPiece extends CGFobject {
      *
      * @param {CGFscene} scene
      */
-    constructor(scene, tile, player, componentP1, componentP2) {
+    constructor(scene, player, componentP1, componentP2) {
         super(scene);
-        this.tile = tile;
         this.player = player;
         this.components = [];
         this.components[1] = componentP1;

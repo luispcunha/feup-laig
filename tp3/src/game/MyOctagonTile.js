@@ -23,8 +23,12 @@ class MyOctagonTile extends CGFobject {
             this.piece.setComponent(component, player);
     }
 
-    addPiece(components, player) {
-        this.piece = new MyOctagonPiece(this.scene, this, player, components[1], components[2]);
+    addPiece(piece) {
+        this.piece = piece;
+    }
+
+    getPiece() {
+        return this.piece;
     }
 
     removePiece() {
@@ -38,9 +42,9 @@ class MyOctagonTile extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(this.column, 0, this.row);
 
-        if (this.piece)
+        if (this.piece) {
             this.piece.display();
-        else {
+        } else {
             this.scene.registerForPick(this.id, this);
             this.component.display();
             this.scene.clearPickRegistration();

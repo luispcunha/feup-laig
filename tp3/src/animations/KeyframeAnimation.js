@@ -71,4 +71,8 @@ class KeyframeAnimation extends Animation {
     apply() {
         this.scene.multMatrix(this.animationMatrix);
     }
+
+    isOver() {
+        return this.animationEnded;
+    }
 }
