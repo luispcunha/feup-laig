@@ -72,7 +72,6 @@ class MyGameOrchestrator {
         }
 
         this.nextTurn();
-        //this.scene.setPlayerCamera(nextState.nextPlay.player);
     }
 
     async onObjectSelected(object, id) {
@@ -82,14 +81,13 @@ class MyGameOrchestrator {
     }
 
     start() {
-        const p = this.resetGameState();
-
-        p.then(() => { this.nextTurn() });
+        this.resetGameState().then(() => { this.nextTurn() });
     }
 
     undo() {
         this.gameSequence.undo();
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
+        this.scene.setPlayerCamera(this.gameSequence.getCurrentState().nextPlay.player);
     }
 
     nextTurn() {

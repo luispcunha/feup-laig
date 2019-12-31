@@ -36,21 +36,10 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(20);
 
-    this.rttTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-    this.securityCamera = new MySecurityCamera(this, this.rttTexture);
-    this.secCamShader = new CGFshader(this.gl, "shaders/securityCamera.vert", "shaders/securityCamera.frag");
-
-    this.displayAxis = true;
+    this.displayAxis = false;
     this.displayLights = false;
-    this.displaySecurityCamera = false;
 
     this.lastT = 0;
-    window.addEventListener('resize', () => this.onWindowResize());
-  }
-
-  onWindowResize() {
-    this.rttTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-    this.securityCamera.texture = this.rttTexture;
   }
 
   /**
@@ -58,7 +47,6 @@ class XMLscene extends CGFscene {
   */
   initCameras() {
     const cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-    this.currentMainCamera = cam;
     this.camera = cam;
   }
 
@@ -127,11 +115,14 @@ class XMLscene extends CGFscene {
 
     this.initLights();
 
-    this.currentMainView = this.graph.defaultView;
+    this.mainView = this.graph.defaultView;
     this.onMainCameraChange();
+    this.p1View = this.graph.p1DefaultView;
+    this.onP1CameraChange();
+    this.p2View = this.graph.p2DefaultView;
+    this.onP2CameraChange();
 
     this.interface.initCameraSettings(Object.keys(this.graph.views));
-    this.interface.initLightSettings();
     this.interface.initGameSettings();
 
     this.sceneInited = true;
@@ -141,22 +132,32 @@ class XMLscene extends CGFscene {
    * Set current camera to the one selected in the interface
    */
   onMainCameraChange() {
-    this.currentMainCamera = this.graph.views[this.currentMainView];
-    this.interface.setActiveCamera(this.currentMainCamera);
+    this.mainCamera = this.graph.views[this.mainView];
+    if (this.currentView == 'main')
+      this.setCamera(this.mainCamera);
+  }
+
+  onP1CameraChange() {
+    this.p1Camera = this.graph.views[this.p1View];
+    if (this.currentView == 'player1')
+      this.setCamera(this.p1Camera);
+  }
+
+  onP2CameraChange() {
+    this.p2Camera = this.graph.views[this.p2View];
+    if (this.currentView == 'player2')
+      this.setCamera(this.p2Camera);
+  }
+
+  setCamera(camera) {
+    this.camera = camera;
+    this.interface.setActiveCamera(camera);
   }
 
 
   display() {
     this.gameOrchestrator.managePick(this.pickMode, this.pickResults);
-    this.render(this.currentMainCamera);
-  }
-
-  /**
-  * Renders the scene.
-  */
-  render(camera) {
     // ---- BEGIN Background, camera and axis setup
-    this.camera = camera;
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -190,6 +191,25 @@ class XMLscene extends CGFscene {
     // ---- END Background, camera and axis setup
   }
 
+  setPlayerCamera(player) {
+    switch (player) {
+      case '1':
+        console.log('changing camera to player 1');
+        this.currentView = 'player1';
+        this.setCamera(this.p1Camera);
+        break;
+      case '2':
+        console.log('changing camera to player 2');
+        this.currentView = 'player2';
+        this.setCamera(this.p2Camera);
+        break;
+      default:
+        console.log('changing camera to main');
+        this.currentView = 'main';
+        this.setCamera(this.mainCamera);
+    }
+  }
+
   /**
    * Changes the material of all graph components that have multiple materials defined
    */
@@ -212,9 +232,6 @@ class XMLscene extends CGFscene {
   update(t) {
     let deltaT = t - this.lastT;
     this.lastT = t;
-
-    const shaderTimeFactor = 5000;
-    this.secCamShader.setUniformsValues({ timeFactor: t / shaderTimeFactor % 1 });
 
     if (this.graph.loadedOk) {
       const keys = Object.keys(this.graph.animations);
