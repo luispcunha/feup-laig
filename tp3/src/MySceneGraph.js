@@ -914,7 +914,6 @@ class MySceneGraph {
                     return board;
 
                 this.primitives[primitiveId] = board;
-
                 this.scene.gameOrchestrator.setBoard(board);
             }
             else if (primitiveType == 'prism') {

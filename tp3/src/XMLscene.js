@@ -12,7 +12,7 @@ class XMLscene extends CGFscene {
     super();
 
     this.interface = myinterface;
-    this.gameOrchestrator = new MyGameOrchestrator();
+    this.gameOrchestrator = new MyGameOrchestrator(this);
   }
 
   /**
@@ -205,6 +205,8 @@ class XMLscene extends CGFscene {
 
       // Displays the scene (MySceneGraph function).
       this.graph.displayScene();
+
+      this.gameOrchestrator.display();
     }
 
     this.popMatrix();

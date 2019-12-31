@@ -15,6 +15,10 @@ class MyOctagonPiece extends CGFobject {
         this.components[2] = componentP2;
     }
 
+    addAnimation(animation) {
+        this.animation = animation;
+    }
+
     setComponent(component, player) {
         this.components[player] = component;
     }
@@ -23,6 +27,8 @@ class MyOctagonPiece extends CGFobject {
      * Display board.
      */
     display() {
+        if (this.animation)
+            this.animation.apply();
         this.components[this.player].display();
     }
 }

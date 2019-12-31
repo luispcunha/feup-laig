@@ -8,13 +8,18 @@ class MyGameOrchestrator {
     /**
      * @constructor
      */
-    constructor() {
+    constructor(scene) {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
         this.animator = new MyAnimator(this);
+        this.scene = scene;
 
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
+    }
+
+    getScene() {
+        return this.scene;
     }
 
     async setBoard(board) {
@@ -30,7 +35,6 @@ class MyGameOrchestrator {
     }
 
     display() {
-        this.board.display();
         this.animator.display();
     }
 
@@ -62,6 +66,8 @@ class MyGameOrchestrator {
 
     async updateGameState(move) {
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
+
+        this.animator.setAnimation(this.board.createOctagonPiece(1));
 
         this.gameSequence.addState(nextState);
         this.board.fillBoards(nextState.boards);
