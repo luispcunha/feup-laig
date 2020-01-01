@@ -35,7 +35,7 @@ class MyGameOrchestrator {
     }
 
     display() {
-        this.animator.display();
+        // this.animator.display();
     }
 
     async resetGameState() {
@@ -65,9 +65,8 @@ class MyGameOrchestrator {
     }
 
     async updateGameState(move) {
-        const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
 
-        this.animator.setAnimation(this.board.createOctagonPiece(1));
+        const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
 
         this.gameSequence.addState(nextState);
         this.board.fillBoards(nextState.boards);

@@ -996,7 +996,7 @@ class MySceneGraph {
         if (!Number.isInteger(height))
             return "unable to parse height of the primitive for ID = " + id;
 
-        return new MyGameBoard(this.scene, width, height);
+        return new MyGameBoard(this.scene.gameOrchestrator, width, height);
     }
 
     /**
