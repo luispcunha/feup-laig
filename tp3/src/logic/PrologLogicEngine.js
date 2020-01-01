@@ -33,7 +33,14 @@ class PrologLogicEngine extends LogicEngine {
         const headers = new Headers();
 
         headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        const response = await fetch(`http://127.0.0.1:8083/${endpoint}`, { method: 'POST', headers, body: 'requestString=' + encodeURIComponent(requestString) });
+        const response = await fetch(
+            `http://${window.location.host}/${endpoint}`,
+            {
+                method: 'POST',
+                headers,
+                body: `requestString=${encodeURIComponent(requestString)}`
+            }
+            );
 
         if (!response.ok) throw 'An error ocurred';
         return await response.json();

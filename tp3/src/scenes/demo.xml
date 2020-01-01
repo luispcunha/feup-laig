@@ -1,7 +1,7 @@
 <lxs>
     <scene root="demoRoot" axis_length="5"/>
 
-    <views default="defaultCamera">
+    <views default="defaultCamera" p1default="defaultCamera" p2default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
             <from x="0" y="8" z="0.01" />
             <to x="0" y="-2" z="0" />

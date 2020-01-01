@@ -23,45 +23,22 @@ class MyInterface extends CGFinterface {
         // add a group of controls (and open/expand by default)
         this.settingsFolder = this.gui.addFolder("Settings");
         this.settingsFolder.open();
-
-        this.initDisplaySettings();
         this.initKeys();
 
         return true;
     }
 
     /**
-     * Adds folder with checkboxes to control the visibility of lights and axis.
-     */
-    initDisplaySettings() {
-        this.displaySettingsFolder = this.settingsFolder.addFolder("Display");
-        this.displaySettingsFolder.add(this.scene, "displayLights").name("Display Lights").onChange(() => this.scene.onLightVisibilityChange());
-        this.displaySettingsFolder.add(this.scene, "displayAxis").name("Display Axis");
-    }
-
-    /**
      * Adds folder with dropdown to select current cameras
      */
     initCameraSettings(viewsList) {
-        this.cameraSettingsFolder = this.settingsFolder.addFolder("Active Cameras");
+        this.cameraSettingsFolder = this.settingsFolder.addFolder("Camera Settings");
         // Dropdown for the main camera
-        this.cameraSettingsFolder.add(this.scene, "currentMainView", viewsList).name("Main Camera").onChange(() => this.scene.onMainCameraChange());
-        // Checkbox to enable/disable security camera
-        this.cameraSettingsFolder.add(this.scene, "displaySecurityCamera").name("Display Security Camera");
-        // Dropdown for the security camera
-        this.cameraSettingsFolder.add(this.scene, "currentSecondaryView", viewsList).name("Security Camera").onChange(() => this.scene.onSecurityCameraChange());
-    }
+        this.cameraSettingsFolder.add(this.scene, "mainView", viewsList).name("Main Camera").onChange(() => this.scene.onMainCameraChange());
 
-    /**
-     * Adds checkboxes to toggle lights on/off
-     */
-    initLightSettings() {
-        this.lightSettingsFolder = this.settingsFolder.addFolder("Active Lights");
+        this.cameraSettingsFolder.add(this.scene, 'p1View', viewsList).name('Player 1\'s Camera').onChange(() => this.scene.onP1CameraChange());
 
-        const keys = Object.keys(this.scene.graph.lights);
-        for (let i = 0; i < keys.length; i++) {
-            this.lightSettingsFolder.add(this.scene.lights[i], 'enabled').name(keys[i]);
-        }
+        this.cameraSettingsFolder.add(this.scene, 'p2View', viewsList).name('Player 2\'s Camera').onChange(() => this.scene.onP2CameraChange());
     }
 
     initGameSettings() {
