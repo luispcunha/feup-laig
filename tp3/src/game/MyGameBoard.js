@@ -22,6 +22,8 @@ class MyGameBoard {
 
         this.squarePieceComponents = [];
         this.octagonPieceComponents = [];
+
+        this.animatedPieces = [];
     }
 
     initOctagonTiles() {
@@ -90,6 +92,14 @@ class MyGameBoard {
             row.forEach(tile => {
                 tile.display();
             });
+        });
+
+        this.animatedPieces.forEach(piece => {
+            piece.display();
+        });
+
+        this.animatedPieces = this.animatedPieces.filter(piece => {
+            return ! piece.isAnimOver();
         });
 
         scene.popMatrix();
@@ -182,5 +192,9 @@ class MyGameBoard {
 
     createSquarePiece(player) {
         return new MySquarePiece(this.orchestrator, player, this.squarePieceComponents[1], this.squarePieceComponents[2]);
+    }
+
+    addAnimatedPiece(piece) {
+        this.animatedPieces.push(piece);
     }
 }

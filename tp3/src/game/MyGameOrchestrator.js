@@ -66,6 +66,8 @@ class MyGameOrchestrator {
 
     async updateGameState(move) {
 
+        this.animator.animateMove(1, move);
+
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
 
         this.gameSequence.addState(nextState);

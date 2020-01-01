@@ -14,13 +14,24 @@ class MyAnimatedOctagonPiece extends MyOctagonPiece {
         this.animation = animation;
     }
 
+    isAnimOver() {
+        return this.animation.isOver();
+    }
+
     /**
      * Display board.
      */
     display() {
-        if (this.animation)
+        const scene = this.orchestrator.getScene();
+
+        scene.pushMatrix();
+
+        if (this.animation) {
             this.animation.apply();
+        }
 
         super.display();
+
+        scene.popMatrix();
     }
 }

@@ -11,11 +11,19 @@ class KeyframeAnimation extends Animation {
      */
     constructor(scene, id, keyframes) {
         super(scene, id);
-        this.keyframes = [new Keyframe()]; // first keyframe corresponds to a default (neutral) keyframe
+
+        this.keyframes = [];
+
+        if (keyframes[0].t > 0)
+            this.keyframes.push(new Keyframe()); // first keyframe corresponds to a default (neutral) keyframe
+
         this.keyframes.push(...keyframes);
         this.generateSegments();
         this.sumT = 0; // total time elapsed since start of execution
-        this.animationMatrix = mat4.create();
+
+        const currentSegment = this.getCurrentSegment();
+        this.animationMatrix = currentSegment.computeAnimMatrix(this.sumT);
+
         this.animationEnded = false;
     }
 
@@ -61,7 +69,9 @@ class KeyframeAnimation extends Animation {
             }
 
             // compute animation matrix, consisting of the interpolation of the keyframes of the current segment
+            console.log("t " + t);
             this.animationMatrix = currentSegment.computeAnimMatrix(this.sumT);
+            console.log(this.animationMatrix);
         }
     }
 
@@ -69,6 +79,8 @@ class KeyframeAnimation extends Animation {
      * Applies current animation matrix to the scene.
      */
     apply() {
+        console.log("apply")
+        console.log(this.animationMatrix);
         this.scene.multMatrix(this.animationMatrix);
     }
 
