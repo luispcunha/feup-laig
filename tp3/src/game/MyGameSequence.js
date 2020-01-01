@@ -41,16 +41,16 @@ class MyGameSequence {
         this.currentMovieIdx = 0;
     }
 
+    getMovieSequence() {
+        if (this.states[this.currentMovieIdx]) {
+            return {
+                state: this.states[this.currentMovieIdx],
+                move: this.moves[this.currentMovieIdx++],
+            }
+        }
+    }
+
     isMovieOver() {
         return this.currentMovieIdx >= this.states.length;
-    }
-
-    getMovieState() {
-        if (this.states[this.currentMovieIdx])
-            return this.states[this.currentMovieIdx];
-    }
-
-    getMovieMove() {
-        return this.moves[this.currentMovieIdx++];
     }
 }

@@ -6,7 +6,7 @@ class PrologLogicEngine extends LogicEngine {
     }
 
     async makeMove(gameState, move) {
-        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.x}-${move.y}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.col}-${move.row}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return PrologLogicEngine.deserializeGameState(response.newGameState);
     }
@@ -33,7 +33,14 @@ class PrologLogicEngine extends LogicEngine {
         const headers = new Headers();
 
         headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        const response = await fetch(`http://127.0.0.1:8083/${endpoint}`, { method: 'POST', headers, body: 'requestString=' + encodeURIComponent(requestString) });
+        const response = await fetch(
+            `http://${window.location.host}/${endpoint}`,
+            {
+                method: 'POST',
+                headers,
+                body: `requestString=${encodeURIComponent(requestString)}`
+            }
+            );
 
         if (!response.ok) throw 'An error ocurred';
         return await response.json();
@@ -43,8 +50,8 @@ class PrologLogicEngine extends LogicEngine {
         const array = serialized.split('-');
 
         return {
-            x: Number(array[0]),
-            y: Number(array[1])
+            col: Number(array[0]),
+            row: Number(array[1])
         }
     }
 

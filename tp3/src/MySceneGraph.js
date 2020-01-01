@@ -262,6 +262,18 @@ class MySceneGraph {
         if (this.defaultView == null)
             return "default view id missing";
 
+        this.p1DefaultView = this.reader.getString(viewsNode, 'p1default');
+        if (!this.p1DefaultView) {
+            this.onXMLMinorError('No default view for Player 1 was specified, using scene default.');
+            this.p1DefaultView = this.defaultView;
+        }
+
+        this.p2DefaultView = this.reader.getString(viewsNode, 'p2default');
+        if (!this.p2DefaultView) {
+            this.onXMLMinorError('No default view for Player 2 was specified, using scene default.');
+            this.p2DefaultView = this.defaultView;
+        }
+
         this.views = {};
         var numViews = 0;
 

@@ -22,14 +22,14 @@ class MyAnimator {
             xi = -2;
             zi = this.orchestrator.board.nRows / 2 - 0.5;
 
-            xf = move.x;
-            zf = move.y;
+            xf = move.col;
+            zf = move.row;
         } else if (player == 2) {
             xi = this.orchestrator.board.nColumns + 2;
             zi = this.orchestrator.board.nRows / 2 - 0.5;
 
-            xf = move.x;
-            zf = move.y;
+            xf = move.col;
+            zf = move.row;
         }
 
         const kfs = this.generateKeyFrames(xi, xf, zi, zf, 1, 2, 10);

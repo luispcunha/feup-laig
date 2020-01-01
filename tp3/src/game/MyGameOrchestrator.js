@@ -103,21 +103,18 @@ class MyGameOrchestrator {
 
     onObjectSelected(object, id) {
         if (object instanceof MyOctagonTile && this.state == GameStates.humanPlaying) {
-            this.executeMove({ x: object.column, y: object.row });
+            this.executeMove({ col: object.column, row: object.row });
         }
     }
 
     start() {
-        const p = this.resetGameState();
-
-        p.then(() => {
-            this.resumeGame();
-        });
+        this.resetGameState().then(() => { this.resumeGame() });
     }
 
     undo() {
         this.gameSequence.undo();
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
+        this.scene.setPlayerCamera(this.gameSequence.getCurrentState().nextPlay.player);
     }
 
     resumeGame() {
@@ -133,6 +130,7 @@ class MyGameOrchestrator {
 
         if (level == PlayerType.human) {
             this.state = GameStates.humanPlaying;
+            this.scene.setPlayerCamera(nextPlayer);
             return;
         }
 
@@ -160,17 +158,17 @@ class MyGameOrchestrator {
     }
 
     resumeMovie() {
+        const movieSequence = this.gameSequence.getMovieSequence();
+        const player = movieSequence.state.nextPlay.player;
+
+        this.board.fillBoards(movieSequence.state.boards);
+
         if (this.gameSequence.isMovieOver()) {
             this.state = GameStates.playing;
             return;
         }
 
-        const gameState = this.gameSequence.getMovieState();
-        const player = gameState.nextPlay.player;
-        const move = this.gameSequence.getMovieMove();
-
-        this.board.fillBoards(gameState.boards);
-        this.animator.animateMove(player, move);
+        this.animator.animateMove(player, movieSequence.move);
 
         this.state = GameStates.movieAnimation;
     }
