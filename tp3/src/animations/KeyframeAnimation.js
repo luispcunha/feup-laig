@@ -69,9 +69,7 @@ class KeyframeAnimation extends Animation {
             }
 
             // compute animation matrix, consisting of the interpolation of the keyframes of the current segment
-            console.log("t " + t);
             this.animationMatrix = currentSegment.computeAnimMatrix(this.sumT);
-            console.log(this.animationMatrix);
         }
     }
 
@@ -79,8 +77,6 @@ class KeyframeAnimation extends Animation {
      * Applies current animation matrix to the scene.
      */
     apply() {
-        console.log("apply")
-        console.log(this.animationMatrix);
         this.scene.multMatrix(this.animationMatrix);
     }
 

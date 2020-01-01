@@ -2,7 +2,13 @@ const PlayerType = {
     human: 0,
     lvl1: 1,
     lvl2: 2
-}
+};
+
+const GameStates = {
+    menu: 0,
+    playing: 1,
+    animatingMove: 2
+};
 
 class MyGameOrchestrator {
     /**
@@ -16,13 +22,15 @@ class MyGameOrchestrator {
 
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
+
+        this.state = GameStates.menu;
     }
 
     getScene() {
         return this.scene;
     }
 
-    async setBoard(board) {
+    setBoard(board) {
         this.board = board;
     }
 
@@ -30,18 +38,26 @@ class MyGameOrchestrator {
         return this.board;
     }
 
-    update(t) {
-        this.animator.update(t);
-    }
+    async update(t) {
+        switch (this.state) {
+            case GameStates.animatingMove:
+                this.animator.update(t);
 
-    display() {
-        // this.animator.display();
+                if (! this.animator.isAnimating()) {
+                    this.board.fillBoards(this.gameSequence.getCurrentState().boards);
+                    this.state = GameStates.playing;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     async resetGameState() {
         const state = await this.logic.getInitialState(8, 8);
 
         this.board.fillBoards(state.boards);
+
         this.gameSequence.reset();
         this.gameSequence.addState(state);
     }
@@ -64,35 +80,30 @@ class MyGameOrchestrator {
         }
     }
 
-    async updateGameState(move) {
+    async executeMove(move) {
 
-        this.animator.animateMove(1, move);
+        const player = this.gameSequence.getCurrentState().nextPlay.player;
 
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
-
         this.gameSequence.addState(nextState);
-        this.board.fillBoards(nextState.boards);
 
-        const gameover = await this.logic.gameOver(nextState);
-
-        if (gameover != -1) {
-            console.log("GAME ENDED: " + gameover + " won");
-            return;
-        }
-
-        this.nextTurn();
+        this.animator.animateMove(player, move);
+        this.state = GameStates.animatingMove;
     }
 
     async onObjectSelected(object, id) {
-        if (object instanceof MyOctagonTile) {
-            this.updateGameState({ x: object.column, y: object.row });
+        if (object instanceof MyOctagonTile && this.state == GameStates.playing) {
+            this.executeMove({ x: object.column, y: object.row });
         }
     }
 
     start() {
         const p = this.resetGameState();
 
-        p.then(() => { this.nextTurn() });
+        p.then(() => {
+            this.state = GameStates.playing;
+            this.nextTurn();
+        });
     }
 
     undo() {

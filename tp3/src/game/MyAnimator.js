@@ -6,7 +6,7 @@ class MyAnimator {
 
     animateMove(player, move) {
         const piece = this.orchestrator.board.createAnimatedOctagonPiece(player);
-        const animation = this.createAnimation(move);
+        const animation = this.createAnimation(player, move);
 
         this.animations.push(animation);
 
@@ -15,12 +15,22 @@ class MyAnimator {
         this.orchestrator.board.addAnimatedPiece(piece);
     }
 
-    createAnimation(move) {
-        const xi = - 2;
-        const zi = this.orchestrator.board.nRows / 2 - 0.5;
+    createAnimation(player, move) {
+        let xi, xf, zi, zf;
 
-        const xf = 2 + move.x;
-        const zf = 1 + move.y - (this.orchestrator.board.nRows / 2 + 0.5);
+        if (player == 1) {
+            xi = -2;
+            zi = this.orchestrator.board.nRows / 2 - 0.5;
+
+            xf = move.x;
+            zf = move.y;
+        } else if (player == 2) {
+            xi = this.orchestrator.board.nColumns + 2;
+            zi = this.orchestrator.board.nRows / 2 - 0.5;
+
+            xf = move.x;
+            zf = move.y;
+        }
 
         const kfs = this.generateKeyFrames(xi, xf, zi, zf, 1, 2, 10);
 
@@ -33,8 +43,8 @@ class MyAnimator {
         const kfs = [];
 
         const dt = t / n;
-        const dx = xf / n;
-        const dz = zf / n;
+        const dx = (xf - xi) / n;
+        const dz = (zf - zi) / n;
 
         const d = Math.PI / n;
 

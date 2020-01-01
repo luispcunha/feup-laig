@@ -205,8 +205,6 @@ class XMLscene extends CGFscene {
 
       // Displays the scene (MySceneGraph function).
       this.graph.displayScene();
-
-      this.gameOrchestrator.display();
     }
 
     this.popMatrix();
