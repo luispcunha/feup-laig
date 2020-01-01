@@ -7,7 +7,9 @@ const PlayerType = {
 const GameStates = {
     menu: 0,
     playing: 1,
-    animatingMove: 2
+    moveAnimation: 2,
+    movie: 3,
+    movieAnimation: 4
 };
 
 class MyGameOrchestrator {
@@ -40,13 +42,22 @@ class MyGameOrchestrator {
 
     async update(t) {
         switch (this.state) {
-            case GameStates.animatingMove:
+            case GameStates.moveAnimation:
                 this.animator.update(t);
 
                 if (! this.animator.isAnimating()) {
                     this.board.fillBoards(this.gameSequence.getCurrentState().boards);
                     this.state = GameStates.playing;
                 }
+
+                break;
+            case GameStates.movieAnimation:
+                this.animator.update(t);
+
+                if (! this.animator.isAnimating()) {
+                    this.resumeMovie();
+                }
+
                 break;
             default:
                 break;
@@ -85,10 +96,11 @@ class MyGameOrchestrator {
         const player = this.gameSequence.getCurrentState().nextPlay.player;
 
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
-        this.gameSequence.addState(nextState);
+
+        this.gameSequence.addSequence(nextState, move);
 
         this.animator.animateMove(player, move);
-        this.state = GameStates.animatingMove;
+        this.state = GameStates.moveAnimation;
     }
 
     async onObjectSelected(object, id) {
@@ -136,5 +148,27 @@ class MyGameOrchestrator {
             move = await this.logic.getGreedyMove(this.gameSequence.getCurrentState());
 
         this.updateGameState(move);
+    }
+
+    movie() {
+        this.gameSequence.startMovie();
+        this.state = GameStates.movie;
+        this.resumeMovie();
+    }
+
+    resumeMovie() {
+        if (this.gameSequence.isMovieOver()) {
+            this.state = GameStates.playing;
+            return;
+        }
+
+        const gameState = this.gameSequence.getMovieState();
+        const player = gameState.nextPlay.player;
+        const move = this.gameSequence.getMovieMove();
+
+        this.board.fillBoards(gameState.boards);
+        this.animator.animateMove(player, move);
+
+        this.state = GameStates.movieAnimation;
     }
 }
