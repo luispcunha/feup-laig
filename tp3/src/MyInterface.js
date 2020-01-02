@@ -50,6 +50,10 @@ class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene.gameOrchestrator, "nColumns", 4, 20).step(1).name("# columns").onChange(() => this.scene.gameOrchestrator.changeBoardSize());
         this.gui.add(this.scene.gameOrchestrator, "nRows", 4, 20).step(1).name("# rows").onChange(() => this.scene.gameOrchestrator.changeBoardSize());
+
+        this.gui.add(this.scene, "currentGraphKey", Object.keys(this.scene.graphs)).name("Theme").onChange(() => {
+            this.scene.changeGraph();
+        });
     }
 
     /**

@@ -113,22 +113,7 @@ class XMLscene extends CGFscene {
   */
   onGraphLoaded() {
     if (this.allGraphsLoaded()) {
-      this.graph = this.graphs[this.currentGraphKey];
-
-      this.axis = new CGFaxis(this, this.graph.referenceLength);
-
-      this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-
-      this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
-
-      this.initLights();
-
-      this.mainView = this.graph.defaultView;
-      this.onMainCameraChange();
-      this.p1View = this.graph.p1DefaultView;
-      this.onP1CameraChange();
-      this.p2View = this.graph.p2DefaultView;
-      this.onP2CameraChange();
+      this.changeGraph();
 
       this.interface.initCameraSettings(Object.keys(this.graph.views));
       this.interface.initGameSettings();
@@ -274,5 +259,24 @@ class XMLscene extends CGFscene {
     });
 
     return allLoaded;
+  }
+
+  changeGraph() {
+    this.graph = this.graphs[this.currentGraphKey];
+
+    this.axis = new CGFaxis(this, this.graph.referenceLength);
+
+    this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+
+    this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+
+    this.initLights();
+
+    this.mainView = this.graph.defaultView;
+    this.onMainCameraChange();
+    this.p1View = this.graph.p1DefaultView;
+    this.onP1CameraChange();
+    this.p2View = this.graph.p2DefaultView;
+    this.onP2CameraChange();
   }
 }

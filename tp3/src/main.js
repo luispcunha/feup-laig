@@ -34,8 +34,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js
       squex1: "squex1.xml"
     };
 
-    const filenames = getUrlVars().length > 0 ? getUrlVars() : defaultFilenames;
-
+    const filenames = Object.keys(getUrlVars()).length > 0 ? getUrlVars() : defaultFilenames;
     myScene.addGraphKeys(Object.keys(filenames));
 
     const myGraphs = { };
