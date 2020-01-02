@@ -52,10 +52,10 @@ class MyGameBoard {
             this.squareTiles.push(rowElems);
         }
 
-        this.squareTiles[0][0].display = () => {};
-        this.squareTiles[0][this.nColumns].display = () => {};
-        this.squareTiles[this.nRows][0].display = () => {};
-        this.squareTiles[this.nRows][this.nColumns].display = () => {};
+        this.squareTiles[0][0].display = () => { };
+        this.squareTiles[0][this.nColumns].display = () => { };
+        this.squareTiles[this.nRows][0].display = () => { };
+        this.squareTiles[this.nRows][this.nColumns].display = () => { };
     }
 
     getOctagonTile(row, column) {
@@ -70,16 +70,15 @@ class MyGameBoard {
      * Display board.
      */
     display(width, height) {
-        console.log("display board")
         const scene = this.orchestrator.getScene();
-
-        scene.pushMatrix();
 
         const widthScale = width / this.nColumns;
         const heightScale = height / this.nRows;
 
+        scene.pushMatrix();
+
         // center and scale board
-        scene.translate(- this.width / 2, 0, - this.height / 2);
+        scene.translate(- width / 2, 0, - height / 2);
         scene.scale(widthScale, 1, heightScale);
         scene.translate(0.5, 0, 0.5);
 
@@ -102,7 +101,7 @@ class MyGameBoard {
         });
 
         this.animatedPieces = this.animatedPieces.filter(piece => {
-            return ! piece.isAnimOver();
+            return !piece.isAnimOver();
         });
 
         scene.popMatrix();
