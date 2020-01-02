@@ -37,7 +37,6 @@ class MyOctagonTile {
             this.piece.display();
         } else {
             scene.registerForPick(this.id, this);
-            console.log("display tile");
             scene.graph.templates['octagonTile'].display();
             scene.clearPickRegistration();
         }

@@ -8,7 +8,6 @@ class MyGameBoardPrimitive {
     scaleTexCoords(ls, lt) { }
 
     display() {
-        console.log("display primitive")
         this.board.display(this.width, this.height);
     }
 }
