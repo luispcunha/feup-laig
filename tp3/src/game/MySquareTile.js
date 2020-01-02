@@ -1,14 +1,12 @@
 /**
  * MyTile class
  */
-class MySquareTile extends CGFobject {
+class MySquareTile {
     /**
      * @constructor
-     *
-     * @param {CGFscene} scene
      */
-    constructor(scene, row, column, scale) {
-        super(scene);
+    constructor(orchestrator, row, column, scale) {
+        this.orchestrator = orchestrator;
         this.column = column;
         this.row = row;
         this.scale = scale;
@@ -23,8 +21,12 @@ class MySquareTile extends CGFobject {
             this.piece.setComponent(component, player);
     }
 
-    addPiece(components, player) {
-        this.piece = new MyOctagonPiece(this.scene, this, player, components[1], components[2]);
+    getPiece(piece) {
+        return piece;
+    }
+
+    addPiece(piece) {
+        this.piece = piece;
     }
 
     removePiece() {
@@ -35,9 +37,11 @@ class MySquareTile extends CGFobject {
      * Display board.
      */
     display() {
-        this.scene.pushMatrix();
-        this.scene.translate(this.column - 0.5, 0, this.row - 0.5);
-        this.scene.scale(this.scale, 1, this.scale);
+        const scene = this.orchestrator.getScene();
+
+        scene.pushMatrix();
+        scene.translate(this.column - 0.5, 0, this.row - 0.5);
+        scene.scale(this.scale, 1, this.scale);
 
         if (this.piece)
             this.piece.display();
@@ -45,6 +49,6 @@ class MySquareTile extends CGFobject {
             this.component.display();
         }
 
-        this.scene.popMatrix();
+        scene.popMatrix();
     }
 }

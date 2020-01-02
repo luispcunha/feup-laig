@@ -2,7 +2,16 @@ const PlayerType = {
     human: 0,
     lvl1: 1,
     lvl2: 2
-}
+};
+
+const GameStates = {
+    menu: 0,
+    humanPlaying: 1,
+    botPlaying: 2,
+    moveAnimation: 3,
+    movie: 4,
+    movieAnimation: 5
+};
 
 class MyGameOrchestrator {
     /**
@@ -11,12 +20,20 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
+        this.animator = new MyAnimator(this);
+        this.scene = scene;
+
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
-        this.scene = scene;
+
+        this.state = GameStates.menu;
     }
 
-    async setBoard(board) {
+    getScene() {
+        return this.scene;
+    }
+
+    setBoard(board) {
         this.board = board;
     }
 
@@ -25,22 +42,36 @@ class MyGameOrchestrator {
     }
 
     update(t) {
+        switch (this.state) {
+            case GameStates.moveAnimation:
+                this.animator.update(t);
 
-    }
+                if (! this.animator.isAnimating()) {
+                    this.resumeGame();
+                }
 
-    display() {
-        this.board.display();
+                break;
+            case GameStates.movieAnimation:
+                this.animator.update(t);
+
+                if (! this.animator.isAnimating()) {
+                    this.resumeMovie();
+                }
+
+                break;
+            default:
+                break;
+        }
     }
 
     async resetGameState() {
         const state = await this.logic.getInitialState(8, 8);
 
-        this.board.fillBoards(state.boards);
         this.gameSequence.reset();
         this.gameSequence.addState(state);
     }
 
-    async managePick(pickMode, pickResults) {
+    managePick(pickMode, pickResults) {
         if (pickMode == false) {
             if (pickResults != null && pickResults.length > 0) {
 
@@ -48,7 +79,7 @@ class MyGameOrchestrator {
                     const obj = pickResults[i][0];
                     if (obj) {
                         const uniqueID = pickResults[i][1];
-                        await this.onObjectSelected(obj, uniqueID)
+                        this.onObjectSelected(obj, uniqueID)
                     }
                 }
 
@@ -58,30 +89,26 @@ class MyGameOrchestrator {
         }
     }
 
-    async updateGameState(move) {
+    async executeMove(move) {
+
+        const player = this.gameSequence.getCurrentState().nextPlay.player;
+
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
 
-        this.gameSequence.addState(nextState);
-        this.board.fillBoards(nextState.boards);
+        this.gameSequence.addSequence(nextState, move);
 
-        const gameover = await this.logic.gameOver(nextState);
-
-        if (gameover != -1) {
-            console.log("GAME ENDED: " + gameover + " won");
-            return;
-        }
-
-        this.nextTurn();
+        this.animator.animateMove(player, move);
+        this.state = GameStates.moveAnimation;
     }
 
-    async onObjectSelected(object, id) {
-        if (object instanceof MyOctagonTile) {
-            this.updateGameState({ x: object.column, y: object.row });
+    onObjectSelected(object, id) {
+        if (object instanceof MyOctagonTile && this.state == GameStates.humanPlaying) {
+            this.executeMove({ col: object.column, row: object.row });
         }
     }
 
     start() {
-        this.resetGameState().then(() => { this.nextTurn() });
+        this.resetGameState().then(() => { this.resumeGame() });
     }
 
     undo() {
@@ -90,7 +117,8 @@ class MyGameOrchestrator {
         this.scene.setPlayerCamera(this.gameSequence.getCurrentState().nextPlay.player);
     }
 
-    nextTurn() {
+    resumeGame() {
+        this.board.fillBoards(this.gameSequence.getCurrentState().boards);
         const nextPlayer = this.gameSequence.getCurrentState().nextPlay.player;
 
         let level;
@@ -101,24 +129,47 @@ class MyGameOrchestrator {
             level = this.p2Type;
 
         if (level == PlayerType.human) {
+            this.state = GameStates.humanPlaying;
             this.scene.setPlayerCamera(nextPlayer);
             return;
         }
 
+        this.state = GameStates.botPlaying;
         this.botTurn(level);
     }
 
-    async botTurn(level) {
-        let move;
-
+    botTurn(level) {
+        let p;
 
         if (level == 1)
-            move = await this.logic.getRandomMove(this.gameSequence.getCurrentState());
+            p = this.logic.getRandomMove(this.gameSequence.getCurrentState());
         else if (level == 2)
-            move = await this.logic.getGreedyMove(this.gameSequence.getCurrentState());
+            p = this.logic.getGreedyMove(this.gameSequence.getCurrentState());
 
-        console.log(move);
+        p.then((move) => {
+            this.executeMove(move);
+        });
+    }
 
-        this.updateGameState(move);
+    movie() {
+        this.gameSequence.startMovie();
+        this.state = GameStates.movie;
+        this.resumeMovie();
+    }
+
+    resumeMovie() {
+        const movieSequence = this.gameSequence.getMovieSequence();
+        const player = movieSequence.state.nextPlay.player;
+
+        this.board.fillBoards(movieSequence.state.boards);
+
+        if (this.gameSequence.isMovieOver()) {
+            this.state = GameStates.playing;
+            return;
+        }
+
+        this.animator.animateMove(player, movieSequence.move);
+
+        this.state = GameStates.movieAnimation;
     }
 }

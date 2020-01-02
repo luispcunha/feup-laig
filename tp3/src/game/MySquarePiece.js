@@ -1,16 +1,12 @@
 /**
  * MyTile class
  */
-class MySquarePiece extends CGFobject {
+class MySquarePiece {
     /**
      * @constructor
-     *
-     * @param {CGFscene} scene
      */
-    constructor(scene, tile, player, componentP1, componentP2) {
-        super(scene);
-        this.tile = tile;
-        this.type = type;
+    constructor(orchestrator, player, componentP1, componentP2) {
+        this.orchestrator = orchestrator;
         this.player = player;
         this.components = [];
         this.components[1] = componentP1;

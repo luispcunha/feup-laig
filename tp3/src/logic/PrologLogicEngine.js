@@ -6,7 +6,7 @@ class PrologLogicEngine extends LogicEngine {
     }
 
     async makeMove(gameState, move) {
-        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.x}-${move.y}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
+        const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.col}-${move.row}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return PrologLogicEngine.deserializeGameState(response.newGameState);
     }
@@ -50,8 +50,8 @@ class PrologLogicEngine extends LogicEngine {
         const array = serialized.split('-');
 
         return {
-            x: Number(array[0]),
-            y: Number(array[1])
+            col: Number(array[0]),
+            row: Number(array[1])
         }
     }
 

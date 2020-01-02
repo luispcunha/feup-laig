@@ -46,6 +46,7 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene.gameOrchestrator, "undo").name("Undo");
         this.gui.add(this.scene.gameOrchestrator, "p1Type", { "Human": PlayerType.human, "Bot lvl 1": PlayerType.lvl1, "Bot lvl 2": PlayerType.lvl2 }).name("Player 1");
         this.gui.add(this.scene.gameOrchestrator, "p2Type", { "Human": PlayerType.human, "Bot lvl 1": PlayerType.lvl1, "Bot lvl 2": PlayerType.lvl2 }).name("Player 2");
+        this.gui.add(this.scene.gameOrchestrator, "movie").name("Movie");
     }
 
     /**
