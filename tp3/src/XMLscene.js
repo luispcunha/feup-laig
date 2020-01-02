@@ -40,6 +40,11 @@ class XMLscene extends CGFscene {
     this.displayLights = false;
 
     this.lastT = 0;
+
+    this.graphs = { };
+    this.graphsLoadedOk = { };
+
+    this.currentGraphKey = null;
   }
 
   /**
@@ -107,25 +112,29 @@ class XMLscene extends CGFscene {
   * As loading is asynchronous, this may be called already after the application has started the run loop
   */
   onGraphLoaded() {
-    this.axis = new CGFaxis(this, this.graph.referenceLength);
+    if (this.allGraphsLoaded()) {
+      this.graph = this.graphs[this.currentGraphKey];
 
-    this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+      this.axis = new CGFaxis(this, this.graph.referenceLength);
 
-    this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+      this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
-    this.initLights();
+      this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
 
-    this.mainView = this.graph.defaultView;
-    this.onMainCameraChange();
-    this.p1View = this.graph.p1DefaultView;
-    this.onP1CameraChange();
-    this.p2View = this.graph.p2DefaultView;
-    this.onP2CameraChange();
+      this.initLights();
 
-    this.interface.initCameraSettings(Object.keys(this.graph.views));
-    this.interface.initGameSettings();
+      this.mainView = this.graph.defaultView;
+      this.onMainCameraChange();
+      this.p1View = this.graph.p1DefaultView;
+      this.onP1CameraChange();
+      this.p2View = this.graph.p2DefaultView;
+      this.onP2CameraChange();
 
-    this.sceneInited = true;
+      this.interface.initCameraSettings(Object.keys(this.graph.views));
+      this.interface.initGameSettings();
+
+      this.sceneInited = true;
+    }
   }
 
   /**
@@ -233,7 +242,7 @@ class XMLscene extends CGFscene {
     let deltaT = t - this.lastT;
     this.lastT = t;
 
-    if (this.graph.loadedOk) {
+    if (this.sceneInited) {
       const keys = Object.keys(this.graph.animations);
 
       for (const key of keys)
@@ -241,5 +250,29 @@ class XMLscene extends CGFscene {
     }
 
     this.gameOrchestrator.update(deltaT);
+  }
+
+  addGraph(graph) {
+    this.graphs[graph.id] = graph;
+    this.graphsLoadedOk[graph.id] = true;
+  }
+
+  addGraphKeys(keys) {
+    this.currentGraphKey = keys[0];
+
+    keys.forEach((key) => {
+      this.graphsLoadedOk[key] = false;
+    });
+  }
+
+  allGraphsLoaded() {
+    let allLoaded = true;
+
+    Object.values(this.graphsLoadedOk).forEach((loaded) => {
+      if (! loaded)
+        allLoaded = loaded;
+    });
+
+    return allLoaded;
   }
 }

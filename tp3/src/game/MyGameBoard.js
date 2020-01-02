@@ -5,23 +5,14 @@ class MyGameBoard {
     /**
      * @constructor
      */
-    constructor(orchestrator, width, height, nColumns, nRows) {
+    constructor(orchestrator, nColumns, nRows) {
         this.orchestrator = orchestrator;
-
-        this.width = width;
-        this.height = height;
 
         this.nRows = nRows;
         this.nColumns = nColumns;
 
-        this.widthScale = width / this.nColumns;
-        this.heightScale = height / this.nRows;
-
         this.initOctagonTiles();
         this.initSquareTiles();
-
-        this.squarePieceComponents = [];
-        this.octagonPieceComponents = [];
 
         this.animatedPieces = [];
     }
@@ -31,14 +22,7 @@ class MyGameBoard {
         this.nRows = nRows;
 
         this.initOctagonTiles();
-        this.addOctagonTileComponentToTiles();
-
         this.initSquareTiles();
-        this.addSquareTileComponentToTiles();
-
-
-        this.widthScale = this.width / this.nColumns;
-        this.heightScale = this.height / this.nRows;
     }
 
     initOctagonTiles() {
@@ -85,14 +69,18 @@ class MyGameBoard {
     /**
      * Display board.
      */
-    display() {
+    display(width, height) {
+        console.log("display board")
         const scene = this.orchestrator.getScene();
 
         scene.pushMatrix();
 
+        const widthScale = width / this.nColumns;
+        const heightScale = height / this.nRows;
+
         // center and scale board
         scene.translate(- this.width / 2, 0, - this.height / 2);
-        scene.scale(this.widthScale, 1, this.heightScale);
+        scene.scale(widthScale, 1, heightScale);
         scene.translate(0.5, 0, 0.5);
 
         // display octagon tiles
@@ -118,56 +106,6 @@ class MyGameBoard {
         });
 
         scene.popMatrix();
-    }
-
-    scaleTexCoords(ls, lt) {}
-
-    setOctagonTileComponent(component) {
-        this.octagonTileComponent = component;
-
-        this.addOctagonTileComponentToTiles();
-    }
-
-    addOctagonTileComponentToTiles() {
-        this.octagonTiles.forEach(row => {
-            row.forEach(tile => {
-                tile.setComponent(this.octagonTileComponent);
-            });
-        });
-    }
-
-    setSquareTileComponent(component) {
-        this.squareTileComponent = component;
-
-        this.addSquareTileComponentToTiles();
-    }
-
-    addSquareTileComponentToTiles() {
-        this.squareTiles.forEach(row => {
-            row.forEach(tile => {
-                tile.setComponent(this.squareTileComponent);
-            });
-        });
-    }
-
-    setSquarePieceComponent(component, player) {
-        this.squarePieceComponents[player] = component;
-
-        this.squareTiles.forEach(row => {
-            row.forEach(tile => {
-                tile.setPieceComponent(component, player);
-            });
-        });
-    }
-
-    setOctagonPieceComponent(component, player) {
-        this.octagonPieceComponents[player] = component;
-
-        this.octagonTiles.forEach(row => {
-            row.forEach(tile => {
-                tile.setPieceComponent(component, player);
-            });
-        });
     }
 
     addPiece(column, row, player) {
@@ -210,15 +148,15 @@ class MyGameBoard {
     }
 
     createAnimatedOctagonPiece(player) {
-        return new MyAnimatedOctagonPiece(this.orchestrator, player, this.octagonPieceComponents[1], this.octagonPieceComponents[2]);
+        return new MyAnimatedOctagonPiece(this.orchestrator, player);
     }
 
     createOctagonPiece(player) {
-        return new MyOctagonPiece(this.orchestrator, player, this.octagonPieceComponents[1], this.octagonPieceComponents[2]);
+        return new MyOctagonPiece(this.orchestrator, player);
     }
 
     createSquarePiece(player) {
-        return new MySquarePiece(this.orchestrator, player, this.squarePieceComponents[1], this.squarePieceComponents[2]);
+        return new MySquarePiece(this.orchestrator, player);
     }
 
     addAnimatedPiece(piece) {

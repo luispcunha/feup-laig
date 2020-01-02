@@ -12,15 +12,6 @@ class MyOctagonTile {
         this.row = row;
     }
 
-    setComponent(component) {
-        this.component = component;
-    }
-
-    setPieceComponent(component, player) {
-        if (this.piece)
-            this.piece.setComponent(component, player);
-    }
-
     addPiece(piece) {
         this.piece = piece;
     }
@@ -46,7 +37,8 @@ class MyOctagonTile {
             this.piece.display();
         } else {
             scene.registerForPick(this.id, this);
-            this.component.display();
+            console.log("display tile");
+            scene.graph.templates['octagonTile'].display();
             scene.clearPickRegistration();
         }
 

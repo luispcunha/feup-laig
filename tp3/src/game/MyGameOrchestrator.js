@@ -18,26 +18,24 @@ class MyGameOrchestrator {
      * @constructor
      */
     constructor(scene) {
+        this.scene = scene;
+
+        this.nColumns = 8;
+        this.nRows = 8;
+
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
         this.animator = new MyAnimator(this);
-        this.scene = scene;
+        this.board = new MyGameBoard(this, this.nColumns, this.nRows);
 
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
 
         this.state = GameStates.menu;
-
-        this.nColumns = 8;
-        this.nRows = 8;
     }
 
     getScene() {
         return this.scene;
-    }
-
-    initBoard(width, height) {
-        this.board = new MyGameBoard(this, width, height, this.nColumns, this.nRows);
     }
 
     getBoard() {

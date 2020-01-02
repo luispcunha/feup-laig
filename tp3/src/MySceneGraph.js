@@ -23,12 +23,12 @@ class MySceneGraph {
     /**
     * @constructor
     */
-    constructor(filename, scene) {
+    constructor(id, filename, scene) {
         this.loadedOk = null;
+        this.id = id;
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        scene.graph = this;
 
         this.nodes = [];
 
@@ -69,6 +69,9 @@ class MySceneGraph {
         this.loadedOk = true;
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
+
+        this.scene.addGraph(this);
+
         this.scene.onGraphLoaded();
     }
 
@@ -925,8 +928,7 @@ class MySceneGraph {
                 if (board instanceof String || typeof board == 'string')
                     return board;
 
-                this.scene.gameOrchestrator.initBoard(board.width, board.height);
-                this.primitives[primitiveId] = this.scene.gameOrchestrator.getBoard();
+                this.primitives[primitiveId] = board;
             }
             else if (primitiveType == 'prism') {
                 var prism = this.parsePrism(grandChildren[0], primitiveId);
@@ -1008,10 +1010,7 @@ class MySceneGraph {
         if (!Number.isInteger(height))
             return "unable to parse height of the primitive for ID = " + id;
 
-        return {
-            width: width,
-            height: height
-        };
+        return new MyGameBoardPrimitive(this.scene.gameOrchestrator.board, width, height);
     }
 
     /**
@@ -1250,6 +1249,9 @@ class MySceneGraph {
         var children = componentsNode.children;
 
         this.components = [];
+        this.templates = [];
+        this.templates.octagonPiece = [];
+        this.templates.squarePiece = [];
 
         var grandChildren = [];
         var grandgrandChildren = [];
@@ -1439,22 +1441,22 @@ class MySceneGraph {
 
             switch (componentID) {
                 case "octagonTile":
-                    this.scene.gameOrchestrator.getBoard().setOctagonTileComponent(currentComponent);
+                    this.templates['octagonTile'] = currentComponent;
                     break;
                 case "squareTile":
-                    this.scene.gameOrchestrator.getBoard().setSquareTileComponent(currentComponent);
+                    this.templates['squareTile'] = currentComponent;
                     break;
                 case "octagonPieceP1":
-                    this.scene.gameOrchestrator.getBoard().setOctagonPieceComponent(currentComponent, 1);
+                    this.templates['octagonPiece'][1] = currentComponent;
                     break;
                 case "octagonPieceP2":
-                    this.scene.gameOrchestrator.getBoard().setOctagonPieceComponent(currentComponent, 2);
+                    this.templates['octagonPiece'][2] = currentComponent;
                     break;
                 case "squarePieceP1":
-                    this.scene.gameOrchestrator.getBoard().setSquarePieceComponent(currentComponent, 1);
+                    this.templates['squarePiece'][1] = currentComponent;
                     break;
                 case "squarePieceP2":
-                    this.scene.gameOrchestrator.getBoard().setSquarePieceComponent(currentComponent, 2);
+                    this.templates['squarePiece'][2] = currentComponent;
                     break;
             }
 

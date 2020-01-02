@@ -11,7 +11,7 @@ function getUrlVars() {
   return vars;
 }
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js', 'primitives/MyPatch.js', 'primitives/MyRectangle.js', 'primitives/MyPrism.js', 'primitives/MySphere.js', 'primitives/MyCylinder.js', 'primitives/MyCylinder2.js', 'primitives/MyTorus.js', 'primitives/MyPlane.js', 'primitives/MyTriangle.js', 'util/Vector.js', 'util/Point.js', 'animations/Animation.js', 'animations/KeyframeAnimation.js', 'animations/Segment.js', 'animations/Keyframe.js', 'animations/KFTransformation.js', 'MySceneGraph.js', 'primitives/MyRegPolygon.js', 'game/MySquareTile.js', 'game/MyGameBoard.js', 'game/MyOctagonTile.js', 'game/MyOctagonPiece.js', 'game/MySquarePiece.js', 'game/MyGameOrchestrator.js', 'game/MyGameSequence.js', 'logic/LogicEngine.js', 'logic/PrologLogicEngine.js', 'game/MyAnimator.js', 'game/MyAnimatedOctagonPiece.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js', 'primitives/MyPatch.js', 'primitives/MyRectangle.js', 'primitives/MyPrism.js', 'primitives/MySphere.js', 'primitives/MyCylinder.js', 'primitives/MyCylinder2.js', 'primitives/MyTorus.js', 'primitives/MyPlane.js', 'primitives/MyTriangle.js', 'util/Vector.js', 'util/Point.js', 'animations/Animation.js', 'animations/KeyframeAnimation.js', 'animations/Segment.js', 'animations/Keyframe.js', 'animations/KFTransformation.js', 'MySceneGraph.js', 'primitives/MyRegPolygon.js', 'game/MySquareTile.js', 'game/MyGameBoard.js', 'game/MyOctagonTile.js', 'game/MyOctagonPiece.js', 'game/MySquarePiece.js', 'game/MyGameOrchestrator.js', 'game/MyGameSequence.js', 'logic/LogicEngine.js', 'logic/PrologLogicEngine.js', 'game/MyAnimator.js', 'game/MyAnimatedOctagonPiece.js', 'game/MyGameBoardPrimitive.js',
 
   main = function () {
     // Standard application, scene and interface setup
@@ -29,14 +29,27 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js
     // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
     // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
 
-    var filename = getUrlVars()['file'] || "demo.xml";
+    const defaultFilenames = {
+      squex: "squex.xml",
+      squex1: "squex1.xml"
+    };
+
+    const filenames = getUrlVars().length > 0 ? getUrlVars() : defaultFilenames;
+
+    myScene.addGraphKeys(Object.keys(filenames));
+
+    const myGraphs = { };
+
+    Object.keys(filenames).forEach((key) => {
+      myGraphs[key] = new MySceneGraph(key, filenames[key], myScene);
+    });
+
 
     // create and load graph, and associate it to scene.
     // Check console for loading errors
-    var myGraph = new MySceneGraph(filename, myScene);
+    // var myGraph = new MySceneGraph('squex', defaultFilenames['squex'], myScene);
 
     // start
     app.run();
   }
-
 ]);

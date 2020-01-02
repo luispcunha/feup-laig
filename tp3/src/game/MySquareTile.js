@@ -12,15 +12,6 @@ class MySquareTile {
         this.scale = scale;
     }
 
-    setComponent(component) {
-        this.component = component;
-    }
-
-    setPieceComponent(component, player) {
-        if (this.piece)
-            this.piece.setComponent(component, player);
-    }
-
     getPiece(piece) {
         return piece;
     }
@@ -46,7 +37,7 @@ class MySquareTile {
         if (this.piece)
             this.piece.display();
         else {
-            this.component.display();
+            this.orchestrator.getScene().graph.templates['squareTile'].display();
         }
 
         scene.popMatrix();
