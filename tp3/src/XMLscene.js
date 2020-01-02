@@ -47,7 +47,7 @@ class XMLscene extends CGFscene {
   */
   initCameras() {
     const cam = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-    this.camera = cam;
+    this.setCamera(cam);
   }
 
   /**
@@ -115,6 +115,7 @@ class XMLscene extends CGFscene {
 
     this.initLights();
 
+    this.currentView = 'main';
     this.mainView = this.graph.defaultView;
     this.onMainCameraChange();
     this.p1View = this.graph.p1DefaultView;
