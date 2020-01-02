@@ -115,7 +115,6 @@ class XMLscene extends CGFscene {
     if (this.allGraphsLoaded()) {
       this.changeGraph();
 
-      this.interface.initCameraSettings(Object.keys(this.graph.views));
       this.interface.initGameSettings();
 
       this.sceneInited = true;
@@ -279,5 +278,7 @@ class XMLscene extends CGFscene {
     this.onP1CameraChange();
     this.p2View = this.graph.p2DefaultView;
     this.onP2CameraChange();
+
+    this.interface.initCameraSettings(Object.keys(this.graph.views));
   }
 }

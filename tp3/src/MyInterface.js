@@ -32,6 +32,9 @@ class MyInterface extends CGFinterface {
      * Adds folder with dropdown to select current cameras
      */
     initCameraSettings(viewsList) {
+        if (this.cameraSettingsFolder)
+            this.settingsFolder.removeFolder(this.cameraSettingsFolder);
+
         this.cameraSettingsFolder = this.settingsFolder.addFolder("Camera Settings");
         // Dropdown for the main camera
         this.cameraSettingsFolder.add(this.scene, "mainView", viewsList).name("Main Camera").onChange(() => this.scene.onMainCameraChange());
