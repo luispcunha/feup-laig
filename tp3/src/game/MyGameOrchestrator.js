@@ -27,18 +27,27 @@ class MyGameOrchestrator {
         this.p2Type = PlayerType.human;
 
         this.state = GameStates.menu;
+
+        this.nColumns = 8;
+        this.nRows = 8;
     }
 
     getScene() {
         return this.scene;
     }
 
-    setBoard(board) {
-        this.board = board;
+    initBoard(width, height) {
+        this.board = new MyGameBoard(this, width, height, this.nColumns, this.nRows);
     }
 
     getBoard() {
         return this.board;
+    }
+
+    changeBoardSize() {
+        if (this.state == GameStates.menu) {
+            this.board.setSize(this.nColumns, this.nRows);
+        }
     }
 
     update(t) {
@@ -65,7 +74,7 @@ class MyGameOrchestrator {
     }
 
     async resetGameState() {
-        const state = await this.logic.getInitialState(8, 8);
+        const state = await this.logic.getInitialState(this.board.nColumns, this.board.nRows);
 
         this.gameSequence.reset();
         this.gameSequence.addState(state);
@@ -117,8 +126,16 @@ class MyGameOrchestrator {
         this.scene.setPlayerCamera(this.gameSequence.getCurrentState().nextPlay.player);
     }
 
-    resumeGame() {
+    async resumeGame() {
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
+
+        const gameover = await this.logic.gameOver(this.gameSequence.getCurrentState());
+        if (gameover != -1) {
+            this.state = GameStates.menu;
+            console.log("player " + gameover + " won");
+            return;
+        }
+
         const nextPlayer = this.gameSequence.getCurrentState().nextPlay.player;
 
         let level;

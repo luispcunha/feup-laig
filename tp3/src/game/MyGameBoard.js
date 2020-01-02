@@ -5,17 +5,17 @@ class MyGameBoard {
     /**
      * @constructor
      */
-    constructor(orchestrator, width, height) {
+    constructor(orchestrator, width, height, nColumns, nRows) {
         this.orchestrator = orchestrator;
 
         this.width = width;
         this.height = height;
 
-        this.nRows = 8;
-        this.nColumns = 8;
+        this.nRows = nRows;
+        this.nColumns = nColumns;
 
-        this.widthScale = width / this.nRows;
-        this.heightScale = height / this.nColumns;
+        this.widthScale = width / this.nColumns;
+        this.heightScale = height / this.nRows;
 
         this.initOctagonTiles();
         this.initSquareTiles();
@@ -24,6 +24,21 @@ class MyGameBoard {
         this.octagonPieceComponents = [];
 
         this.animatedPieces = [];
+    }
+
+    setSize(nColumns, nRows) {
+        this.nColumns = nColumns;
+        this.nRows = nRows;
+
+        this.initOctagonTiles();
+        this.addOctagonTileComponentToTiles();
+
+        this.initSquareTiles();
+        this.addSquareTileComponentToTiles();
+
+
+        this.widthScale = this.width / this.nColumns;
+        this.heightScale = this.height / this.nRows;
     }
 
     initOctagonTiles() {
@@ -108,17 +123,29 @@ class MyGameBoard {
     scaleTexCoords(ls, lt) {}
 
     setOctagonTileComponent(component) {
+        this.octagonTileComponent = component;
+
+        this.addOctagonTileComponentToTiles();
+    }
+
+    addOctagonTileComponentToTiles() {
         this.octagonTiles.forEach(row => {
             row.forEach(tile => {
-                tile.setComponent(component);
+                tile.setComponent(this.octagonTileComponent);
             });
         });
     }
 
     setSquareTileComponent(component) {
+        this.squareTileComponent = component;
+
+        this.addSquareTileComponentToTiles();
+    }
+
+    addSquareTileComponentToTiles() {
         this.squareTiles.forEach(row => {
             row.forEach(tile => {
-                tile.setComponent(component);
+                tile.setComponent(this.squareTileComponent);
             });
         });
     }

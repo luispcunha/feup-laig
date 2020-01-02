@@ -925,8 +925,8 @@ class MySceneGraph {
                 if (board instanceof String || typeof board == 'string')
                     return board;
 
-                this.primitives[primitiveId] = board;
-                this.scene.gameOrchestrator.setBoard(board);
+                this.scene.gameOrchestrator.initBoard(board.width, board.height);
+                this.primitives[primitiveId] = this.scene.gameOrchestrator.getBoard();
             }
             else if (primitiveType == 'prism') {
                 var prism = this.parsePrism(grandChildren[0], primitiveId);
@@ -1008,7 +1008,10 @@ class MySceneGraph {
         if (!Number.isInteger(height))
             return "unable to parse height of the primitive for ID = " + id;
 
-        return new MyGameBoard(this.scene.gameOrchestrator, width, height);
+        return {
+            width: width,
+            height: height
+        };
     }
 
     /**
