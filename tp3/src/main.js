@@ -43,11 +43,6 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js
       myGraphs[key] = new MySceneGraph(key, filenames[key], myScene);
     });
 
-
-    // create and load graph, and associate it to scene.
-    // Check console for loading errors
-    // var myGraph = new MySceneGraph('squex', defaultFilenames['squex'], myScene);
-
     // start
     app.run();
   }
