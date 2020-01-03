@@ -32,6 +32,16 @@ class MyGameOrchestrator {
         this.p2Type = PlayerType.human;
 
         this.state = GameStates.menu;
+        this.timer = new MyTimer(this);
+    }
+
+    onSceneInited() {
+        this.timer.init();
+    }
+
+    display() {
+        if (this.timer)
+            this.timer.display();
     }
 
     getScene() {
@@ -69,6 +79,8 @@ class MyGameOrchestrator {
             default:
                 break;
         }
+
+        this.timer.update(t);
     }
 
     async resetGameState() {
@@ -115,7 +127,10 @@ class MyGameOrchestrator {
     }
 
     start() {
-        this.resetGameState().then(() => { this.resumeGame() });
+        this.resetGameState().then(() => {
+            this.timer.start();
+            this.resumeGame();
+        });
     }
 
     undo() {

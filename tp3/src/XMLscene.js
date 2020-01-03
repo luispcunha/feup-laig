@@ -117,6 +117,8 @@ class XMLscene extends CGFscene {
 
       this.interface.initGameSettings();
 
+      this.gameOrchestrator.onSceneInited();
+
       this.sceneInited = true;
     }
   }
@@ -178,6 +180,7 @@ class XMLscene extends CGFscene {
 
       // Displays the scene (MySceneGraph function).
       this.graph.displayScene();
+      this.gameOrchestrator.display();
     }
 
     this.popMatrix();
