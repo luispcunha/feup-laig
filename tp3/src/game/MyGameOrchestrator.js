@@ -142,13 +142,6 @@ class MyGameOrchestrator {
     async resumeGame() {
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
 
-        const gameover = await this.logic.gameOver(this.gameSequence.getCurrentState());
-        if (gameover != -1) {
-            this.state = GameStates.menu;
-            console.log("player " + gameover + " won");
-            return;
-        }
-
         const nextPlayer = this.gameSequence.getCurrentState().nextPlay.player;
 
         let level;
@@ -160,20 +153,31 @@ class MyGameOrchestrator {
 
         if (level == PlayerType.human) {
             this.state = GameStates.humanPlaying;
-            this.scene.setPlayerCamera(nextPlayer);
+        } else {
+            this.state = GameStates.botPlaying;
+        }
+
+        const gameover = await this.logic.gameOver(this.gameSequence.getCurrentState());
+        if (gameover != -1) {
+            this.state = GameStates.menu;
+            this.timer.stop();
+            this.scene.setPlayerCamera();
+            console.log("player " + gameover + " won");
             return;
         }
 
-        this.state = GameStates.botPlaying;
-        this.botTurn(level);
+        this.scene.setPlayerCamera(nextPlayer);
+        this.nextTurn(level);
     }
 
-    botTurn(level) {
+    nextTurn(level) {
         let p;
 
-        if (level == 1)
+        if (level == PlayerType.human)
+            return;
+        else if (level == PlayerType.lvl1)
             p = this.logic.getRandomMove(this.gameSequence.getCurrentState());
-        else if (level == 2)
+        else if (level == PlayerType.lvl2)
             p = this.logic.getGreedyMove(this.gameSequence.getCurrentState());
 
         p.then((move) => {
