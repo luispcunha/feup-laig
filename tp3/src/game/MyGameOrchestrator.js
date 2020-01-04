@@ -128,6 +128,7 @@ class MyGameOrchestrator {
 
     start() {
         this.resetGameState().then(() => {
+            this.timer.reset();
             this.timer.start();
             this.resumeGame();
         });
