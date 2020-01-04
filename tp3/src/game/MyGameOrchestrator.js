@@ -32,9 +32,7 @@ class MyGameOrchestrator {
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
 
-        this.state = GameStates.menu;
         this.timer = new MyTimer(this);
-
     }
 
     onSceneInited() {
@@ -42,6 +40,24 @@ class MyGameOrchestrator {
 
         this.gameOver = new MyOverlayElement(this.getScene(), -0.11, 0.11, -0.70, 0.85);
         this.gameOver.setTexture(this.scene.graph.textures[1]);
+
+        this.changeState(GameStates.menu);
+    }
+
+    changeState(newState) {
+        this.state = newState;
+
+        switch (newState) {
+            case GameStates.menu:
+                this.scene.interface.initGameControlsMenu();
+                break;
+
+            case GameStates.humanPlaying:
+                this.scene.interface.initGameControlsHumanPlaying();
+                break;
+            default:
+                break;
+        }
     }
 
     display() {
@@ -126,7 +142,7 @@ class MyGameOrchestrator {
         this.gameSequence.addSequence(nextState, move);
 
         this.animator.animateMove(player, move);
-        this.state = GameStates.moveAnimation;
+        this.changeState(GameStates.moveAnimation);
     }
 
     onObjectSelected(object, id) {
@@ -140,7 +156,8 @@ class MyGameOrchestrator {
         this.timer.hide();
 
         this.resetGameState().then(() => {
-            this.state = GameStates.menu;
+            this.scene.setPlayerCamera();
+            this.changeState(GameStates.menu);
             this.board.fillBoards(this.gameSequence.getCurrentState().boards);
         });
     }
@@ -177,33 +194,34 @@ class MyGameOrchestrator {
     async resumeGame() {
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
 
-        const nextPlayer = this.gameSequence.getNextPlayer();
         const level = this.getNextPlayerType();
 
         if (level == PlayerType.human) {
-            this.state = GameStates.humanPlaying;
+            this.changeState(GameStates.humanPlaying);
         } else {
-            this.state = GameStates.botPlaying;
+            this.changeState(GameStates.botPlaying);
         }
 
         const gameover = await this.logic.gameOver(this.gameSequence.getCurrentState());
         if (gameover != -1) {
-            this.state = GameStates.gameOver;
+            this.changeState(GameStates.gameOver);
             this.timer.stop();
             this.scene.setPlayerCamera();
             console.log("player " + gameover + " won");
             return;
         }
 
-        this.scene.setPlayerCamera(nextPlayer);
         this.nextTurn(level);
     }
 
     nextTurn(level) {
+        const nextPlayer = this.gameSequence.getNextPlayer();
         let p;
 
-        if (level == PlayerType.human)
+        if (level == PlayerType.human) {
+            this.scene.setPlayerCamera(nextPlayer);
             return;
+        }
         else if (level == PlayerType.lvl1)
             p = this.logic.getRandomMove(this.gameSequence.getCurrentState());
         else if (level == PlayerType.lvl2)
@@ -218,7 +236,7 @@ class MyGameOrchestrator {
         if (this.state == GameStates.humanPlaying || this.state == GameStates.menu || this.state == GameStates.gameOver) {
             this.gameSequence.startMovie();
             this.previousState = this.state;
-            this.state = GameStates.movie;
+            this.changeState(GameStates.movie);
             this.resumeMovie();
         }
     }
@@ -230,12 +248,12 @@ class MyGameOrchestrator {
         this.board.fillBoards(movieSequence.state.boards);
 
         if (this.gameSequence.isMovieOver()) {
-            this.state = this.previousState;
+            this.changeState(this.previousState);
             return;
         }
 
         this.animator.animateMove(player, movieSequence.move);
 
-        this.state = GameStates.movieAnimation;
+        this.changeState(GameStates.movieAnimation);
     }
 }

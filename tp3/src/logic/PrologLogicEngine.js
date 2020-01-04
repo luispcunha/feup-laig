@@ -1,6 +1,6 @@
 class PrologLogicEngine extends LogicEngine {
     async getInitialState(nColumns, nRows) {
-        const response = await PrologLogicEngine.makeRequest('initialstate', `[generate_initial_game_state, ${nColumns.toFixed(0)}, ${nRows.toFixed(0)}, 1, 1]`);
+        const response = await PrologLogicEngine.makeRequest('initialstate', `[generate_initial_game_state, ${nRows.toFixed(0)}, ${nColumns.toFixed(0)}, 1, 1]`);
 
         return PrologLogicEngine.deserializeGameState(response.state);
     }
