@@ -45,6 +45,10 @@ class MyGameOrchestrator {
     }
 
     changeState(newState) {
+        if (newState == GameStates.gameOver) setTimeout(
+            () => this.quit(),
+            8000
+        );
         this.state = newState;
 
         switch (newState) {
