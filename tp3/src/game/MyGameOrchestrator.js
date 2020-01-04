@@ -10,7 +10,8 @@ const GameStates = {
     botPlaying: 2,
     moveAnimation: 3,
     movie: 4,
-    movieAnimation: 5
+    movieAnimation: 5,
+    gameOver: 6
 };
 
 class MyGameOrchestrator {
@@ -33,15 +34,23 @@ class MyGameOrchestrator {
 
         this.state = GameStates.menu;
         this.timer = new MyTimer(this);
+
     }
 
     onSceneInited() {
         this.timer.init();
+
+        this.gameOver = new MyOverlayElement(this.getScene(), -0.11, 0.11, -0.70, 0.85);
+        this.gameOver.setTexture(this.scene.graph.textures[1]);
     }
 
     display() {
         if (this.timer)
             this.timer.display();
+
+        if (this.state == GameStates.gameOver) {
+            this.gameOver.display();
+        }
     }
 
     getScene() {
@@ -126,12 +135,25 @@ class MyGameOrchestrator {
         }
     }
 
-    start() {
+    quit() {
+        this.timer.reset();
+        this.timer.hide();
+
         this.resetGameState().then(() => {
-            this.timer.reset();
-            this.timer.start();
-            this.resumeGame();
+            this.state = GameStates.menu;
+            this.board.fillBoards(this.gameSequence.getCurrentState().boards);
         });
+    }
+
+    start() {
+        if (this.state == GameStates.menu || this.state == GameStates.gameOver) {
+            this.resetGameState().then(() => {
+                this.timer.reset();
+                this.timer.show();
+                this.timer.start();
+                this.resumeGame();
+            });
+        }
     }
 
     undo() {
@@ -166,7 +188,7 @@ class MyGameOrchestrator {
 
         const gameover = await this.logic.gameOver(this.gameSequence.getCurrentState());
         if (gameover != -1) {
-            this.state = GameStates.menu;
+            this.state = GameStates.gameOver;
             this.timer.stop();
             this.scene.setPlayerCamera();
             console.log("player " + gameover + " won");
@@ -193,7 +215,7 @@ class MyGameOrchestrator {
     }
 
     movie() {
-        if (this.state == GameStates.humanPlaying || this.statet == GameStates.menu) {
+        if (this.state == GameStates.humanPlaying || this.state == GameStates.menu || this.state == GameStates.gameOver) {
             this.gameSequence.startMovie();
             this.previousState = this.state;
             this.state = GameStates.movie;

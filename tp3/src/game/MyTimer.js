@@ -5,6 +5,8 @@ class MyTimer {
         this.inited = false;
 
         this.orchestrator = orchestrator;
+
+        this.visible = false;
     }
 
     init() {
@@ -19,6 +21,14 @@ class MyTimer {
         this.secondsUnits = new MyOverlayElement(scene, 0.06, 0.11, 0.85, 1);
 
         this.colon.setTexture(scene.graph.textures['colon']);
+    }
+
+    hide() {
+        this.visible = false;
+    }
+
+    show() {
+        this.visible = true;
     }
 
     start() {
@@ -39,7 +49,7 @@ class MyTimer {
     }
 
     display() {
-        if (this.inited) {
+        if (this.inited && this.visible) {
             const scene = this.orchestrator.getScene();
 
             const totalSeconds = Math.round(this.time / 1000);

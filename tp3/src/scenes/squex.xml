@@ -27,7 +27,7 @@
             <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
-            <attenuation constant="1" linear="0" quadratic="0" />
+            <attenuation constant="0" linear="0" quadratic="0" />
         </omni>
     </lights>
 
@@ -48,6 +48,8 @@
         <texture id="8" file="scenes/images/8.jpg" />
         <texture id="9" file="scenes/images/9.jpg" />
         <texture id="colon" file="scenes/images/colon.jpg" />
+
+        <texture id="igloo" file="scenes/images/igloo.jpg" />
     </textures>
 
     <materials>
@@ -103,6 +105,10 @@
 
         <primitive id="plane">
             <plane npartsU="10" npartsV="10" />
+        </primitive>
+
+        <primitive id="iglooSphere">
+            <sphere radius="15" slices="16" stacks="16" />
         </primitive>
 
     </primitives>
@@ -234,7 +240,7 @@
         <component id="plane">
             <transformation>
                 <translate x="0" y="-0.2" z="0" />
-                <scale x="6" y="1" z="6" />
+                <scale x="30" y="1" z="30" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -245,6 +251,19 @@
             </children>
         </component>
 
+        <component id="igloo">
+            <transformation>
+                <rotate axis="x" angle="-270" />
+                <scale x="1" y="1" z="-1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="igloo" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="iglooSphere" />
+            </children>
+        </component>
 
         <component id="demoRoot">
             <transformation>
@@ -254,8 +273,9 @@
             </materials>
             <texture id="none" />
             <children>
-                <primitiveref id="board" />
                 <componentref id="plane" />
+                <primitiveref id="board" />
+                <componentref id="igloo" />
             </children>
         </component>
     </components>
