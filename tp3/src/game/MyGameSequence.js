@@ -27,7 +27,39 @@ class MyGameSequence {
         return this.states[this.states.length - 1];
     }
 
-    undo() {
+    getNextPlayer() {
+        return this.getCurrentState().nextPlay.player;
+    }
+
+    undo(playerTypes) {
+        if (this.onlyBotPlays(playerTypes)) {
+            return;
+        }
+
+        this.pop();
+
+        let level = playerTypes[this.getNextPlayer()];
+        while (level != PlayerType.human) {
+            this.pop();
+            level = playerTypes[this.getNextPlayer()];
+        }
+    }
+
+    onlyBotPlays(playerTypes) {
+        let humanPlays = 0;
+
+        for (let i = 0; i < this.states.length - 1; i++) {
+            const player = this.states[i].nextPlay.player;
+            const type = playerTypes[player];
+
+            if (type == PlayerType.human)
+                humanPlays++;
+        }
+
+        return humanPlays == 0;
+    }
+
+    pop() {
         if (this.states.length > 1) {
             this.states.pop();
         }
@@ -35,6 +67,10 @@ class MyGameSequence {
         if (this.moves.length > 1) {
             this.moves.pop();
         }
+    }
+
+    numStates() {
+        return this.states.length;
     }
 
     startMovie() {

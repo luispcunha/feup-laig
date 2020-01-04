@@ -134,22 +134,28 @@ class MyGameOrchestrator {
     }
 
     undo() {
-        this.gameSequence.undo();
-        this.board.fillBoards(this.gameSequence.getCurrentState().boards);
-        this.scene.setPlayerCamera(this.gameSequence.getCurrentState().nextPlay.player);
+        if (this.state == GameStates.humanPlaying) {
+
+            this.gameSequence.undo({ 1: this.p1Type, 2: this.p2Type });
+            this.board.fillBoards(this.gameSequence.getCurrentState().boards);
+            this.scene.setPlayerCamera(this.gameSequence.getNextPlayer());
+        }
+    }
+
+    getNextPlayerType() {
+        const nextPlayer = this.gameSequence.getNextPlayer();
+
+        if (nextPlayer == 1)
+            return this.p1Type;
+        else if (nextPlayer == 2)
+            return this.p2Type;
     }
 
     async resumeGame() {
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
 
-        const nextPlayer = this.gameSequence.getCurrentState().nextPlay.player;
-
-        let level;
-
-        if (nextPlayer == 1)
-            level = this.p1Type;
-        else if (nextPlayer == 2)
-            level = this.p2Type;
+        const nextPlayer = this.gameSequence.getNextPlayer();
+        const level = this.getNextPlayerType();
 
         if (level == PlayerType.human) {
             this.state = GameStates.humanPlaying;
@@ -186,9 +192,12 @@ class MyGameOrchestrator {
     }
 
     movie() {
-        this.gameSequence.startMovie();
-        this.state = GameStates.movie;
-        this.resumeMovie();
+        if (this.state == GameStates.humanPlaying || this.statet == GameStates.menu) {
+            this.gameSequence.startMovie();
+            this.previousState = this.state;
+            this.state = GameStates.movie;
+            this.resumeMovie();
+        }
     }
 
     resumeMovie() {
@@ -198,7 +207,7 @@ class MyGameOrchestrator {
         this.board.fillBoards(movieSequence.state.boards);
 
         if (this.gameSequence.isMovieOver()) {
-            this.state = GameStates.playing;
+            this.state = this.previousState;
             return;
         }
 
