@@ -928,6 +928,10 @@ class MySceneGraph {
                 if (board instanceof String || typeof board == 'string')
                     return board;
 
+                if (this.boardPrimitive)
+                    this.onXMLError('There must be only one board primitive.');
+
+                this.boardPrimitive = board;
                 this.primitives[primitiveId] = board;
             }
             else if (primitiveType == 'prism') {

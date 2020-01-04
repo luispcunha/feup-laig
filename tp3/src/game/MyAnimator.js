@@ -18,6 +18,10 @@ class MyAnimator {
     createAnimation(player, move) {
         let xi, xf, zi, zf;
 
+        const boardPrimitive = this.orchestrator.getScene().graph.boardPrimitive;
+        const boardSideAvg = (boardPrimitive.width + boardPrimitive.height) / 2;
+        const y = boardSideAvg * 0.3;
+
         if (player == 1) {
             xi = -2;
             zi = this.orchestrator.board.nRows / 2 - 0.5;
@@ -32,7 +36,7 @@ class MyAnimator {
             zf = move.row;
         }
 
-        const kfs = this.generateKeyFrames(xi, xf, zi, zf, 1, 2, 10);
+        const kfs = this.generateKeyFrames(xi, xf, zi, zf, y, 1.5, 50);
 
         const animation = new KeyframeAnimation(this.orchestrator.getScene(), "anim", kfs);
 
