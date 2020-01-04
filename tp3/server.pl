@@ -6,23 +6,25 @@
 
 :- use_module(library(lists)).
 
-:- http_handler(root(game), prepReplyStringToJSON, []).						% Predicate to handle requests on server/game (for Prolog Game Logic)
-
+% Set up routes at 'localhost:8083/$ROUTE' for out api endpoints
+:- http_handler(root(game), prepReplyStringToJSON, []).
 :- http_handler(root(initialstate), handleInitialState, []).
 :- http_handler(root(makemove), handleMakeMove, []).
 :- http_handler(root(gameover), handleGameOver, []).
 :- http_handler(root(getmove), handleGetMove, []).
 
-:- http_handler(src('.'), serve_files_in_directory(src), [prefix]).			% Serve files in /pub as requested (for WebGL Game Interface)
+user:file_search_path(document_root, '.').
+% Serve our game's frontend at 'localhost:8083/src'
+:- http_handler(src('.'), serve_files_in_directory(src), [prefix]).
+http:location(src, root(src), []).
+user:file_search_path(src, document_root(src)).
+% Serve WebCGF at 'localhost:8083/lib'
 :- http_handler(lib('.'), serve_files_in_directory(lib), [prefix]).
-http:location(src, root(src), []).											% Location of /pub alias on server
-user:file_search_path(document_root, '.').									% Absolute location of HTTP server document root
-user:file_search_path(src, document_root(src)).								% location of /pub in relation to document root
 http:location(lib, root(lib), []).
 user:file_search_path(lib, document_root(lib)).
 
 server(Port) :-
-    http_server(http_dispatch, [port(Port)]).		% Start server on port Port
+    http_server(http_dispatch, [port(Port)]).
 
 %Receive Request as String via POST
 prepReplyStringToJSON(Request) :-
@@ -74,6 +76,14 @@ next(0,1).
 :- ensure_loaded('logic-engine/move.pl').
 :- ensure_loaded('logic-engine/gameover.pl').
 :- ensure_loaded('logic-engine/bot.pl').
+
+% ENDPOINTS
+% Here the general pattern is as follows:
+% Prolog follows the convention that generally 'inputs' should come
+% in the beginning of the term and 'outputs' in the end. Therefore,
+% we convert the request string to a list of the term and the inputs,
+% append it a list with the outputs, interpret it as a term, and call
+% it. Then we serialize the outputs list and send it as a response.
 
 handleInitialState(Request) :-
     member(method(post), Request), !,
