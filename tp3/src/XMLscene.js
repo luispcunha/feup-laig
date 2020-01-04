@@ -151,6 +151,9 @@ class XMLscene extends CGFscene {
 
 
   display() {
+    if (this.cameraInTransition) {
+      this.camera = this.cameraBuilder.getCamera();
+    }
     this.gameOrchestrator.managePick(this.pickMode, this.pickResults);
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -192,18 +195,23 @@ class XMLscene extends CGFscene {
       case '1':
         console.log('changing camera to player 1');
         this.currentView = 'player1';
-        this.setCamera(this.p1Camera);
+        this.goToCamera(this.p1Camera);
         break;
       case '2':
         console.log('changing camera to player 2');
         this.currentView = 'player2';
-        this.setCamera(this.p2Camera);
+        this.goToCamera(this.p2Camera);
         break;
       default:
         console.log('changing camera to main');
         this.currentView = 'main';
-        this.setCamera(this.mainCamera);
+        this.goToCamera(this.mainCamera);
     }
+  }
+
+  goToCamera(camera) {
+    this.cameraBuilder = new PanningCamerasBuilder(this.camera, camera, 1.2);
+    this.cameraInTransition = true;
   }
 
   /**
@@ -237,6 +245,14 @@ class XMLscene extends CGFscene {
     }
 
     this.gameOrchestrator.update(deltaT);
+
+    if (this.cameraBuilder) {
+      if (this.cameraBuilder.update(deltaT)) {
+        this.setCamera(this.cameraBuilder.getCamera());
+        this.cameraBuilder = undefined;
+        this.cameraInTransition = undefined;
+      }
+    }
   }
 
   addGraph(graph) {
