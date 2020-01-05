@@ -31,6 +31,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js
 
     const defaultFilenames = {
       mystic: "mystic.xml",
+      arctic: 'arctic.xml',
       squex: "squex.xml",
       squex1: "squex1.xml"
     };
