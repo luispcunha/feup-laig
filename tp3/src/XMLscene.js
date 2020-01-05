@@ -62,6 +62,10 @@ class XMLscene extends CGFscene {
     var i = 0;
     // Lights index.
 
+    for (let j = 0; j < this.lights.length; j++) {
+      this.lights[j] = new CGFlight(this, j);
+    }
+
     // Reads the lights from the scene graph.
     for (var key in this.graph.lights) {
       if (i >= 8)
