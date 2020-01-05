@@ -161,4 +161,8 @@ class MyGameBoard {
     addAnimatedPiece(piece) {
         this.animatedPieces.push(piece);
     }
+
+    removeAnimatedPieces() {
+        this.animatedPieces = [];
+    }
 }

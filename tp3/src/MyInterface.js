@@ -77,6 +77,25 @@ class MyInterface extends CGFinterface {
         this.gameFolder.open();
     }
 
+    initGameControlsGameOver() {
+        this.gui.removeFolder(this.gameFolder);
+        this.gameFolder = this.gui.addFolder("Game Controls");
+
+        this.gameFolder.add(this.scene.gameOrchestrator, "movie").name("Movie");
+        this.gameFolder.add(this.scene.gameOrchestrator, "quit").name("Quit");
+
+        this.gameFolder.open();
+    }
+
+    initGameControlsOnlyQuit() {
+        this.gui.removeFolder(this.gameFolder);
+        this.gameFolder = this.gui.addFolder("Game Controls");
+
+        this.gameFolder.add(this.scene.gameOrchestrator, "quit").name("Quit");
+
+        this.gameFolder.open();
+    }
+
 
     /**
      * Set up interface to use keyboard

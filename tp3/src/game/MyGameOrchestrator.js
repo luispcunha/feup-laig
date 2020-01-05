@@ -59,7 +59,13 @@ class MyGameOrchestrator {
             case GameStates.humanPlaying:
                 this.scene.interface.initGameControlsHumanPlaying();
                 break;
+
+            case GameStates.gameOver:
+                this.scene.interface.initGameControlsGameOver();
+                break;
+
             default:
+                this.scene.interface.initGameControlsOnlyQuit();
                 break;
         }
     }
@@ -162,6 +168,7 @@ class MyGameOrchestrator {
         this.resetGameState().then(() => {
             this.scene.setPlayerCamera();
             this.changeState(GameStates.menu);
+            this.board.removeAnimatedPieces();
             this.board.fillBoards(this.gameSequence.getCurrentState().boards);
         });
     }
