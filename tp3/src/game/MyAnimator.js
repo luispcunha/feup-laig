@@ -22,15 +22,18 @@ class MyAnimator {
         const boardSideAvg = (boardPrimitive.width + boardPrimitive.height) / 2;
         const y = boardSideAvg * 0.3;
 
+        const xDif = this.orchestrator.board.nColumns / 4;
+        console.log(xDif)
+
         if (player == 1) {
-            xi = -2;
-            zi = this.orchestrator.board.nRows / 2 - 0.5;
+            xi = - xDif - 1;
+            zi = 4 * this.orchestrator.board.nRows / 5 - 0.5;
 
             xf = move.col;
             zf = move.row;
         } else if (player == 2) {
-            xi = this.orchestrator.board.nColumns + 2;
-            zi = this.orchestrator.board.nRows / 2 - 0.5;
+            xi = this.orchestrator.board.nColumns + xDif;
+            zi = this.orchestrator.board.nRows / 5 - 0.5;
 
             xf = move.col;
             zf = move.row;

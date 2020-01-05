@@ -288,8 +288,20 @@
                 <componentref id="boardBase" />
                 <componentref id="boardSide" />
 
-                <componentref id="box" />
              </children>
+        </component>
+
+        <component id="pieceContainer">
+            <transformation>
+                <scale x="1" y="0.1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="box" />
+            </children>
         </component>
 
         <component id="boardTiles">
@@ -687,7 +699,7 @@
 
         <component id="boxWiderSide1">
             <transformation>
-                <translate x="-0.3" y="0" z="0" />
+                <translate x="-0.55" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -700,7 +712,7 @@
 
         <component id="boxWiderSide2">
             <transformation>
-                <translate x="0.3" y="0" z="0" />
+                <translate x="0.55" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -714,7 +726,7 @@
 
         <component id="boxWiderSide">
             <transformation>
-                <scale x="0.1" y="1" z="1" />
+                <scale x="0.1" y="1" z="1.5" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -727,7 +739,7 @@
 
         <component id="boxNarrowerSide1">
             <transformation>
-                <translate x="0" y="0" z="0.45" />
+                <translate x="0" y="0" z="0.7" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -741,7 +753,7 @@
 
         <component id="boxNarrowerSide2">
             <transformation>
-                <translate x="0" y="0" z="-0.45" />
+                <translate x="0" y="0" z="-0.7" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -754,7 +766,7 @@
 
         <component id="boxNarrowerSide">
             <transformation>
-                <scale x="0.5" y="1" z="0.1" />
+                <scale x="1" y="1" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -767,7 +779,7 @@
 
         <component id="boxBottom">
             <transformation>
-                <scale x="0.5" y="0.1" z="1" />
+                <scale x="1" y="0.1" z="1.5" />
             </transformation>
             <materials>
                 <material id="inherit" />

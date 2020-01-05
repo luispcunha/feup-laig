@@ -1014,7 +1014,7 @@ class MySceneGraph {
         if (!Number.isInteger(height))
             return "unable to parse height of the primitive for ID = " + id;
 
-        return new MyGameBoardPrimitive(this.scene.gameOrchestrator.board, width, height);
+        return new MyGameBoardPrimitive(this.scene, this.scene.gameOrchestrator.board, width, height);
     }
 
     /**
@@ -1461,6 +1461,11 @@ class MySceneGraph {
                     break;
                 case "squarePieceP2":
                     this.templates['squarePiece'][2] = currentComponent;
+                    break;
+                case "pieceContainer":
+                    this.templates['pieceContainer'] = currentComponent;
+                    break;
+                default:
                     break;
             }
 

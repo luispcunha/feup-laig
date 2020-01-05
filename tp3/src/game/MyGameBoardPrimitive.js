@@ -1,5 +1,6 @@
 class MyGameBoardPrimitive {
-    constructor(board, width, height) {
+    constructor(scene, board, width, height) {
+        this.scene = scene;
         this.board = board;
         this.width = width;
         this.height = height;
