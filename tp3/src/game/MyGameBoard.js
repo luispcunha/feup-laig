@@ -110,12 +110,14 @@ class MyGameBoard {
         scene.pushMatrix();
         scene.translate(- xDif - 1, 0, 4 * this.nRows / 5 - 0.5);
         scene.graph.templates['pieceContainer'].display();
+        scene.graph.templates['octagonPiece'][1].display();
         scene.popMatrix();
 
 
         scene.pushMatrix();
         scene.translate(this.nColumns + xDif, 0, this.nRows / 5 - 0.5);
         scene.graph.templates['pieceContainer'].display();
+        scene.graph.templates['octagonPiece'][2].display();
         scene.popMatrix();
 
         scene.popMatrix();

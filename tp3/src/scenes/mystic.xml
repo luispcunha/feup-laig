@@ -291,18 +291,7 @@
              </children>
         </component>
 
-        <component id="pieceContainer">
-            <transformation>
-                <scale x="1" y="0.1" z="1" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="box" />
-            </children>
-        </component>
+
 
         <component id="boardTiles">
             <transformation>
