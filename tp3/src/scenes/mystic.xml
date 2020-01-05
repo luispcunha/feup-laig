@@ -38,6 +38,8 @@
         <texture id="p2PiecesTex" file="scenes/images/p2pieces.jpg" />
         <texture id="tableTex" file="scenes/images/darkwood.jpg" />
         <texture id="wallTex" file="scenes/images/darkwood.jpg" />
+        <texture id="rugTex" file="scenes/images/rug.jpg" />
+        <texture id="floorTex" file="scenes/images/wood-floor.jpg" />
     </textures>
 
     <materials>
@@ -115,8 +117,20 @@
             <plane npartsU="64" npartsV="64" />
         </primitive>
 
-        <primitive id="floorPlane">
-            <plane npartsU="64" npartsV="64" />
+        <primitive id="floorRectangle">
+            <rectangle x1="-5" x2="5" y1="-5" y2="5" />
+        </primitive>
+
+        <primitive id="rugPlane">
+            <plane npartsU="32" npartsV="32" />
+        </primitive>
+
+        <primitive id="parallelepipedPrism">
+            <prism nsides="4" apothem="0.5" height="1" />
+        </primitive>
+
+        <primitive id="parallelepipedRectangle">
+            <rectangle x1="-0.5" x2="0.5" y1="-0.5" y2="0.5" />
         </primitive>
     </primitives>
 
@@ -257,6 +271,7 @@
                 <componentref id="positionedBoard" />
                 <componentref id="walls" />
                 <componentref id="floor" />
+                <componentref id="rug" />
             </children>
         </component>
 
@@ -272,7 +287,9 @@
                 <componentref id="boardTiles" />
                 <componentref id="boardBase" />
                 <componentref id="boardSide" />
-            </children>
+
+                <componentref id="box" />
+             </children>
         </component>
 
         <component id="boardTiles">
@@ -569,16 +586,196 @@
 
         <component id="floor">
             <transformation>
-                <scale x="10" y="1" z="10" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="floorTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="floorRectangle" />
+            </children>
+        </component>
+
+        <component id="rug">
+            <transformation>
+                <translate x="0" y="0.01" z="0" />
+                <rotate axis="y" angle="90" />
+                <scale x="3" y="1" z="6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="rugTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rugPlane" />
+            </children>
+        </component>
+
+        <component id="parallelepiped">
+            <transformation>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
-                <primitiveref id="floorPlane" />
+                <componentref id="parallelepipedSides" />
+                <componentref id="parallelepipedTop" />
+                <componentref id="parallelepipedBottom" />
             </children>
         </component>
 
+        <component id="parallelepipedSides">
+            <transformation>
+                <rotate axis="y" angle="45" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="parallelepipedPrism" />
+            </children>
+        </component>
+
+        <component id="parallelepipedTop">
+            <transformation>
+                <translate x="0" y="1" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="parallelepipedRectangle" />
+            </children>
+        </component>
+
+        <component id="parallelepipedBottom">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="parallelepipedRectangle" />
+            </children>
+        </component>
+
+
+        <component id="box">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="boxWiderSide1" />
+                <componentref id="boxWiderSide2" />
+                <componentref id="boxNarrowerSide1" />
+                <componentref id="boxNarrowerSide2" />
+                <componentref id="boxBottom" />
+            </children>
+        </component>
+
+
+        <component id="boxWiderSide1">
+            <transformation>
+                <translate x="-0.3" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="boxWiderSide" />
+            </children>
+        </component>
+
+        <component id="boxWiderSide2">
+            <transformation>
+                <translate x="0.3" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="boxWiderSide" />
+            </children>
+        </component>
+
+
+        <component id="boxWiderSide">
+            <transformation>
+                <scale x="0.1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="parallelepiped" />
+            </children>
+        </component>
+
+        <component id="boxNarrowerSide1">
+            <transformation>
+                <translate x="0" y="0" z="0.45" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="boxNarrowerSide" />
+            </children>
+        </component>
+
+
+        <component id="boxNarrowerSide2">
+            <transformation>
+                <translate x="0" y="0" z="-0.45" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="boxNarrowerSide" />
+            </children>
+        </component>
+
+        <component id="boxNarrowerSide">
+            <transformation>
+                <scale x="0.5" y="1" z="0.1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="parallelepiped" />
+            </children>
+        </component>
+
+        <component id="boxBottom">
+            <transformation>
+                <scale x="0.5" y="0.1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="parallelepiped" />
+            </children>
+        </component>
     </components>
 </lxs>
