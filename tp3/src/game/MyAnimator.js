@@ -46,25 +46,49 @@ class MyAnimator {
         return animation;
     }
 
-    generateKeyFrames(xi, xf, zi, zf, height, t, n) {
+    generateKeyFrames(xi, xf, zi, zf, height, t, nframes) {
         const kfs = [];
+
+        const n = nframes - 3;
 
         const dt = t / n;
         const dx = (xf - xi) / n;
         const dz = (zf - zi) / n;
 
-        const d = Math.PI / n;
+        const dh = Math.PI / n;
+
+        const archInitialHeight = 0.15;
+        const archInitialTime = archInitialHeight * Point.distance(new Point(0, 0, 0), new Point(dx, Math.sin(dh) * height, dz)) / dt;
+
+        let kf = new Keyframe(
+            0,
+            new KFTransformation(1, 1, 1),
+            new KFTransformation(0, 0, 0),
+            new KFTransformation(xi, 0, zi)
+        );
+
+        kfs.push(kf);
+
 
         for (let i = 0; i <= n; i++) {
-            const kf =  new Keyframe(
-                i * dt,
+            kf =  new Keyframe(
+                archInitialTime + i * dt,
                 new KFTransformation(1, 1, 1),
                 new KFTransformation(0, 0, 0),
-                new KFTransformation(xi + i * dx, Math.sin(d * i) * height, zi + i * dz)
+                new KFTransformation(xi + i * dx, archInitialHeight + Math.sin(dh * i) * height, zi + i * dz)
             );
 
             kfs.push(kf);
         }
+
+        kf = new Keyframe(
+            2 * archInitialTime + t,
+            new KFTransformation(1, 1, 1),
+            new KFTransformation(0, 0, 0),
+            new KFTransformation(xf, 0, zf)
+        );
+
+        kfs.push(kf);
 
         return kfs;
     }

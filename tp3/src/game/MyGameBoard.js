@@ -14,6 +14,7 @@ class MyGameBoard {
         this.initOctagonTiles();
         this.initSquareTiles();
 
+
         this.animatedPieces = [];
     }
 
