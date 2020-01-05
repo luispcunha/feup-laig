@@ -36,12 +36,30 @@ class MyGameOrchestrator {
     }
 
     onSceneInited() {
-        this.timer.init();
+        this.numberTextures = [];
+        this.gameOverTextures = [];
 
-        this.gameOver = new MyOverlayElement(this.getScene(), -0.11, 0.11, -0.70, 0.85);
-        this.gameOver.setTexture(this.scene.graph.textures[1]);
+
+        let path = "scenes/images/numbers/";
+
+        for (let i = 0; i < 10; i++) {
+            this.numberTextures[i] = new CGFtexture(this.getScene(), path + i + ".jpg");
+        }
+
+        this.colonTexture = new CGFtexture(this.getScene(), path + "colon.jpg");
+
+        path = "scenes/images/gameover/";
+
+        for (let i = 1; i <= 2; i++) {
+            this.gameOverTextures[i] = new CGFtexture(this.getScene(), path + i + ".png");
+        }
+
+
+        this.gameOver = new MyOverlayElement(this.getScene(), -0.11, 0.11, 0.70, 0.85);
+
 
         this.changeState(GameStates.menu);
+        this.timer.init();
     }
 
     changeState(newState) {
@@ -218,7 +236,7 @@ class MyGameOrchestrator {
             this.changeState(GameStates.gameOver);
             this.timer.stop();
             this.scene.setPlayerCamera();
-            console.log("player " + gameover + " won");
+            this.gameOver.setTexture(this.gameOverTextures[gameover]);
             return;
         }
 

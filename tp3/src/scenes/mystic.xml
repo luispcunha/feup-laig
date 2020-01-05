@@ -38,17 +38,6 @@
         <texture id="p2PiecesTex" file="scenes/images/p2pieces.jpg" />
         <texture id="tableTex" file="scenes/images/darkwood.jpg" />
         <texture id="wallTex" file="scenes/images/darkwood.jpg" />
-        <texture id="0" file="scenes/images/0.jpg" />
-        <texture id="1" file="scenes/images/1.jpg" />
-        <texture id="2" file="scenes/images/2.jpg" />
-        <texture id="3" file="scenes/images/3.jpg" />
-        <texture id="4" file="scenes/images/4.jpg" />
-        <texture id="5" file="scenes/images/5.jpg" />
-        <texture id="6" file="scenes/images/6.jpg" />
-        <texture id="7" file="scenes/images/7.jpg" />
-        <texture id="8" file="scenes/images/8.jpg" />
-        <texture id="9" file="scenes/images/9.jpg" />
-        <texture id="colon" file="scenes/images/colon.jpg" />
     </textures>
 
     <materials>

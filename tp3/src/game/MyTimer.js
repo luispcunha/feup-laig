@@ -20,7 +20,7 @@ class MyTimer {
         this.secondsTens = new MyOverlayElement(scene, 0.01, 0.06, 0.85, 1);
         this.secondsUnits = new MyOverlayElement(scene, 0.06, 0.11, 0.85, 1);
 
-        this.colon.setTexture(scene.graph.textures['colon']);
+        this.colon.setTexture(this.orchestrator.colonTexture);
     }
 
     hide() {
@@ -50,22 +50,20 @@ class MyTimer {
 
     display() {
         if (this.inited && this.visible) {
-            const scene = this.orchestrator.getScene();
-
             const totalSeconds = Math.round(this.time / 1000);
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
 
-            this.minutesTens.setTexture(scene.graph.textures[Math.floor(minutes / 10)]);
+            this.minutesTens.setTexture(this.orchestrator.numberTextures[Math.floor(minutes / 10)]);
             this.minutesTens.display();
 
-            this.minutesUnits.setTexture(scene.graph.textures[minutes % 10]);
+            this.minutesUnits.setTexture(this.orchestrator.numberTextures[minutes % 10]);
             this.minutesUnits.display();
 
-            this.secondsTens.setTexture(scene.graph.textures[Math.floor(seconds / 10)]);
+            this.secondsTens.setTexture(this.orchestrator.numberTextures[Math.floor(seconds / 10)]);
             this.secondsTens.display();
 
-            this.secondsUnits.setTexture(scene.graph.textures[seconds % 10]);
+            this.secondsUnits.setTexture(this.orchestrator.numberTextures[seconds % 10]);
             this.secondsUnits.display();
 
             this.colon.display();
