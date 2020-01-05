@@ -36,8 +36,6 @@
         <texture id="squareTileTex" file="scenes/images/darkwood.jpg" />
         <texture id="p1PiecesTex" file="scenes/images/p1pieces.jpg" />
         <texture id="p2PiecesTex" file="scenes/images/p2pieces.jpg" />
-
-        <texture id="igloo" file="scenes/images/igloo.jpg" />
     </textures>
 
     <materials>

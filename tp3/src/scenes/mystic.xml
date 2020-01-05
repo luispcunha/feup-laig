@@ -36,10 +36,12 @@
         <texture id="squareTileTex" file="scenes/images/darkwood.jpg" />
         <texture id="p1PiecesTex" file="scenes/images/p1pieces.jpg" />
         <texture id="p2PiecesTex" file="scenes/images/p2pieces.jpg" />
-        <texture id="tableTex" file="scenes/images/darkwood.jpg" />
-        <texture id="wallTex" file="scenes/images/darkwood.jpg" />
+        <texture id="woodTex" file="scenes/images/darkwood.jpg" />
+        <texture id="wallTex" file="scenes/images/white-wall.jpg" />
         <texture id="rugTex" file="scenes/images/rug.jpg" />
         <texture id="floorTex" file="scenes/images/wood-floor.jpg" />
+        <texture id="footballTex" file="scenes/images/football.jpg" />
+        <texture id="tennisTex" file="scenes/images/tennis.jpg" />
     </textures>
 
     <materials>
@@ -55,11 +57,11 @@
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
         </material>
-        <material id="demoMaterial" shininess="10">
+        <material id="tennisBallMaterial" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0" g="0" b="0.4" a="1.0" />
-            <diffuse r="0" g="0" b="1" a="1.0" />
-            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
         </material>
 
         <material id="woodMaterial" shininess="1">
@@ -131,6 +133,10 @@
 
         <primitive id="parallelepipedRectangle">
             <rectangle x1="-0.5" x2="0.5" y1="-0.5" y2="0.5" />
+        </primitive>
+
+        <primitive id="ballSphere">
+            <sphere radius="1" slices="20" stacks="20" />
         </primitive>
     </primitives>
 
@@ -258,6 +264,20 @@
             </children>
         </component>
 
+        <component id="pieceContainer">
+            <transformation>
+                <scale x="1.2" y="0.1" z="1.1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="box" />
+            </children>
+        </component>
+
+
         <!-- scene components start here -->
         <component id="root">
             <transformation>
@@ -272,6 +292,7 @@
                 <componentref id="walls" />
                 <componentref id="floor" />
                 <componentref id="rug" />
+                <componentref id="ballsShelf" />
             </children>
         </component>
 
@@ -287,11 +308,8 @@
                 <componentref id="boardTiles" />
                 <componentref id="boardBase" />
                 <componentref id="boardSide" />
-
              </children>
         </component>
-
-
 
         <component id="boardTiles">
             <transformation>
@@ -338,7 +356,7 @@
             <materials>
                 <material id="woodMaterial"/>
             </materials>
-            <texture id="tableTex" length_s="1" length_t="1"/>
+            <texture id="woodTex" length_s="1" length_t="1"/>
             <children>
                 <componentref id="tableTop"/>
                 <componentref id="tableTopBottom"/>
@@ -776,6 +794,64 @@
             <texture id="inherit" />
             <children>
                 <componentref id="parallelepiped" />
+            </children>
+        </component>
+
+        <component id="ballsShelf">
+            <transformation>
+                <translate x="-4.6" y="2" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="shelf" />
+                <componentref id="football" />
+                <componentref id="tennisBall" />
+            </children>
+        </component>
+
+        <component id="shelf">
+            <transformation>
+                <scale x="1.2" y="0.1" z="2.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="woodTex" length_s="1" length_t="1" />
+            <children>
+                <componentref id="parallelepiped" />
+            </children>
+        </component>
+
+        <component id="football">
+            <transformation>
+                <translate x="0" y="0.4" z="-0.2" />
+                <scale x="0.3" y="0.3" z="0.3" />
+                <rotate axis="x" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="footballTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="ballSphere" />
+            </children>
+        </component>
+
+        <component id="tennisBall">
+            <transformation>
+                <translate x="0.2" y="0.2" z="0.2" />
+                <scale x="0.1" y="0.1" z="0.1" />
+                <rotate axis="x" angle="0" />
+            </transformation>
+            <materials>
+                <material id="tennisBallMaterial" />
+            </materials>
+            <texture id="tennisTex" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="ballSphere" />
             </children>
         </component>
     </components>
