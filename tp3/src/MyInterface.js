@@ -60,8 +60,8 @@ class MyInterface extends CGFinterface {
         this.gameFolder.add(this.scene.gameOrchestrator, "start").name("Start");
         this.gameFolder.add(this.scene.gameOrchestrator, "p1Type", { "Human": PlayerType.human, "Bot lvl 1": PlayerType.lvl1, "Bot lvl 2": PlayerType.lvl2 }).name("Player 1");
         this.gameFolder.add(this.scene.gameOrchestrator, "p2Type", { "Human": PlayerType.human, "Bot lvl 1": PlayerType.lvl1, "Bot lvl 2": PlayerType.lvl2 }).name("Player 2");
-        this.gameFolder.add(this.scene.gameOrchestrator, "nColumns", 4, 20).step(1).name("# columns").onChange(() => this.scene.gameOrchestrator.changeBoardSize());
-        this.gameFolder.add(this.scene.gameOrchestrator, "nRows", 4, 20).step(1).name("# rows").onChange(() => this.scene.gameOrchestrator.changeBoardSize());
+        this.gameFolder.add(this.scene.gameOrchestrator, "nColumns", 4, 14).step(1).name("# columns").onChange(() => this.scene.gameOrchestrator.changeBoardSize());
+        this.gameFolder.add(this.scene.gameOrchestrator, "nRows", 4, 14).step(1).name("# rows").onChange(() => this.scene.gameOrchestrator.changeBoardSize());
 
         this.gameFolder.open();
     }
