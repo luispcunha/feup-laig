@@ -117,6 +117,7 @@ class XMLscene extends CGFscene {
   */
   onGraphLoaded() {
     if (this.allGraphsLoaded()) {
+      this.currentView = 'main';
       this.changeGraph();
 
       this.interface.initGameSettings();
@@ -294,7 +295,6 @@ class XMLscene extends CGFscene {
 
     this.initLights();
 
-    this.currentView = 'main';
     this.mainView = this.graph.defaultView;
     this.onMainCameraChange();
     this.p1View = this.graph.p1DefaultView;

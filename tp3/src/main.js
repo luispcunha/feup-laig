@@ -30,8 +30,9 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MyComponent.js', 'MyInterface.js
     // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
 
     const defaultFilenames = {
-      Room: "mystic.xml",
-      Igloo: 'igloo.xml'
+      Room: 'room.xml',
+      Igloo: 'igloo.xml',
+      Springfield : 'spf.xml'
     };
 
     const filenames = Object.keys(getUrlVars()).length > 0 ? getUrlVars() : defaultFilenames;

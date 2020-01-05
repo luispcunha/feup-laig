@@ -36,9 +36,9 @@ class MySquareTile {
 
         if (this.piece)
             this.piece.display();
-        else {
-            this.orchestrator.getScene().graph.templates['squareTile'].display();
-        }
+
+        this.orchestrator.getScene().graph.templates['squareTile'].display();
+
 
         scene.popMatrix();
     }

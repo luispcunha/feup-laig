@@ -34,6 +34,7 @@ class MyOctagonTile {
         scene.translate(this.column, 0, this.row);
 
         if (this.piece) {
+            scene.graph.templates['octagonTile'].display();
             this.piece.display();
         } else {
             scene.registerForPick(this.id, this);

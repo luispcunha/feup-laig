@@ -74,6 +74,10 @@
             <board width="5" height="5" />
         </primitive>
 
+        <primitive id="boardTorus">
+            <torus inner="0.05" outer="0.85" slices="10" loops="4"/>
+        </primitive>
+
         <primitive id="octagon">
             <regpolygon nsides="8" apothem="0.5" />
         </primitive>
