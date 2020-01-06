@@ -2018,7 +2018,7 @@
             <materials>
                 <material id="piecesMaterial" />
             </materials>
-            <texture id="p1PiecesTex" length_s="1" length_t="1" />
+            <texture id="p2PiecesTex" length_s="1" length_t="1" />
             <children>
                 <componentref id="squarePiece" />
             </children>
