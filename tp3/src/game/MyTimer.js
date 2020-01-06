@@ -1,3 +1,6 @@
+/**
+ * Class representing a timer displayed in overlay, with methods to start and stop counting, reset count, and tell if it should be visible or not.
+ */
 class MyTimer {
     constructor(orchestrator) {
         this.time = 0;
@@ -43,6 +46,10 @@ class MyTimer {
         this.time = 0;
     }
 
+    /**
+     * Update timer
+     * @param {*} t elapsed time since last update
+     */
     update(t) {
         if (this.counting)
             this.time += t;

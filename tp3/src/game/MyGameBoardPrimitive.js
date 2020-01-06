@@ -1,3 +1,6 @@
+/**
+ * Primitive used to place the board in the scene graph. Has a width and height, used to display the board with the right dimensions
+ */
 class MyGameBoardPrimitive {
     constructor(scene, board, width, height) {
         this.scene = scene;

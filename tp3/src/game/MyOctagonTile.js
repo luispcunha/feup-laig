@@ -1,31 +1,37 @@
 /**
- * MyTile class
+ * MyOctagonTile class
  */
 class MyOctagonTile {
-    /**
-     * @constructor
-     */
     constructor(orchestrator, id, row, column) {
         this.orchestrator = orchestrator;
         this.id = id;
         this.column = column;
         this.row = row;
     }
-
+    /**
+     * Adds a piece to the tile
+     * @param {*} piece piece to add
+     */
     addPiece(piece) {
         this.piece = piece;
     }
 
+    /**
+     * Gets piece holded by the tile (null if none)
+     */
     getPiece() {
         return this.piece;
     }
 
+    /**
+     * Removes piece from the tile
+     */
     removePiece() {
         this.piece = null;
     }
 
     /**
-     * Display board.
+     * Displays tile and piece it holds, if any.
      */
     display() {
         const scene = this.orchestrator.getScene();

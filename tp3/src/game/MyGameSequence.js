@@ -1,7 +1,7 @@
+/**
+ * Class containing both the sequence of moves and states of a game
+ */
 class MyGameSequence {
-    /**
-     * @constructor
-     */
     constructor() {
         this.states = [];
         this.moves = [];
@@ -9,28 +9,50 @@ class MyGameSequence {
         this.currentMovieIdx = 0;
     }
 
+    /**
+     * Resets game sequence
+     */
     reset() {
         this.states = [];
         this.moves = [];
     }
 
+    /**
+     * Adds a new state
+     * @param {} state new state
+     */
     addState(state) {
         this.states.push(state);
     }
 
+    /**
+     * Adds a new state and a new move to the sequence
+     * @param {*} state new state
+     * @param {*} move new move
+     */
     addSequence(state, move) {
         this.states.push(state);
         this.moves.push(move);
     }
 
+    /**
+     * Gets current state
+     */
     getCurrentState() {
         return this.states[this.states.length - 1];
     }
 
+    /**
+     * Gets next player to play
+     */
     getNextPlayer() {
         return this.getCurrentState().nextPlay.player;
     }
 
+    /**
+     * Undos last moves, until the last time a human move was made
+     * @param {*} playerTypes
+     */
     undo(playerTypes) {
         if (this.onlyBotPlays(playerTypes)) {
             return;
@@ -59,6 +81,9 @@ class MyGameSequence {
         return humanPlays == 0;
     }
 
+    /**
+     * Removes the last state and move from the stacks
+     */
     pop() {
         if (this.states.length > 1) {
             this.states.pop();
@@ -69,14 +94,23 @@ class MyGameSequence {
         }
     }
 
+    /**
+     * Gets number of states
+     */
     numStates() {
         return this.states.length;
     }
 
+    /**
+     * Starts a movie
+     */
     startMovie() {
         this.currentMovieIdx = 0;
     }
 
+    /**
+     * Gets current movie sequence
+     */
     getMovieSequence() {
         if (this.states[this.currentMovieIdx]) {
             return {
@@ -86,6 +120,9 @@ class MyGameSequence {
         }
     }
 
+    /**
+     * Checks if movie is over
+     */
     isMovieOver() {
         return this.currentMovieIdx >= this.states.length;
     }

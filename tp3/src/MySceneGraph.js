@@ -1005,6 +1005,12 @@ class MySceneGraph {
         return new MyPlane(this.scene, npartsU, npartsV);
     }
 
+    /**
+     * Parses board primitive
+     *
+     * @param {*} node
+     * @param {*} id
+     */
     parseBoard(node, id) {
         const width = this.reader.getInteger(node, 'height');
         if (!Number.isInteger(width))
@@ -1443,6 +1449,7 @@ class MySceneGraph {
             currentComponent.componentChildren = componentChildren;
             currentComponent.loaded = true; // mark component as loaded
 
+            // parse components with special IDs
             switch (componentID) {
                 case "octagonTile":
                     this.templates['octagonTile'] = currentComponent;

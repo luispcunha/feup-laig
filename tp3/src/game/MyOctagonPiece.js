@@ -1,5 +1,5 @@
 /**
- * MyTile class
+ * Class representing an octagon piece and the player it belongs
  */
 class MyOctagonPiece {
     /**
@@ -11,7 +11,7 @@ class MyOctagonPiece {
     }
 
     /**
-     * Display board.
+     * Display octagon piece
      */
     display() {
         this.orchestrator.getScene().graph.templates['octagonPiece'][this.player].display();

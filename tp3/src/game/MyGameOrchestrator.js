@@ -264,6 +264,7 @@ class MyGameOrchestrator {
     movie() {
         if (this.state == GameStates.humanPlaying || this.state == GameStates.menu || this.state == GameStates.gameOver) {
             this.gameSequence.startMovie();
+            this.timer.stop();
             this.previousState = this.state;
             this.changeState(GameStates.movie);
             this.resumeMovie();
@@ -278,6 +279,7 @@ class MyGameOrchestrator {
 
         if (this.gameSequence.isMovieOver()) {
             this.changeState(this.previousState);
+            this.timer.start();
             return;
         }
 

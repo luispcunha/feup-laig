@@ -1,10 +1,7 @@
 /**
- * MyTile class
+ * MySquareTile class, similar to MyOctagonTile class
  */
 class MySquareTile {
-    /**
-     * @constructor
-     */
     constructor(orchestrator, row, column, scale) {
         this.orchestrator = orchestrator;
         this.column = column;
@@ -25,7 +22,7 @@ class MySquareTile {
     }
 
     /**
-     * Display board.
+     * Displays tile.
      */
     display() {
         const scene = this.orchestrator.getScene();

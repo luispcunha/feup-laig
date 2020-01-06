@@ -1,34 +1,70 @@
+/**
+ * Class that interfaces with the Prolog server that contains the game's logic
+ */
 class PrologLogicEngine extends LogicEngine {
+    /**
+     * Gets initial state of the game
+     *
+     * @param {*} nColumns  desired number of columns of the board
+     * @param {*} nRows     desired number of rows of the board
+     */
     async getInitialState(nColumns, nRows) {
         const response = await PrologLogicEngine.makeRequest('initialstate', `[generate_initial_game_state, ${nRows.toFixed(0)}, ${nColumns.toFixed(0)}, 1, 1]`);
 
         return PrologLogicEngine.deserializeGameState(response.state);
     }
 
+    /**
+     * Receives a game state and a move, returning the an updated game state
+     *
+     * @param {} gameState  current game state
+     * @param {*} move      move to apply to the current game state
+     */
     async makeMove(gameState, move) {
         const response = await PrologLogicEngine.makeRequest('makemove', `[move, ${move.col}-${move.row}, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return PrologLogicEngine.deserializeGameState(response.newGameState);
     }
 
+    /**
+     * Checks if the game is over, returning -1 if not, and 1 or 2 depending on the player who won the game
+     *
+     * @param {*} gameState game state to check
+     */
     async gameOver(gameState) {
         const response = await PrologLogicEngine.makeRequest('gameover', `[gameover, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return response.winner;
     }
 
+    /**
+     * Gets a random valid move for the game state
+     *
+     * @param {*} gameState game state for which a move is wanted
+     */
     async getRandomMove(gameState) {
         const response = await PrologLogicEngine.makeRequest('getmove', `[random_move, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return PrologLogicEngine.deserializeMove(response.move);
     }
 
+    /**
+     * Gets the best move for the current game state, according to a greedy strategy
+     *
+     * @param {*} gameState game state for which a move is wanted
+     */
     async getGreedyMove(gameState) {
         const response = await PrologLogicEngine.makeRequest('getmove', `[greedy_move, ${PrologLogicEngine.serializeGameState(gameState)}]`);
 
         return PrologLogicEngine.deserializeMove(response.move);
     }
 
+    /**
+     * Makes a request for the prolog
+     *
+     * @param {*} endpoint
+     * @param {*} requestString
+     */
     static async makeRequest(endpoint, requestString) {
         const headers = new Headers();
 
@@ -46,6 +82,11 @@ class PrologLogicEngine extends LogicEngine {
         return await response.json();
     }
 
+    /**
+     * Parses a string containg a move in the prolog format
+     *
+     * @param {*} serialized string to parse
+     */
     static deserializeMove(serialized) {
         const array = serialized.split('-');
 
@@ -55,6 +96,11 @@ class PrologLogicEngine extends LogicEngine {
         }
     }
 
+    /**
+     * Converts a string representing a game state that comes from prolog to an object format
+     *
+     * @param {*} serialized string containing game state to convert
+     */
     static deserializeGameState(serialized) {
         const elements = serialized.split(',');
         const lastElements = elements.splice(-6, 6);
@@ -84,6 +130,11 @@ class PrologLogicEngine extends LogicEngine {
         };
     }
 
+    /**
+     * Converts object representing a game state to a string, ready for prolog
+     *
+     * @param {*} state state to convert
+     */
     static serializeGameState(state) {
         const values = [];
 

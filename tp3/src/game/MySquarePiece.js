@@ -1,5 +1,5 @@
 /**
- * MyTile class
+ * MySquarePiece class
  */
 class MySquarePiece {
     /**
@@ -11,7 +11,7 @@ class MySquarePiece {
     }
 
     /**
-     * Display board.
+     * Display piece.
      */
     display() {
         this.orchestrator.getScene().graph.templates['squarePiece'][this.player].display();

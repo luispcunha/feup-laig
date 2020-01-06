@@ -260,11 +260,21 @@ class XMLscene extends CGFscene {
     }
   }
 
+  /**
+   * Adds a scene graph to the scene, marking true the boolean that informs if the graph has been loaded
+   *
+   * @param {*} graph graph to add
+   */
   addGraph(graph) {
     this.graphs[graph.id] = graph;
     this.graphsLoadedOk[graph.id] = true;
   }
 
+  /**
+   * Adds keys of a graph that haven't been loaded
+   *
+   * @param {*} keys
+   */
   addGraphKeys(keys) {
     this.currentGraphKey = keys[0];
 
@@ -273,6 +283,9 @@ class XMLscene extends CGFscene {
     });
   }
 
+  /**
+   * Checks if all the graphs have been loaded
+   */
   allGraphsLoaded() {
     let allLoaded = true;
 
@@ -284,6 +297,9 @@ class XMLscene extends CGFscene {
     return allLoaded;
   }
 
+  /**
+   * Changes current used graph
+   */
   changeGraph() {
     this.graph = this.graphs[this.currentGraphKey];
 
