@@ -12,6 +12,9 @@ class MyTimer {
         this.visible = false;
     }
 
+    /**
+     * Init elements
+     */
     init() {
         this.inited = true;
 
@@ -26,22 +29,37 @@ class MyTimer {
         this.colon.setTexture(this.orchestrator.colonTexture);
     }
 
+    /**
+     * Set visibility to false
+     */
     hide() {
         this.visible = false;
     }
 
+    /**
+     * Set visibility to true
+     */
     show() {
         this.visible = true;
     }
 
+    /**
+     * Start counting
+     */
     start() {
         this.counting = true;
     }
 
+    /**
+     * Pause counting
+     */
     stop() {
         this.counting = false;
     }
 
+    /**
+     * Reset timer
+     */
     reset() {
         this.time = 0;
     }
@@ -55,6 +73,9 @@ class MyTimer {
             this.time += t;
     }
 
+    /**
+     * Display timer
+     */
     display() {
         if (this.inited && this.visible) {
             const totalSeconds = Math.round(this.time / 1000);
