@@ -1,9 +1,15 @@
+/**
+ * Possible player types
+ */
 const PlayerType = {
     human: 0,
     lvl1: 1,
     lvl2: 2
 };
 
+/**
+ * Possible game states
+ */
 const GameStates = {
     menu: 0,
     humanPlaying: 1,
@@ -14,6 +20,9 @@ const GameStates = {
     gameOver: 6
 };
 
+/**
+ * MyGameOrchestrator class that controls every aspect of the execution of the game, as well as its features
+ */
 class MyGameOrchestrator {
     /**
      * @constructor
@@ -21,24 +30,32 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.scene = scene;
 
+        // dimensions of the board
         this.nColumns = 8;
         this.nRows = 8;
 
+        // instances of helper classes
         this.gameSequence = new MyGameSequence();
         this.logic = new PrologLogicEngine();
         this.animator = new MyAnimator(this);
         this.board = new MyGameBoard(this, this.nColumns, this.nRows);
 
+        // types of the players
         this.p1Type = PlayerType.human;
         this.p2Type = PlayerType.human;
 
+        // timer
         this.timer = new MyTimer(this);
     }
 
+    /**
+     * Do initial configuration that after scene is initializes
+     */
     onSceneInited() {
         this.numberTextures = [];
         this.gameOverTextures = [];
 
+        // load textures necessary for timer and gameover display
 
         let path = "scenes/images/numbers/";
 
@@ -54,7 +71,6 @@ class MyGameOrchestrator {
             this.gameOverTextures[i] = new CGFtexture(this.getScene(), path + i + ".png");
         }
 
-
         this.gameOver = new MyOverlayElement(this.getScene(), -0.11, 0.11, 0.70, 0.85);
 
 
@@ -62,6 +78,9 @@ class MyGameOrchestrator {
         this.timer.init();
     }
 
+    /**
+     * Changes current state, updating the interface
+     */
     changeState(newState) {
         if (newState == GameStates.gameOver) setTimeout(
             () => this.quit(),
@@ -88,6 +107,9 @@ class MyGameOrchestrator {
         }
     }
 
+    /**
+     * Displays timer and gameover modal, if in the correct state
+     */
     display() {
         if (this.timer)
             this.timer.display();
@@ -97,25 +119,41 @@ class MyGameOrchestrator {
         }
     }
 
+    /**
+     * Returns orchestrator's scene instance
+     */
     getScene() {
         return this.scene;
     }
 
+    /**
+     * Returns board
+     */
     getBoard() {
         return this.board;
     }
 
+    /**
+     * Changes board dimensions
+     */
     changeBoardSize() {
         if (this.state == GameStates.menu) {
             this.board.setSize(this.nColumns, this.nRows);
         }
     }
 
+    /**
+     * Updates game
+     *
+     * @param {*} t elapsed time since last update
+     */
     update(t) {
         switch (this.state) {
+            // if in animation states, updates animator
             case GameStates.moveAnimation:
                 this.animator.update(t);
 
+                // if animation of move is complete, resumes game
                 if (! this.animator.isAnimating()) {
                     this.resumeGame();
                 }
@@ -124,6 +162,7 @@ class MyGameOrchestrator {
             case GameStates.movieAnimation:
                 this.animator.update(t);
 
+                // if animation of move in a movie is complete, resumes movie
                 if (! this.animator.isAnimating()) {
                     this.resumeMovie();
                 }
@@ -133,9 +172,13 @@ class MyGameOrchestrator {
                 break;
         }
 
+        // updates time
         this.timer.update(t);
     }
 
+    /**
+     * Resets game state, by getting initial state from server and updates game sequence accordingly
+     */
     async resetGameState() {
         const state = await this.logic.getInitialState(this.board.nColumns, this.board.nRows);
 
@@ -143,6 +186,9 @@ class MyGameOrchestrator {
         this.gameSequence.addState(state);
     }
 
+    /**
+     * Manages picking
+     */
     managePick(pickMode, pickResults) {
         if (pickMode == false) {
             if (pickResults != null && pickResults.length > 0) {
@@ -161,24 +207,35 @@ class MyGameOrchestrator {
         }
     }
 
+    /**
+     * Executes a move
+     * @param {*} move move to be executed
+     */
     async executeMove(move) {
+        // gets current player
+        const player = this.gameSequence.getNextPlayer();
 
-        const player = this.gameSequence.getCurrentState().nextPlay.player;
-
+        // requests prolog to update game state by executing the move
         const nextState = await this.logic.makeMove(this.gameSequence.getCurrentState(), move);
 
+        // updates game sequence
         this.gameSequence.addSequence(nextState, move);
 
+        // asks animator to animate executed move
         this.animator.animateMove(player, move);
         this.changeState(GameStates.moveAnimation);
     }
 
+    // picking selection handler
     onObjectSelected(object, id) {
         if (object instanceof MyOctagonTile && this.state == GameStates.humanPlaying) {
             this.executeMove({ col: object.column, row: object.row });
         }
     }
 
+    /**
+     * Quits current game and returns to menu state
+     */
     quit() {
         this.timer.reset();
         this.timer.hide();
@@ -191,6 +248,9 @@ class MyGameOrchestrator {
         });
     }
 
+    /**
+     * Starts game
+     */
     start() {
         if (this.state == GameStates.menu || this.state == GameStates.gameOver) {
             this.resetGameState().then(() => {
@@ -202,6 +262,9 @@ class MyGameOrchestrator {
         }
     }
 
+    /**
+     * Undo previous play
+     */
     undo() {
         if (this.state == GameStates.humanPlaying) {
 
@@ -211,6 +274,9 @@ class MyGameOrchestrator {
         }
     }
 
+    /**
+     * Get type of the next player
+     */
     getNextPlayerType() {
         const nextPlayer = this.gameSequence.getNextPlayer();
 
@@ -220,19 +286,25 @@ class MyGameOrchestrator {
             return this.p2Type;
     }
 
+    /**
+     * Resumes game, checking if it is over
+     */
     async resumeGame() {
+        // updates board, so it is correctly displayed
         this.board.fillBoards(this.gameSequence.getCurrentState().boards);
 
+        // change state according to next player type
         const level = this.getNextPlayerType();
-
         if (level == PlayerType.human) {
             this.changeState(GameStates.humanPlaying);
         } else {
             this.changeState(GameStates.botPlaying);
         }
 
+        // checks if game is over
         const gameover = await this.logic.gameOver(this.gameSequence.getCurrentState());
         if (gameover != -1) {
+            // if so, changes state, stops timer and sets corresponding texture to the gameover modal
             this.changeState(GameStates.gameOver);
             this.timer.stop();
             this.scene.setPlayerCamera();
@@ -240,13 +312,20 @@ class MyGameOrchestrator {
             return;
         }
 
+        // execute next turn
         this.nextTurn(level);
     }
 
+    /**
+     * Executes next turn
+     * @param {*} level type of the player who will play the next turn
+     */
     nextTurn(level) {
         const nextPlayer = this.gameSequence.getNextPlayer();
         let p;
 
+        // if player is human, updates camera, and returns, waiting for it to choose a move
+        // else, if next player is a bot, request server for a move
         if (level == PlayerType.human) {
             this.scene.setPlayerCamera(nextPlayer);
             return;
@@ -256,11 +335,15 @@ class MyGameOrchestrator {
         else if (level == PlayerType.lvl2)
             p = this.logic.getGreedyMove(this.gameSequence.getCurrentState());
 
+        // set move to callback execute move when move is loaded
         p.then((move) => {
             this.executeMove(move);
         });
     }
 
+    /**
+     * Starts movie if in an allowed state
+     */
     movie() {
         if (this.state == GameStates.humanPlaying || this.state == GameStates.menu || this.state == GameStates.gameOver) {
             this.gameSequence.startMovie();
@@ -271,12 +354,16 @@ class MyGameOrchestrator {
         }
     }
 
+    /**
+     * Resumes movie
+     */
     resumeMovie() {
         const movieSequence = this.gameSequence.getMovieSequence();
         const player = movieSequence.state.nextPlay.player;
 
         this.board.fillBoards(movieSequence.state.boards);
 
+        // if movie is over, start timer again and return to the previous state
         if (this.gameSequence.isMovieOver()) {
             this.changeState(this.previousState);
             this.timer.start();
